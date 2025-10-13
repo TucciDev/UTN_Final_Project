@@ -1,0 +1,113 @@
+/* Cambia el color de fondo del navbar */
+.navbar {
+    background-color: #101111 !important;
+    margin-bottom: 25px;
+}
+    
+
+/* Cambia el color y la fuente de los enlaces del navbar */
+.navbar-brand, .nav-link, .dropdown-item {
+    color: #eeeeee !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Color de enlace activo */
+.nav-link.active {
+    font-weight: bold;
+    color: #eeeeee !important;
+}
+
+/* Cambia el color de los enlaces al pasar el mouse */
+.nav-link:hover, .dropdown-item:hover {
+    color: #09a3eb !important;
+}
+
+/* Cambia el color del botón de búsqueda */
+.btn-outline-success {
+    color: #09a3eb;
+    border-color: #fffafa;
+    background-color: #fffafa;
+}
+
+.btn-outline-success:hover {
+    background-color: #e4e3e0;
+    border-color: #09a3eb;
+    color: #343a40;
+}
+/* Estilos para el formulario de inserción */
+
+.label_nombre, .label_email, .label_password {
+    font-weight: bold;
+    margin-right: 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.input_nombre, .input_email, .input_password {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.btn-enviar {
+    background-color: #09a3eb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.titulo{
+    text-align: center;
+    color: #3467f194;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+.form_insert {
+    max-width: 400px;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.footer {
+    background-color: #101111;
+    color: #eeeeee;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.user_container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border:#15bebe 1px solid;
+    border-radius: 8px;
+}
+
+.titulo_usuarios_tabla{
+    text-align: center;
+    color: #3467f194;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+.btn_editar, .btn_borrar {
+    background-color: #09a3eb;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-decoration:dashed;
+}
