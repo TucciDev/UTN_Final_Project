@@ -11,17 +11,11 @@ class UserController extends Controller
     
     public function index()
     {
-        $users = User::all();
-        return view("layouts.index", compact('users'));
+        return view('welcome');
     }
 
     
-    public function create()
-    {
-        // return view("layouts.create");
-        
-        return view("layouts.insert");
-    }
+    
 
     /**
      * Guarda un nuevo usuario en la base de datos.
@@ -35,7 +29,7 @@ class UserController extends Controller
         $usuario = new User();
         $usuario->name = $request->name;
         $usuario->email = $request->email;
-        $usuario->password = $request->password;
+        $usuario->password = Hash::make($request->password);
         $usuario->save();
             
     }
@@ -57,3 +51,12 @@ class UserController extends Controller
     }
 
 }
+
+/*
+public function create()
+    {
+        // return view("layouts.create");
+        
+        return view("layouts.insert");
+    }
+*/
