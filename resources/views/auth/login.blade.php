@@ -105,6 +105,11 @@
                                     Recordarme
                                 </label>
                             </div>
+                            <div>
+                                <a href="{{ route('password.request') }}" class="auth-link">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn-primary-custom">
