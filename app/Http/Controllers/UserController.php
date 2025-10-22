@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\createUsersRequest; 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,33 +12,37 @@ class UserController extends Controller
     
     public function index()
     {
-        return view('welcome');
+        $users = User::all();
+        return view("layouts.index", compact('users'));
     }
 
     
-    
+    public function create()
+    {
+        return view("layouts.insert");
+    }
 
     /**
      * Guarda un nuevo usuario en la base de datos.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\createUsersRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(createUsersRequest $request) 
     {
-    
-        $usuario = new User();
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        $usuario->password = Hash::make($request->password);
-        $usuario->save();
-            
+        
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), 
+        ]);
+
+       
+        return redirect()->route('home')->with('success', 'Usuario creado exitosamente.');
     }
-    
+
     public function show($id)
     {
-     
-      //este metodo muestra un registro en particular
 
      $user=user::findOrFail($id);
      return view("layouts.show",compact('user'));
@@ -51,12 +56,3 @@ class UserController extends Controller
     }
 
 }
-
-/*
-public function create()
-    {
-        // return view("layouts.create");
-        
-        return view("layouts.insert");
-    }
-*/
