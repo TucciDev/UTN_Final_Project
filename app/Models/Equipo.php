@@ -2,178 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class Equipo extends Model
 {
-    use HasFactory;
+    // public function user()
+    // {
+    //    return $this->hasOne("App\Models\User");
+    // }
 
-    protected $fillable = [
-        'nombre',
-        'descripcion',
-        'codigo_invitacion',
-        'icono',
-        'color',
-        'imagen', // ✅ AGREGADO
-        'creador_id',
-        'activo',
-    ];
+    // public function usuarios()
+    // {
+    //    return $this->hasMany("App\Models\User");
+    // }   
 
-    protected $casts = [
-        'activo' => 'boolean',
-    ];
-
-    // ========================================
-    // RELACIONES
-    // ========================================
-
-    /**
-     * Creador del equipo
-     */
-    public function creador()
-    {
-        return $this->belongsTo(User::class, 'creador_id');
-    }
-
-    /**
-     * Usuarios que pertenecen al equipo (relación many-to-many)
-     */
     public function usuarios()
     {
-        return $this->belongsToMany(User::class, 'equipo_usuario')
-                    ->withPivot('rol', 'favorito', 'puntos')
-                    ->withTimestamps();
+       return $this->belongsToMany("App\Models\User");
     }
-
-    /**
-     * Solo administradores del equipo
-     */
-    public function administradores()
-    {
-        return $this->usuarios()->wherePivot('rol', 'admin');
-    }
-
-    /**
-     * Solo miembros regulares del equipo
-     */
-    public function miembros()
-    {
-        return $this->usuarios()->wherePivot('rol', 'miembro');
-    }
-
-    // ========================================
-    // MÉTODOS ÚTILES
-    // ========================================
-
-    /**
-     * Verifica si un usuario es admin del equipo
-     */
-    public function esAdmin(User $user): bool
-    {
-        return $this->usuarios()
-                    ->wherePivot('user_id', $user->id)
-                    ->wherePivot('rol', 'admin')
-                    ->exists();
-    }
-
-    /**
-     * Verifica si un usuario pertenece al equipo
-     */
-    public function tieneUsuario(User $user): bool
-    {
-        return $this->usuarios()->where('user_id', $user->id)->exists();
-    }
-
-    /**
-     * Agrega un usuario al equipo
-     */
-    public function agregarUsuario(User $user, string $rol = 'miembro'): void
-    {
-        if (!$this->tieneUsuario($user)) {
-            $this->usuarios()->attach($user->id, [
-                'rol' => $rol,
-                'favorito' => false,
-                'puntos' => 0,
-            ]);
-        }
-    }
-
-    /**
-     * Remueve un usuario del equipo
-     */
-    public function removerUsuario(User $user): void
-    {
-        $this->usuarios()->detach($user->id);
-    }
-
-    /**
-     * Genera un código de invitación único
-     */
     
-    public static function generarCodigoInvitacion(): string
-    {
-        do {
-            $codigo = strtoupper(Str::random(8));
-        } while (self::where('codigo_invitacion', $codigo)->exists());
-
-        return $codigo;
-    }
-
-    /**
-     * Obtiene la URL de la imagen del equipo
-     */
-    public function getImagenUrlAttribute(): string
-    {
-        if ($this->imagen && Storage::disk('public')->exists($this->imagen)) {
-            return asset('storage/' . $this->imagen);
-        }
-        
-        // Si no hay imagen, retornar null para usar el icono
-        return '';
-    }
-
-    /**
-     * Elimina la imagen anterior del storage
-     */
-    public function eliminarImagenAnterior(): void
-    {
-        if ($this->imagen && Storage::disk('public')->exists($this->imagen)) {
-            Storage::disk('public')->delete($this->imagen);
-        }
-    }
-
-    /**
-     * Obtiene la cantidad de tareas del equipo
-     * (Placeholder - implementar cuando tengas el modelo Tarea)
-     */
-    public function cantidadTareas(): int
-    {
-        // return $this->tareas()->count();
-        return rand(10, 50); // Temporal
-    }
-
-    /**
-     * Obtiene la cantidad de tareas completadas
-     * (Placeholder - implementar cuando tengas el modelo Tarea)
-     */
-    public function tareasCompletadas(): int
-    {
-        // return $this->tareas()->where('estado', 'completada')->count();
-        return rand(5, 30); // Temporal
-    }
-
-    /**
-     * Boot method para eliminar imagen al eliminar equipo
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($equipo) {
-            $equipo->eliminarImagenAnterior();
-        });
-    }
 }

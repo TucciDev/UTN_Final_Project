@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Equipo;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,13 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail
         // Gravatar por defecto
         $hash = md5(strtolower(trim($this->email)));
         return "https://www.gravatar.com/avatar/{$hash}?d=identicon&s=200";
-    }
-
-     public function equipos()
-    {
-        return $this->belongsToMany(Equipo::class, 'equipo_usuario', 'user_id', 'equipo_id')
-                    ->withPivot('rol', 'favorito', 'puntos')
-                    ->withTimestamps();
     }
 }
 

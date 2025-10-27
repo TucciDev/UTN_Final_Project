@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\EquipoController;
-use Illuminate\Support\Facades\Auth;
 
 // ========================================
 // PÁGINA PRINCIPAL (PÚBLICA - Todos pueden verla)
@@ -27,48 +26,118 @@ Route::middleware('guest')->group(function () {
 // RUTAS PROTEGIDAS (solo autenticados)
 // ========================================
 Route::middleware('auth')->group(function () {
-    
-    // Dashboard - ahora usa el EquipoController
-    Route::get('/dashboard', [EquipoController::class, 'index'])->name('dashboard');
+    // Dashboard
+    Route::get('/dashboard', function() {
+        return view('dashboard');
+    })->name('dashboard');
     
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
     // Perfil de usuario
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    
-    // ========================================
-    // RUTAS DE EQUIPOS
-    // ========================================
-    
-    // Ver todos los equipos (dashboard)
-    Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
-    
-    // Crear equipo
-    Route::get('/equipos/crear', [EquipoController::class, 'create'])->name('equipos.create');
-    Route::post('/equipos', [EquipoController::class, 'store'])->name('equipos.store');
-    
-    // Unirse a un equipo
-    Route::get('/equipos/unirse', [EquipoController::class, 'showJoinForm'])->name('equipos.join.form');
-    Route::post('/equipos/unirse', [EquipoController::class, 'join'])->name('equipos.join');
-    
-    // Ver, editar y eliminar equipo específico
-    Route::get('/equipos/{id}', [EquipoController::class, 'show'])->name('equipos.show');
-    Route::get('/equipos/{id}/editar', [EquipoController::class, 'edit'])->name('equipos.edit');
-    Route::put('/equipos/{id}', [EquipoController::class, 'update'])->name('equipos.update');
-    Route::delete('/equipos/{id}', [EquipoController::class, 'destroy'])->name('equipos.destroy');
-    
-    // Salir de un equipo
-    Route::post('/equipos/{id}/salir', [EquipoController::class, 'leave'])->name('equipos.leave');
-    
-    // Gestión de miembros (solo admins)
-    Route::delete('/equipos/{equipoId}/miembros/{userId}', [EquipoController::class, 'removeMember'])
-        ->name('equipos.members.remove');
-    Route::patch('/equipos/{equipoId}/miembros/{userId}/rol', [EquipoController::class, 'changeRole'])
-        ->name('equipos.members.change-role');
 });
+// 
 
-// ========================================
-// RUTAS DE AUTENTICACIÓN ADICIONALES (generadas por Laravel)
-// ========================================
-Auth::routes(['login' => false, 'register' => false, 'reset' => true, 'verify' => false]);
+// Route::get("/read",function()
+// {
+//     //forma de obtener registros usando el ORM y no SQL puro
+//     $user=App\Models\User::all();
+
+//     foreach($user as $users)
+//     {
+//             echo $users->name;
+//             echo "<br>";
+//             echo $users->email;
+//             echo "<br>";
+//             echo $users->password;
+//             echo "<br>";
+//             echo "<br>";
+//    }
+// });
+
+// Route::get("/filtro",function()
+// {
+//     //consulta con filtro
+//     $user=App\Models\User::where("id",3)->get();
+    
+//     return $user;
+// });
+
+
+// Route::get("/insertar",function()
+// {
+//     //forma de obtener insertar registros usando el ORM y no SQL puro
+//     $user=new App\Models\User;
+
+//     $user->name ="Nine rodriguez";
+//     $user->email ="rodriguez9@gmail.com";
+//     $user->password ="MorettiCasla";
+//     $user->equipo_id=1;
+
+//     $user->save();
+
+//     echo "registro insertado";
+// });
+
+// Route::get("/update",function()
+// {
+//     //forma de obtener insertar registros usando el ORM y no SQL puro
+//     $user=App\Models\User::find(5);
+
+//     $user->name ="matiassss";
+//     $user->email ="maraujo@hotmail.com";
+//     $user->password ="123457864";
+
+//     $user->save();
+
+//     echo "registro actualizado";
+// });
+
+// // Route::get('/actualizar',function()
+// // {
+// //     $user=DB::update('update users set email = "ftucci278@alumnos.utn.edu.ar" where id = ?', [1]);
+
+   
+// // });
+
+// Route::get('/borrar',function()
+// {
+//    $user=App\Models\User::find(6);
+//    $user->delete();
+
+//    echo "registro borrado";
+   
+// });
+
+// Route::get('/softdelete',function()
+// {
+//    $user=App\Models\User::find(3)->delete();
+
+//    echo "registro desactivado";
+   
+// });
+
+// route::get('/equipo/{id}/users/',function($id)
+// {
+//    return App\Models\Equipo::find($id)->user;
+// });
+
+// route::get('/user/{id}/equipo',function($id)
+// {
+//     //me retorna el equipo asociado a ese usuario
+//    return App\Models\User::find($id)->equipo;
+// });
+
+// route::get('/equipo/{id}/usuarios',function($id)
+// {
+//     $usuarios=App\Models\Equipo::find($id);
+
+//     foreach($usuarios->usuarios as $user)
+//     {
+//         echo $user->name;
+        
+//         echo "<br>";
+//     }
+// });
+
