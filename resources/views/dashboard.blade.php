@@ -47,7 +47,6 @@
             flex-direction: column;
         }
 
-        /* Header del sidebar */
         .sidebar-header {
             padding: 1.5rem;
             background: rgba(255, 255, 255, 0.95);
@@ -62,7 +61,6 @@
             height: auto;
         }
 
-        /* Navegación del sidebar */
         .sidebar-nav {
             padding: 1rem 0;
             flex: 1;
@@ -108,7 +106,6 @@
             text-align: center;
         }
 
-        /* Perfil en sidebar - CORREGIDO */
         .sidebar-profile {
             padding: 1rem 1.5rem;
             background: rgba(102, 126, 234, 0.08);
@@ -202,14 +199,40 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* Content area */
         .content-area {
             max-width: 1400px;
             margin: 0 auto;
         }
 
         /* ========================================
-        CARDS DE GRUPOS
+        ALERTAS
+        ======================================== */
+        .alert {
+            border-radius: 12px;
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+        }
+
+        /* ========================================
+        HEADER Y CARDS
         ======================================== */
         .groups-header {
             margin-bottom: 2rem;
@@ -241,12 +264,16 @@
             cursor: pointer;
             height: 100%;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .group-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 30px rgba(102, 126, 234, 0.25);
             border-color: #667eea;
+            text-decoration: none;
         }
 
         .group-card-header {
@@ -260,7 +287,6 @@
             width: 50px;
             height: 50px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -319,7 +345,6 @@
             color: #1e293b;
         }
 
-        /* Badge de miembros */
         .members-badge {
             display: flex;
             align-items: center;
@@ -349,8 +374,8 @@
             margin-left: -0.5rem;
         }
 
-        /* Card para crear grupo */
-        .create-group-card {
+        /* Card para crear/unirse a grupo */
+        .action-card {
             background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
             color: white;
             display: flex;
@@ -360,14 +385,16 @@
             text-align: center;
             gap: 1rem;
             border: 2px dashed rgba(255,255,255,0.4);
+            min-height: 250px;
         }
 
-        .create-group-card:hover {
+        .action-card:hover {
             border-color: white;
             background: linear-gradient(135deg, #5568d3 0%, #1d4ed8 100%);
+            color: white;
         }
 
-        .create-group-icon {
+        .action-icon {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -378,18 +405,44 @@
             font-size: 2rem;
         }
 
-        .create-group-card h5 {
+        .action-card h5 {
             margin: 0;
             font-weight: 700;
+            color: white;
         }
 
-        .create-group-card p {
+        .action-card p {
             margin: 0;
             opacity: 0.95;
             font-size: 0.9rem;
         }
 
-       /* ========================================
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        /* ========================================
         RESPONSIVE
         ======================================== */
         @media (max-width: 991px) {
@@ -413,19 +466,13 @@
                 justify-content: center;
             }
 
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: 0.3s ease;
-            }
-            
             .mobile-menu-btn.active {
                 position: fixed;
-                left: 190px; /* un poco más que el ancho del sidebar */
+                left: 190px;
                 transition: left 0.3s ease;
                 transform: rotate(90deg);
             }
+
             .groups-header {
                 padding: 1.5rem;
             }
@@ -468,7 +515,6 @@
             }
         }
 
-        /* Overlay para cerrar sidebar en móvil */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -487,7 +533,6 @@
             opacity: 1;
         }
 
-        /* Dropdown menu mejorado */
         .dropdown-menu {
             border: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -504,7 +549,6 @@
             color: #667eea;
         }
 
-        /* Prevenir scroll del body cuando sidebar está abierto en móvil */
         body.sidebar-open {
             overflow: hidden;
         }
@@ -540,15 +584,21 @@
             <div class="nav-section-title">Grupos</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{{ route('dashboard') }}">
                         <i class="bi bi-collection"></i>
                         <span>Mis Grupos</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#createGroupModal">
+                    <a class="nav-link" href="{{ route('equipos.create') }}">
                         <i class="bi bi-plus-circle"></i>
                         <span>Crear Grupo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('equipos.join.form') }}">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Unirse a Grupo</span>
                     </a>
                 </li>
             </ul>
@@ -575,7 +625,7 @@
         <div class="sidebar-profile">
             <div class="profile-info">
                 <div class="profile-avatar">
-                    {{ substr(Auth::user()->nombre, 0, 1) }}{{ substr(Auth::user()->apellido, 0, 1) }}
+                    {{ Auth::user()->initials }}
                 </div>
                 <div class="profile-details">
                     <div class="profile-name">{{ Auth::user()->username }}</div>
@@ -603,15 +653,37 @@
         </div>
     </aside>
 
-    <!-- Overlay para cerrar sidebar en móvil -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
     <!-- ========================================
         MAIN CONTENT
     ======================================== -->
     <main class="main-content">
-        <!-- Content Area -->
         <div class="content-area">
+            <!-- Alertas -->
+             <!--
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="bi bi-check-circle me-2"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
+
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
+
+            @if(session('info'))
+            <div class="alert alert-info alert-dismissible fade show">
+                <i class="bi bi-info-circle me-2"></i>
+                {{ session('info') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
+             -->
             <!-- Header -->
             <div class="groups-header">
                 <h2>Bienvenido, {{ Auth::user()->nombre }}! 👋</h2>
@@ -623,27 +695,52 @@
                 
                 <!-- Card: Crear nuevo grupo -->
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="group-card create-group-card" data-bs-toggle="modal" data-bs-target="#createGroupModal">
-                        <div class="create-group-icon">
+                    <a href="{{ route('equipos.create') }}" class="group-card action-card">
+                        <div class="action-icon">
                             <i class="bi bi-plus-lg"></i>
                         </div>
                         <h5>Crear Nuevo Grupo</h5>
                         <p>Comienza a colaborar con tu equipo</p>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- Grupo 1 -->
+                <!-- Card: Unirse a grupo -->
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="group-card">
+                    <a href="{{ route('equipos.join.form') }}" class="group-card action-card" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                        <div class="action-icon">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                        </div>
+                        <h5>Unirse a un Grupo</h5>
+                        <p>Ingresa con un código de invitación</p>
+                    </a>
+                </div>
+
+                <!-- Equipos del usuario -->
+                @forelse($equipos as $equipo)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ route('equipos.show', $equipo['id']) }}" class="group-card">
                         <div class="group-card-header">
-                            <div class="group-icon">
-                                <i class="bi bi-code-slash"></i>
-                            </div>
+                            @if($equipo['imagen_url'])
+                                <!-- Si tiene imagen, mostrar la imagen -->
+                                <div class="group-icon" style="background: transparent; padding: 0; overflow: hidden;">
+                                    <img src="{{ $equipo['imagen_url'] }}" alt="{{ $equipo['nombre'] }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            @else
+                                <!-- Si no tiene imagen, mostrar icono con color -->
+                                <div class="group-icon" style="background: {{ $equipo['color'] }};">
+                                    <i class="{{ $equipo['icono'] }}"></i>
+                                </div>
+                            @endif
                             <div class="group-info">
-                                <div class="group-name">Desarrollo Web</div>
+                                <div class="group-name">{{ $equipo['nombre'] }}</div>
                                 <div class="group-role">
-                                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
-                                    Admin
+                                    @if($equipo['es_admin'])
+                                        <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
+                                        Admin
+                                    @else
+                                        <i class="bi bi-person" style="color: #60a5fa;"></i>
+                                        Miembro
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -651,112 +748,37 @@
                         <div class="group-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Tareas</span>
-                                <span class="stat-value">24</span>
+                                <span class="stat-value">0<!--{{ $equipo['total_tareas'] }}--></span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Completadas</span>
-                                <span class="stat-value">15</span>
+                                <span class="stat-value">0<!--{{ $equipo['tareas_completadas'] }}--></span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Miembros</span>
-                                <span class="stat-value">8</span>
+                                <span class="stat-value">{{ $equipo['total_miembros'] }}</span>
                             </div>
                         </div>
 
+                        @if($equipo['miembros']->count() > 0)
                         <div class="members-badge">
                             <div class="avatar-group">
-                                <div class="avatar">FP</div>
-                                <div class="avatar">MG</div>
-                                <div class="avatar">LR</div>
-                                <div class="avatar">+5</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Grupo 2 -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="group-card">
-                        <div class="group-card-header">
-                            <div class="group-icon">
-                                <i class="bi bi-palette"></i>
-                            </div>
-                            <div class="group-info">
-                                <div class="group-name">Diseño UI/UX</div>
-                                <div class="group-role">
-                                    <i class="bi bi-person" style="color: #60a5fa;"></i>
-                                    Miembro
+                                @foreach($equipo['miembros'] as $miembro)
+                                <div class="avatar" title="{{ $miembro['nombre'] }}">
+                                    {{ $miembro['iniciales'] }}
                                 </div>
+                                @endforeach
+                                @if($equipo['mas_miembros'] > 0)
+                                <div class="avatar">+{{ $equipo['mas_miembros'] }}</div>
+                                @endif
                             </div>
                         </div>
-                        
-                        <div class="group-stats">
-                            <div class="stat-item">
-                                <span class="stat-label">Tareas</span>
-                                <span class="stat-value">12</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Completadas</span>
-                                <span class="stat-value">8</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Miembros</span>
-                                <span class="stat-value">5</span>
-                            </div>
-                        </div>
-
-                        <div class="members-badge">
-                            <div class="avatar-group">
-                                <div class="avatar">AM</div>
-                                <div class="avatar">JS</div>
-                                <div class="avatar">TR</div>
-                                <div class="avatar">+2</div>
-                            </div>
-                        </div>
-                    </div>
+                        @endif
+                    </a>
                 </div>
-
-                <!-- Grupo 3 -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="group-card">
-                        <div class="group-card-header">
-                            <div class="group-icon">
-                                <i class="bi bi-megaphone"></i>
-                            </div>
-                            <div class="group-info">
-                                <div class="group-name">Marketing Digital</div>
-                                <div class="group-role">
-                                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
-                                    Admin
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="group-stats">
-                            <div class="stat-item">
-                                <span class="stat-label">Tareas</span>
-                                <span class="stat-value">18</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Completadas</span>
-                                <span class="stat-value">12</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Miembros</span>
-                                <span class="stat-value">6</span>
-                            </div>
-                        </div>
-
-                        <div class="members-badge">
-                            <div class="avatar-group">
-                                <div class="avatar">FP</div>
-                                <div class="avatar">CM</div>
-                                <div class="avatar">PL</div>
-                                <div class="avatar">+3</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    <!-- Este bloque solo se muestra si NO hay equipos -->
+                @endforelse
 
             </div>
         </div>
@@ -796,13 +818,9 @@
             body.classList.remove('sidebar-open');
         }
 
-        // Toggle sidebar al hacer click en el botón hamburguesa
         mobileMenuBtn.addEventListener('click', toggleSidebar);
-
-        // Cerrar sidebar al hacer click en el overlay
         sidebarOverlay.addEventListener('click', closeSidebar);
 
-        // Cerrar sidebar al hacer click en cualquier link del sidebar en móvil
         const sidebarLinks = sidebar.querySelectorAll('.nav-link');
         sidebarLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -812,14 +830,12 @@
             });
         });
 
-        // Cerrar sidebar al cambiar de tamaño a desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth > 991) {
                 closeSidebar();
             }
         });
 
-        // Prevenir scroll cuando el sidebar está abierto en móvil
         let startY = 0;
         sidebar.addEventListener('touchstart', function(e) {
             startY = e.touches[0].pageY;
