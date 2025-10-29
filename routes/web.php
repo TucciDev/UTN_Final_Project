@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EquipoController;
 use Illuminate\Support\Facades\Auth;
 
 // ========================================
@@ -26,16 +27,45 @@ Route::middleware('guest')->group(function () {
 // RUTAS PROTEGIDAS (solo autenticados)
 // ========================================
 Route::middleware('auth')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', function() {
-        return view('dashboard');
-    })->name('dashboard');
+    
+    // Dashboard - ahora usa el EquipoController
+    Route::get('/dashboard', [EquipoController::class, 'index'])->name('dashboard');
     
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
     // Perfil de usuario
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    
+    // ========================================
+    // RUTAS DE EQUIPOS
+    // ========================================
+    
+    // Ver todos los equipos (dashboard)
+    Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
+    
+    // Crear equipo
+    Route::get('/equipos/crear', [EquipoController::class, 'create'])->name('equipos.create');
+    Route::post('/equipos', [EquipoController::class, 'store'])->name('equipos.store');
+    
+    // Unirse a un equipo
+    Route::get('/equipos/unirse', [EquipoController::class, 'showJoinForm'])->name('equipos.join.form');
+    Route::post('/equipos/unirse', [EquipoController::class, 'join'])->name('equipos.join');
+    
+    // Ver, editar y eliminar equipo específico
+    Route::get('/equipos/{id}', [EquipoController::class, 'show'])->name('equipos.show');
+    Route::get('/equipos/{id}/editar', [EquipoController::class, 'edit'])->name('equipos.edit');
+    Route::put('/equipos/{id}', [EquipoController::class, 'update'])->name('equipos.update');
+    Route::delete('/equipos/{id}', [EquipoController::class, 'destroy'])->name('equipos.destroy');
+    
+    // Salir de un equipo
+    Route::post('/equipos/{id}/salir', [EquipoController::class, 'leave'])->name('equipos.leave');
+    
+    // Gestión de miembros (solo admins)
+    Route::delete('/equipos/{equipoId}/miembros/{userId}', [EquipoController::class, 'removeMember'])
+        ->name('equipos.members.remove');
+    Route::patch('/equipos/{equipoId}/miembros/{userId}/rol', [EquipoController::class, 'changeRole'])
+        ->name('equipos.members.change-role');
 });
 
 // ========================================
