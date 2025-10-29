@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // ✅ ACTUALIZADO: Usar ruta_img si existe, sino Gravatar
-    public function getAvatarUrlAttribute(): string
+    public function getAvatarUrlAttribute(): ?string
     {
         if ($this->ruta_img) {
             return asset($this->ruta_img);
@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
         
         // Gravatar por defecto
         $hash = md5(strtolower(trim($this->email)));
-        return "https://www.gravatar.com/avatar/{$hash}?d=identicon&s=200";
+        return null;
     }
 
      public function equipos()

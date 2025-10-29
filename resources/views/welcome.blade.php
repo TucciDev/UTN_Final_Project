@@ -485,7 +485,7 @@
                     <h6 class="footer-title mb-3">Legal</h6>
                     <ul class="footer-links list-unstyled">
                         <li><a href="#">Privacidad</a></li>
-                        <li><a href="#">Términos</a></li>
+                        <li><a href="terminosycondiciones.html">Términos</a></li>
                         <li><a href="#">Cookies</a></li>
                         <li><a href="#">Licencias</a></li>
                     </ul>

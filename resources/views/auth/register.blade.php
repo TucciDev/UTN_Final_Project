@@ -182,9 +182,9 @@
                                        required>
                                 <label class="form-check-label" for="terms">
                                     Acepto los 
-                                    <a href="#" class="auth-link">Términos y Condiciones</a> 
+                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Términos y Condiciones</a> 
                                     y la 
-                                    <a href="#" class="auth-link">Política de Privacidad</a>
+                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Política de Privacidad</a>
                                 </label>
                             </div>
                         </div>
