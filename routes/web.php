@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\TareaController;
 use Illuminate\Support\Facades\Auth;
 
 // ========================================
@@ -66,6 +67,22 @@ Route::middleware('auth')->group(function () {
         ->name('equipos.members.remove');
     Route::patch('/equipos/{equipoId}/miembros/{userId}/rol', [EquipoController::class, 'changeRole'])
         ->name('equipos.members.change-role');
+
+    // ========================================
+    // RUTAS DE TAREAS
+    // ========================================
+    
+    // Crear tarea
+    Route::post('/equipos/{equipoId}/tareas', [TareaController::class, 'store'])->name('tareas.store');
+    
+    // Actualizar tarea
+    Route::put('/tareas/{tareaId}', [TareaController::class, 'update'])->name('tareas.update');
+    
+    // Cambiar estado (para drag & drop)
+    Route::patch('/tareas/{tareaId}/estado', [TareaController::class, 'cambiarEstado'])->name('tareas.cambiar-estado');
+    
+    // Eliminar tarea
+    Route::delete('/tareas/{tareaId}', [TareaController::class, 'destroy'])->name('tareas.destroy');
 });
 
 // ========================================

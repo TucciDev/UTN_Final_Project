@@ -145,24 +145,28 @@ class Equipo extends Model
         }
     }
 
+    /*
+    * Tareas del equipo
+    */
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class);
+    }
+
     /**
      * Obtiene la cantidad de tareas del equipo
-     * (Placeholder - implementar cuando tengas el modelo Tarea)
      */
     public function cantidadTareas(): int
     {
-        // return $this->tareas()->count();
-        return rand(10, 50); // Temporal
+        return $this->tareas()->count();
     }
 
     /**
      * Obtiene la cantidad de tareas completadas
-     * (Placeholder - implementar cuando tengas el modelo Tarea)
      */
     public function tareasCompletadas(): int
     {
-        // return $this->tareas()->where('estado', 'completada')->count();
-        return rand(5, 30); // Temporal
+        return $this->tareas()->where('estado', 'completada')->count();
     }
 
     /**
