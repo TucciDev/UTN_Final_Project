@@ -36,6 +36,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
     // Perfil de usuario
+
+    Route::get('/perfil', [UserController::class, 'perfil'])->name('perfil');
+    Route::put('/perfil', [UserController::class, 'updatePerfil'])->name('perfil.update');
+    Route::delete('/perfil', [UserController::class, 'destroyPerfil'])->name('perfil.destroy');
+    Route::post('/perfil/password', [UserController::class, 'updatePassword'])->name('password.update');
+    
+    
+    // ========================================
+    // RUTAS DE USUARIOS
+    // ========================================
+    
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     
     // ========================================
