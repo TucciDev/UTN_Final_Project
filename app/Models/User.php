@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'username',
         'password',
-        'ruta_img',              // ✅ AGREGADO
+        'ruta_img',              
         'provider',
         'provider_id',
         'email_verified_at',
@@ -67,6 +67,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Equipo::class, 'equipo_usuario', 'user_id', 'equipo_id')
                     ->withPivot('rol', 'favorito', 'puntos')
                     ->withTimestamps();
+    }
+
+    /**
+     * Tareas asignadas al usuario
+     */
+    public function tareasAsignadas()
+    {
+        return $this->hasMany(Tarea::class, 'asignado_a');
+    }
+
+    /**
+     * Tareas creadas por el usuario
+     */
+    public function tareasCreadas()
+    {
+        return $this->hasMany(Tarea::class, 'creador_id');
     }
 }
 

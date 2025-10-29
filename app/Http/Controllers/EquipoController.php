@@ -134,7 +134,7 @@ class EquipoController extends Controller
      */
     public function show($id)
     {
-        $equipo = Equipo::with(['usuarios', 'creador'])
+        $equipo = Equipo::with(['usuarios', 'creador', 'tareas.asignado'])
             ->withCount('usuarios as total_miembros')
             ->findOrFail($id);
 
@@ -154,12 +154,21 @@ class EquipoController extends Controller
         $rolUsuario = $miembroActual->pivot->rol;
         $puntosUsuario = $miembroActual->pivot->puntos;
 
-        // Obtener miembros con su información
+        // Obtener miembros con su información y cantidad de tareas
         $miembros = $equipo->usuarios()
             ->orderByRaw("CASE WHEN equipo_usuario.rol = 'admin' THEN 0 ELSE 1 END")
             ->orderByDesc('equipo_usuario.puntos')
             ->get()
-            ->map(function ($usuario) {
+            ->map(function ($usuario) use ($equipo) {
+                $tareasAsignadas = $equipo->tareas()
+                    ->where('asignado_a', $usuario->id)
+                    ->count();
+                
+                $tareasCompletadas = $equipo->tareas()
+                    ->where('asignado_a', $usuario->id)
+                    ->where('estado', 'completada')
+                    ->count();
+
                 return [
                     'id' => $usuario->id,
                     'nombre' => $usuario->full_name,
@@ -170,15 +179,41 @@ class EquipoController extends Controller
                     'rol' => $usuario->pivot->rol,
                     'puntos' => $usuario->pivot->puntos,
                     'es_admin' => $usuario->pivot->rol === 'admin',
+                    'tareas_asignadas' => $tareasAsignadas,
+                    'tareas_completadas' => $tareasCompletadas,
                 ];
             });
+
+        // Obtener tareas por estado (para el tablero Kanban)
+        $tareasPorHacer = $equipo->tareas()
+            ->where('estado', 'por_hacer')
+            ->with('asignado')
+            ->orderBy('prioridad', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $tareasEnProgreso = $equipo->tareas()
+            ->where('estado', 'en_progreso')
+            ->with('asignado')
+            ->orderBy('prioridad', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $tareasCompletadas = $equipo->tareas()
+            ->where('estado', 'completada')
+            ->with('asignado')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         return view('equipos.show', compact(
             'equipo',
             'esAdmin',
             'rolUsuario',
             'puntosUsuario',
-            'miembros'
+            'miembros',
+            'tareasPorHacer',
+            'tareasEnProgreso',
+            'tareasCompletadas'
         ));
     }
 

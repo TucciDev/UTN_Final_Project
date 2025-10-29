@@ -758,11 +758,11 @@
                         <div class="group-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Tareas</span>
-                                <span class="stat-value">0<!--{{ $equipo['total_tareas'] }}--></span>
+                                <span class="stat-value">{{ $equipo['total_tareas'] }}</span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Completadas</span>
-                                <span class="stat-value">0<!--{{ $equipo['tareas_completadas'] }}--></span>
+                                <span class="stat-value">{{ $equipo['tareas_completadas'] }}</span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Miembros</span>
