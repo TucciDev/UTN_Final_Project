@@ -13,19 +13,18 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-    /* 
-       'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_REDIRECT_URI', 'http://localhost:8000/login/google/callback'),
-    ],
+    'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('GOOGLE_REDIRECT_URI', 'http://127.0.0.1:8000/auth/google/callback'), // <-- CORREGIDO
+],
 
-    'github' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => env('GITHUB_REDIRECT_URI', 'http://localhost:8000/login/github/callback'),
-    ],
-    */
+    // 'github' => [
+    //     'client_id' => env('GITHUB_CLIENT_ID'),
+    //     'client_secret' => env('GITHUB_CLIENT_SECRET'),
+    //     'redirect' => env('GITHUB_REDIRECT_URI', 'http://localhost:8000/login/github/callback'),
+    // ],
+    // */
     
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
