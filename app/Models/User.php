@@ -11,6 +11,7 @@ use App\Models\Equipo;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    // ... (use HasApiTokens, HasFactory, Notifiable;)
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -19,10 +20,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'username',
         'password',
-        'ruta_img',              // ✅ AGREGADO
+        'ruta_img',
         'provider',
         'provider_id',
         'email_verified_at',
+        'google_id'
     ];
 
     protected $hidden = [
@@ -67,6 +69,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Equipo::class, 'equipo_usuario', 'user_id', 'equipo_id')
                     ->withPivot('rol', 'favorito', 'puntos')
                     ->withTimestamps();
+    }
+
+    /**
+     * Genera un nombre de usuario único a partir de un email.
+     */
+    public static function generateUsername(string $email): string
+    {
+        $username = strstr($email, '@', true); // Obtiene la parte antes del @
+        $baseUsername = $username;
+        $counter = 1;
+
+        while (self::where('username', $username)->exists()) {
+            $username = $baseUsername . $counter;
+            $counter++;
+        }
+
+        return $username;
     }
 }
 

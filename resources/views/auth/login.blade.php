@@ -119,6 +119,16 @@
                     </form>
 
                     <div class="text-center mt-4">
+                        <div class="separator">
+                            <span class="separator-text">O</span>
+                        </div>
+                        <a href="{{ route('google.redirect') }}" class="btn btn-google-custom mt-3">
+                            <i class="bi bi-google me-2"></i>
+                            Iniciar sesión con Google
+                        </a>
+                    </div>
+
+                    <div class="text-center mt-4">
                         <p class="text-muted">
                             ¿No tienes cuenta? 
                             <a href="{{ route('register') }}" class="auth-link">Regístrate aquí</a>

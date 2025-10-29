@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EquipoController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GoogleLoginController;
 
 // ========================================
 // PÁGINA PRINCIPAL (PÚBLICA - Todos pueden verla)
@@ -21,6 +22,10 @@ Route::middleware('guest')->group(function () {
     
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+
+    // Rutas de Google
+    Route::get('/auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
 // ========================================
