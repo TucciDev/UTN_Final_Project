@@ -11,6 +11,7 @@ use App\Models\Equipo;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    // ... (use HasApiTokens, HasFactory, Notifiable;)
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -19,10 +20,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'username',
         'password',
-        'ruta_img',              
-        'provider',
-        'provider_id',
+        'ruta_img',
         'email_verified_at',
+        'google_id'
     ];
 
     protected $hidden = [
@@ -70,19 +70,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Tareas asignadas al usuario
+     * Genera un nombre de usuario único a partir de un email.
      */
-    public function tareasAsignadas()
+    public static function generateUsername(string $email): string
     {
-        return $this->hasMany(Tarea::class, 'asignado_a');
-    }
+        $username = strstr($email, '@', true); // Obtiene la parte antes del @
+        $baseUsername = $username;
+        $counter = 1;
 
-    /**
-     * Tareas creadas por el usuario
-     */
-    public function tareasCreadas()
-    {
-        return $this->hasMany(Tarea::class, 'creador_id');
+        while (self::where('username', $username)->exists()) {
+            $username = $baseUsername . $counter;
+            $counter++;
+        }
+
+        return $username;
     }
 }
 

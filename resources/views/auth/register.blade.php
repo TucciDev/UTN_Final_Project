@@ -214,7 +214,11 @@
                             Crear Cuenta
                         </button>
                     </form>
-
+                    <a href="{{ route('google.redirect') }}" class="btn btn-light border w-100 py-2">
+                            <i class="bi bi-google me-2"></i>
+                            Registrarse con Google
+                        </a>
+                        
                     <div class="text-center mt-4">
                         <p class="text-muted">
                             ¿Ya tienes cuenta? 
