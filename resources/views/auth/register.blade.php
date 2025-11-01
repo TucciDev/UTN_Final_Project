@@ -8,6 +8,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <style>
+        .password-toggle-icon {
+            cursor: pointer;
+            transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .password-toggle-icon:hover {
+            color: #667eea;
+        }
+
+        .password-toggle-icon:active {
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 <body>
     <div class="auth-wrapper auth-wrapper-register">
@@ -148,6 +162,9 @@
                                        required
                                        minlength="8"
                                        oninput="checkPasswordStrength()">
+                                <span class="input-group-text">
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
                             </div>
                             <div class="password-strength">
                                 <div class="password-strength-bar" id="strengthBar"></div>
@@ -165,11 +182,14 @@
                                 </span>
                                 <input type="password" 
                                        class="form-control" 
-                                       id="password_confirmation" 
+                                       id="password-confirm" 
                                        name="password_confirmation"
                                        placeholder="Repite tu contraseña" 
                                        required
                                        minlength="8">
+                                <span class="input-group-text">
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordConfirm" style="cursor: pointer;"></i>
+                                </span>
                             </div>
                         </div>
 
@@ -218,6 +238,61 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/password.js') }}"></script>
+    <script>
+        function checkPasswordStrength() {
+            const pwdInput = document.getElementById('password');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+
+            if (!pwdInput || !strengthBar || !strengthText) return;
+
+            const pwd = pwdInput.value;
+            let score = 0;
+
+            if (pwd.length >= 8) score += 1; // length
+            if (/[A-ZÁÉÍÓÚÑ]/.test(pwd)) score += 1; // uppercase
+            if (/[0-9]/.test(pwd)) score += 1; // digits
+            if (/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]/.test(pwd)) score += 1; // special chars
+
+            const percent = (score / 3) * 100;
+            strengthBar.style.width = percent + '%';
+
+            let text = 'Débil';
+            let color = '#f59e0b'; // verde claro
+
+            if (score === 1) {
+                text = 'Débil';
+                color = '#f59e0b';
+            } else if (score === 2) {
+                text = 'Moderada';
+                color = '#60a5fa';
+            } else if (score >= 3) {
+                text = 'Fuerte';
+                color = '#10b981';
+            }
+
+            strengthBar.style.background = color;
+            strengthText.textContent = text;
+        }
+
+        function togglePasswordVisibility(inputId, toggleButtonId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = document.getElementById(toggleButtonId);
+
+            if (!passwordInput || !toggleButton) return;
+
+            toggleButton.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        }
+
+        // initialize
+        checkPasswordStrength();
+        togglePasswordVisibility('password', 'togglePassword');
+        togglePasswordVisibility('password-confirm', 'togglePasswordConfirm');
+    </script>
 </body>
 </html>

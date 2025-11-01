@@ -284,6 +284,19 @@
             border: none;
         }
 
+        .password-toggle-icon {
+            cursor: pointer;
+            transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .password-toggle-icon:hover {
+            color: #667eea;
+        }
+
+        .password-toggle-icon:active {
+            transform: scale(1.2);
+        }
+
         /* ========================================
         RESPONSIVE
         ======================================== */
@@ -451,6 +464,31 @@
     ======================================== -->
     <main class="main-content">
         <div class="content-area">
+            {{-- Flash messages (success / error / validation) --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show auto-dismiss" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show auto-dismiss" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show auto-dismiss" role="alert">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 col-xl-8">
@@ -577,7 +615,12 @@
             
                                     <div class="mb-3">
                                         <label for="current_password" class="form-label">{{ __('Contraseña Actual') }}</label>
-                                        <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autocomplete="current-password">
+                                        <div class="input-group">
+                                            <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autocomplete="current-password">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-eye-slash password-toggle-icon" id="toggleCurrentPassword" style="cursor: pointer;"></i>
+                                            </span>
+                                        </div>
                                         @error('current_password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -587,17 +630,43 @@
             
                                     <div class="mb-3">
                                         <label for="password" class="form-label">{{ __('Nueva Contraseña') }}</label>
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                        <div class="input-group">
+                                            <input id="password" 
+                                                type="password" 
+                                                class="form-control @error('password') is-invalid @enderror" 
+                                                name="password" 
+                                                required 
+                                                autocomplete="new-password" 
+                                                oninput="checkPasswordStrength()">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                            </span>
+                                        </div>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                        <small id="passwordHelp" class="form-text text-muted" style="display: none;">
+                                            La contraseña debe tener minimo 8 caracteres.
+                                        </small>
+                                        <!-- Indicador de fortaleza -->
+                                        <div class="mt-2">
+                                            <div class="progress" style="height: 8px;">
+                                                <div id="strengthBar" class="progress-bar" style="width: 0%; background-color: #f59e0b;"></div>
+                                            </div>
+                                            <small id="strengthText" class="form-text text-muted">Fortaleza: Débil</small>
+                                        </div>
                                     </div>
             
                                     <div class="mb-3">
                                         <label for="password-confirm" class="form-label">{{ __('Confirmar Nueva Contraseña') }}</label>
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        <div class="input-group">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" oninput="checkPasswordStrength()">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordConfirm" style="cursor: pointer;"></i>
+                                            </span>
+                                        </div>
                                     </div>
             
                                     <div class="text-end">
@@ -671,6 +740,65 @@
 
         mobileMenuBtn.addEventListener('click', toggleSidebar);
         sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        document.getElementById('password').addEventListener('click', function() {
+            document.getElementById('passwordHelp').style.display = 'block';
+        });
+
+        function togglePasswordVisibility(inputId, toggleButtonId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = document.getElementById(toggleButtonId);
+
+            toggleButton.addEventListener('click', function() {
+                // toggle the type attribute
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                // toggle the eye / eye-slash icon
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        }
+
+        function checkPasswordStrength() {  // Evaluar la fortaleza de la contraseña
+            const pwdInput = document.getElementById('password');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+
+            if (!pwdInput || !strengthBar || !strengthText) return;
+
+            const pwd = pwdInput.value;
+            let score = 0;
+
+            if (pwd.length >= 8) score += 1; // length
+            if (/[A-ZÁÉÍÓÚÑ]/.test(pwd)) score += 1; // uppercase
+            if (/[0-9]/.test(pwd)) score += 1; // digits
+            if (/[^A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]/.test(pwd)) score += 1; // special chars
+
+            const percent = (score / 3) * 100;
+            strengthBar.style.width = percent + '%';
+
+            let text = 'Débil';
+            let color = '#f59e0b'; // verde claro
+
+            if (score === 1) {
+                text = 'Débil';
+                color = '#f59e0b';
+            } else if (score === 2) {
+                text = 'Moderada';
+                color = '#60a5fa';
+            } else if (score >= 3) {
+                text = 'Fuerte';
+                color = '#10b981';
+            }
+
+            strengthBar.style.background = color;
+            strengthText.textContent = text;
+        }
+
+        togglePasswordVisibility('current_password', 'toggleCurrentPassword');
+        togglePasswordVisibility('password', 'togglePassword');
+        togglePasswordVisibility('password-confirm', 'togglePasswordConfirm');
+        checkPasswordStrength();
     </script>
 </body>
 </html>

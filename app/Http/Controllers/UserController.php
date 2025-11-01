@@ -133,10 +133,7 @@ class UserController extends Controller
 
         $request->validate([
             'current_password' => ['required', 'current_password'], // valida la contraseña actual
-            'password' => ['required', 'string', 'confirmed', Password::min(8)
-                            ->letters()
-                            ->numbers()
-                            ->symbols()], // valida la nueva contraseña
+            'password' => ['required', 'string', 'confirmed', Password::min(8)], // valida la nueva contraseña
         ]);
 
         // Guardar la nueva contraseña
