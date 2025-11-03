@@ -85,7 +85,7 @@ class UserController extends Controller
 
         if ($request->has('delete_avatar')) {
             if ($user->ruta_img) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $user->ruta_img));
+                Storage::disk('public')->delete($user->ruta_img);
                 $user->ruta_img = null;
                 $user->save();
             }
@@ -97,13 +97,12 @@ class UserController extends Controller
             'surname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'ruta_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'ruta_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         if ($request->has('delete_avatar')) {
             if ($user->ruta_img) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $user->ruta_img));
-                $user->ruta_img = null;
+                Storage::disk('public')->delete($user->ruta_img);
             }
         }
 

@@ -775,7 +775,15 @@
                             <div class="avatar-group">
                                 @foreach($equipo['miembros'] as $miembro)
                                 <div class="avatar" title="{{ $miembro['nombre'] }}">
-                                    {{ $miembro['iniciales'] }}
+                                    @if($miembro['avatar_url'])
+                                        <!-- Si tiene imagen, mostrar la imagen -->
+                                        <img src="{{ $miembro['avatar_url'] }}" 
+                                            alt="{{ $miembro['nombre'] }}" 
+                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                    @else
+                                        <!-- Si no tiene imagen, mostrar iniciales -->
+                                        {{ $miembro['iniciales'] }}
+                                    @endif
                                 </div>
                                 @endforeach
                                 @if($equipo['mas_miembros'] > 0)

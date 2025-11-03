@@ -50,6 +50,9 @@ class EquipoController extends Controller
                         return [
                             'iniciales' => $usuario->initials,
                             'nombre' => $usuario->full_name,
+                            'avatar_url' => $usuario->ruta_img 
+                            ? asset($usuario->ruta_img) 
+                            : null,
                         ];
                     }),
                     'mas_miembros' => max(0, $equipo->total_miembros - 3),
