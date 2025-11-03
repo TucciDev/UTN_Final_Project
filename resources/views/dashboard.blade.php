@@ -625,7 +625,17 @@
         <div class="sidebar-profile">
             <div class="profile-info">
                 <div class="profile-avatar">
-                    {{ Auth::user()->initials }}
+                    @if (Auth::user()->avatar_url)
+                        <img src="{{ Auth::user()->avatar_url }}" 
+                            alt="Avatar" 
+                            class="rounded-circle" 
+                            style="width: 50px; height: 50px; object-fit: cover;">
+                    @else
+                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px; background-color:">
+                            {{ Auth::user()->initials }}
+                        </div>
+                    @endif
                 </div>
                 <div class="profile-details">
                     <div class="profile-name">{{ Auth::user()->username }}</div>
@@ -636,7 +646,7 @@
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="{{ route('perfil') }}"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
@@ -748,11 +758,11 @@
                         <div class="group-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Tareas</span>
-                                <span class="stat-value">0<!--{{ $equipo['total_tareas'] }}--></span>
+                                <span class="stat-value">{{ $equipo['total_tareas'] }}</span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Completadas</span>
-                                <span class="stat-value">0<!--{{ $equipo['tareas_completadas'] }}--></span>
+                                <span class="stat-value">{{ $equipo['tareas_completadas'] }}</span>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-label">Miembros</span>

@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\TareaController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GoogleLoginController;
 
 // ========================================
 // PÁGINA PRINCIPAL (PÚBLICA - Todos pueden verla)
@@ -21,6 +23,10 @@ Route::middleware('guest')->group(function () {
     
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+
+    // Rutas de Google
+    Route::get('/auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
 // ========================================
@@ -49,6 +55,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
     // Perfil de usuario
+
+    Route::get('/perfil', [UserController::class, 'perfil'])->name('perfil');
+    Route::put('/perfil', [UserController::class, 'updatePerfil'])->name('perfil.update');
+    Route::delete('/perfil', [UserController::class, 'destroyPerfil'])->name('perfil.destroy');
+    Route::post('/perfil/password', [UserController::class, 'updatePassword'])->name('password.update');
+    
+    
+    // ========================================
+    // RUTAS DE USUARIOS
+    // ========================================
+    
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     
     // ========================================
@@ -80,6 +97,22 @@ Route::middleware('auth')->group(function () {
         ->name('equipos.members.remove');
     Route::patch('/equipos/{equipoId}/miembros/{userId}/rol', [EquipoController::class, 'changeRole'])
         ->name('equipos.members.change-role');
+
+    // ========================================
+    // RUTAS DE TAREAS
+    // ========================================
+    
+    // Crear tarea
+    Route::post('/equipos/{equipoId}/tareas', [TareaController::class, 'store'])->name('tareas.store');
+    
+    // Actualizar tarea
+    Route::put('/tareas/{tareaId}', [TareaController::class, 'update'])->name('tareas.update');
+    
+    // Cambiar estado (para drag & drop)
+    Route::patch('/tareas/{tareaId}/estado', [TareaController::class, 'cambiarEstado'])->name('tareas.cambiar-estado');
+    
+    // Eliminar tarea
+    Route::delete('/tareas/{tareaId}', [TareaController::class, 'destroy'])->name('tareas.destroy');
 });
 
 // ========================================
