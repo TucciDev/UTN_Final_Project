@@ -787,6 +787,84 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Estilos para el Podio del Ranking */
+        .podium-card {
+            width: 100%;
+            border-radius: 16px 16px 0 0;
+            padding: 1.5rem 1rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .podium-trophy {
+            position: absolute;
+            top: 1rem;
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        .podium-avatar {
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .podium-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .podium-points {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .podium-position {
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        /* Estilos para la lista del ranking */
+        .ranking-list-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 2px solid #f1f5f9;
+        }
+
+        .ranking-position { font-weight: 700; color: #64748b; font-size: 1.1rem; width: 25px; text-align: center; }
+        .ranking-avatar { width: 40px; height: 40px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .ranking-name { flex: 1; font-weight: 600; color: #1e293b; }
+        .ranking-points { font-weight: 700; color: #2563eb; font-size: 1.1rem; }
+
+        @media (max-width: 576px) {
+            .podium-card { padding: 1rem 0.5rem; }
+            .podium-avatar { width: 50px; height: 50px; font-size: 1.2rem; }
+            .podium-name { font-size: 0.85rem; }
+            .podium-points { font-size: 0.8rem; }
+            .podium-position { font-size: 2rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -890,6 +968,12 @@
                 <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#workload" type="button">
                     <i class="bi bi-graph-up"></i>
                     Carga de Trabajo
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#Ranking" type="button">
+                    <i class="bi bi-trophy-fill"></i>
+                    Ranking
                 </button>
             </li>
         </ul>
@@ -1208,8 +1292,78 @@
                 </div>
             </div>
 
-        </div>
+            <!-- Tab: Ranking -->
+<div class="tab-pane fade" id="Ranking" role="tabpanel">
+    <div class="members-list">
+        <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
+            <i class="bi bi-people-fill me-2"></i>
+            Ranking de puntos del equipo
+        </h3>
+
+        @php
+            // Ordenar miembros por puntos para el ranking
+            $rankingMiembros = $miembros->sortByDesc('puntos')->values();
+        @endphp
+
+        @if($rankingMiembros->count() > 0)
+            <!-- Podio -->
+            <div class="row justify-content-center text-center mb-5">
+                <!-- Segundo Lugar -->
+                @if($rankingMiembros->has(1))
+                    <div class="col-4 d-flex align-items-end">
+                        <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
+                            <div class="podium-avatar">{{ $rankingMiembros[1]['iniciales'] }}</div>
+                            <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
+                            <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
+                            <div class="podium-position" style="font-size: 3rem;">2</div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Primer Lugar -->
+                @if($rankingMiembros->has(0))
+                    <div class="col-4 d-flex align-items-end">
+                        <div class="podium-card" style="height: 100%; background: linear-gradient(135deg, #ffc400ff, #f0c400);">
+                            <i class="bi bi-trophy-fill podium-trophy"></i>
+                            <div class="podium-avatar">{{ $rankingMiembros[0]['iniciales'] }}</div>
+                            <div class="podium-name">{{ $rankingMiembros[0]['nombre'] }}</div>
+                            <div class="podium-points">{{ $rankingMiembros[0]['puntos'] }} pts</div>
+                            <div class="podium-position" style="font-size: 4rem;">1</div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Tercer Lugar -->
+                @if($rankingMiembros->has(2))
+                    <div class="col-4 d-flex align-items-end">
+                        <div class="podium-card" style="height: 70%; background: linear-gradient(135deg, #d48a40ff, #cc8c4bff);">
+                            <div class="podium-avatar">{{ $rankingMiembros[2]['iniciales'] }}</div>
+                            <div class="podium-name">{{ $rankingMiembros[2]['nombre'] }}</div>
+                            <div class="podium-points">{{ $rankingMiembros[2]['puntos'] }} pts</div>
+                            <div class="podium-position" style="font-size: 2.5rem;">3</div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Lista del resto de miembros -->
+            @if($rankingMiembros->count() > 3)
+                <h4 style="color: #1e293b; font-weight: 600; margin-bottom: 1rem;">Resto del Ranking</h4>
+                @foreach($rankingMiembros->slice(3) as $index => $miembro)
+                    <div class="ranking-list-item">
+                        <div class="ranking-position">{{ $index + 4 }}</div>
+                        <div class="ranking-avatar">{{ $miembro['iniciales'] }}</div>
+                        <div class="ranking-name">{{ $miembro['nombre'] }}</div>
+                        <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
+                    </div>
+                @endforeach
+            @endif
+        @else
+            <div class="empty-state">No hay miembros en el equipo para mostrar un ranking.</div>
+        @endif
     </div>
+</div>
+    
 
     <!-- Modal: Crear Tarea -->
     <div class="modal fade" id="createTaskModal" tabindex="-1">
