@@ -465,7 +465,7 @@
                         <li><a href="#">Sobre Nosotros</a></li>
                         <li><a href="#">Blog</a></li>
                         <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Contacto</a></li>
+                        <li><a href="{{ route('contact') }}">Contacto</a></li>
                     </ul>
                 </div>
                 
@@ -476,7 +476,7 @@
                         <li><a href="#">Documentación</a></li>
                         <li><a href="#">API</a></li>
                         <li><a href="#">Tutoriales</a></li>
-                        <li><a href="#">Soporte</a></li>
+                        <li><a href="{{ route('support') }}">Soporte</a></li>
                     </ul>
                 </div>
                 
@@ -509,11 +509,11 @@
                 </div>
             </div>
         </div>
-        yield('footer')
+        
     </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Tu archivo de animaciones -->
+    <!-- Archivo de animaciones -->
     <script src="js/animations.js"></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

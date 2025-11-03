@@ -28,6 +28,47 @@
             margin: 0 auto;
         }
 
+        /* Avatares en tarjetas de grupos */
+        .avatar-group .avatar {
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-group .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Wrapper para iniciales cuando no hay imagen */
+        .avatar-initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Avatar grande en lista de miembros */
+        .member-avatar-large {
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         /* Header del equipo */
         .team-header {
             background: rgba(255, 255, 255, 0.95);
@@ -1175,8 +1216,14 @@
                     </h3>
 
                     @foreach($miembros as $miembro)
-                        <div class="member-card">
-                            <div class="member-avatar-large">{{ $miembro['iniciales'] }}</div>
+                    <div class="member-card">
+                        <div class="member-avatar-large">
+                            @if($miembro['avatar_url'])
+                                <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}">
+                            @else
+                                {{ $miembro['iniciales'] }}
+                            @endif
+                        </div>
                             <div class="member-info">
                                 <div class="member-name">{{ $miembro['nombre'] }}</div>
                                 <div class="member-role">

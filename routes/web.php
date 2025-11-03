@@ -30,6 +30,20 @@ Route::middleware('guest')->group(function () {
 });
 
 // ========================================
+// SOPORTE
+// ========================================
+Route::get('/support', function () {
+    return view('support');
+})->name('support');
+
+// ========================================
+// CONTACTO
+// ========================================
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// ========================================
 // RUTAS PROTEGIDAS (solo autenticados)
 // ========================================
 Route::middleware('auth')->group(function () {
