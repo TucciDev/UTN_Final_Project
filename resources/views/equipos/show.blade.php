@@ -1467,22 +1467,22 @@
             </div>
                         
 
-          <!-- Tab: Carga de Trabajo -->
-<div class="tab-pane fade" id="workload" role="tabpanel">
-    @if($esAdmin)
-        <div class="members-list">
-            <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
-                <i class="bi bi-graph-up me-2"></i>
-                Carga de trabajo del equipo
-            </h3>
+                        <!-- Tab: Carga de Trabajo -->
+            <div class="tab-pane fade" id="workload" role="tabpanel">
+                @if($esAdmin)
+                    <div class="members-list">
+                        <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
+                            <i class="bi bi-graph-up me-2"></i>
+                            Carga de trabajo del equipo
+                        </h3>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-                @foreach($miembros as $miembro)
-                    @php
-                        $cargaActual = $miembro['tareas_asignadas'] - $miembro['tareas_completadas'];
-                        $capacidadMaxima = 6;
-                        $porcentajeCarga = min(($cargaActual / $capacidadMaxima) * 100, 100);
-                    @endphp
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                            @foreach($miembros as $miembro)
+                                @php
+                                    $cargaActual = $miembro['tareas_asignadas'] - $miembro['tareas_completadas'];
+                                    $capacidadMaxima = 6;
+                                    $porcentajeCarga = min(($cargaActual / $capacidadMaxima) * 100, 100);
+                                @endphp
                     
                     <div class="workload-card">
                         <!-- Avatar y nombre -->
@@ -1543,14 +1543,14 @@
             </div>
         </div>
     @else
-        <div class="members-list">
-            <div class="empty-state">
-                <i class="bi bi-lock-fill"></i>
-                <p style="color: #64748b; margin-top: 1rem;">Esta sección solo está disponible para administradores</p>
+                    <div class="members-list">
+                        <div class="empty-state">
+                            <i class="bi bi-lock-fill"></i>
+                            <p style="color: #64748b; margin-top: 1rem;">Esta sección solo está disponible para administradores</p>
+                        </div>
+                    </div>
+                @endif
             </div>
-        </div>
-    @endif
-</div>
 
 
 
