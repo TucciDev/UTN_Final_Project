@@ -98,6 +98,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/equipos/{equipoId}/miembros/{userId}/rol', [EquipoController::class, 'changeRole'])
         ->name('equipos.members.change-role');
 
+    // Rutas para gestión de miembros del equipo
+    Route::patch('/equipos/{equipo}/miembros/{user}/rol', [EquipoController::class, 'changeRole'])
+        ->name('equipos.change-role')
+        ->middleware('auth');
+
+    Route::delete('/equipos/{equipo}/miembros/{user}', [EquipoController::class, 'removeMember'])
+        ->name('equipos.remove-member')
+        ->middleware('auth');
+
     // ========================================
     // RUTAS DE TAREAS
     // ========================================
