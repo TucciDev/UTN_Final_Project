@@ -1467,90 +1467,90 @@
             </div>
                         
 
-          <!-- Tab: Carga de Trabajo -->
-<div class="tab-pane fade" id="workload" role="tabpanel">
-    @if($esAdmin)
-        <div class="members-list">
-            <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
-                <i class="bi bi-graph-up me-2"></i>
-                Carga de trabajo del equipo
-            </h3>
+                    <!-- Tab: Carga de Trabajo -->
+            <div class="tab-pane fade" id="workload" role="tabpanel">
+                @if($esAdmin)
+                    <div class="members-list">
+                        <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
+                            <i class="bi bi-graph-up me-2"></i>
+                            Carga de trabajo del equipo
+                        </h3>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-                @foreach($miembros as $miembro)
-                    @php
-                        $cargaActual = $miembro['tareas_asignadas'] - $miembro['tareas_completadas'];
-                        $capacidadMaxima = 6;
-                        $porcentajeCarga = min(($cargaActual / $capacidadMaxima) * 100, 100);
-                    @endphp
-                    
-                    <div class="workload-card">
-                        <!-- Avatar y nombre -->
-                        <div style="display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem;">
-                            <div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0;">
-                                @if($miembro['avatar_url'])
-                                    <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
-                                @else
-                                    {{ $miembro['iniciales'] }}
-                                @endif
-                            </div>
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-weight: 500; color: #1e293b; font-size: 0.95rem; margin-bottom: 0.05rem !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                    {{ $miembro['nombre'] }}
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                            @foreach($miembros as $miembro)
+                                @php
+                                    $cargaActual = $miembro['tareas_asignadas'] - $miembro['tareas_completadas'];
+                                    $capacidadMaxima = 6;
+                                    $porcentajeCarga = min(($cargaActual / $capacidadMaxima) * 100, 100);
+                                @endphp
+                                
+                                <div class="workload-card">
+                                    <!-- Avatar y nombre -->
+                                    <div style="display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem;">
+                                        <div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0;">
+                                            @if($miembro['avatar_url'])
+                                                <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                                            @else
+                                                {{ $miembro['iniciales'] }}
+                                            @endif
+                                        </div>
+                                        <div style="flex: 1; min-width: 0;">
+                                            <div style="font-weight: 500; color: #1e293b; font-size: 0.95rem; margin-bottom: 0.05rem !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                {{ $miembro['nombre'] }}
+                                            </div>
+                                            <div style="font-size: 0.8rem; color: #64748b;">
+                                                @if($miembro['es_admin'])
+                                                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i> Administrador
+                                                @else
+                                                    <i class="bi bi-person"></i> Miembro
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Carga actual -->
+                                    <div style="margin-bottom: 0.75rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                            <span style="font-size: 0.88rem; font-weight: 400; color: rgba(28, 37, 53, 1);">Carga actual:</span>
+                                            <span style="font-size: 0.88rem; font-weight: 600; color: #1e293b;">
+                                                {{ $cargaActual }} 
+                                                @if($cargaActual == 1)
+                                                    tarea
+                                                @else
+                                                    tareas
+                                                @endif
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Barra de progreso -->
+                                        <div style="width: 100%; height: 8px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);">
+                                            <div class="progress-bar" style="height: 100%; border-radius: 8px; transition: width 0.3s ease, background 0.3s ease; width: {{ $porcentajeCarga }}%; 
+                                                background: {{ $cargaActual >= 6 ? 'linear-gradient(135deg, #ff6b6b, #ee5a6f, #c44569)' : ($cargaActual >= 4 ? 'linear-gradient(135deg, #ffd93d, #f9ca24, #f39c12)' : 'linear-gradient(135deg, #6bcf7f, #4ecdc4, #45b7d1)') }};
+                                                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                                            "></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Capacidad máxima -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; font-size: 0.8rem;">
+                                        <span style="color: #64748b;">Capacidad máxima:</span>
+                                        <span style="font-weight: 700; color: {{ $cargaActual >= 6 ? '#ef4444' : '#64748b' }};">
+                                            {{ $cargaActual }} / {{ $capacidadMaxima }}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div style="font-size: 0.8rem; color: #64748b;">
-                                    @if($miembro['es_admin'])
-                                        <i class="bi bi-star-fill" style="color: #fbbf24;"></i> Administrador
-                                    @else
-                                        <i class="bi bi-person"></i> Miembro
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Carga actual -->
-                        <div style="margin-bottom: 0.75rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                <span style="font-size: 0.88rem; font-weight: 400; color: rgba(28, 37, 53, 1);">Carga actual:</span>
-                                <span style="font-size: 0.88rem; font-weight: 600; color: #1e293b;">
-                                    {{ $cargaActual }} 
-                                    @if($cargaActual == 1)
-                                        tarea
-                                    @else
-                                        tareas
-                                    @endif
-                                </span>
-                            </div>
-                            
-                            <!-- Barra de progreso -->
-                            <div style="width: 100%; height: 8px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);">
-                                <div class="progress-bar" style="height: 100%; border-radius: 8px; transition: width 0.3s ease, background 0.3s ease; width: {{ $porcentajeCarga }}%; 
-                                    background: {{ $cargaActual >= 6 ? 'linear-gradient(135deg, #ff6b6b, #ee5a6f, #c44569)' : ($cargaActual >= 4 ? 'linear-gradient(135deg, #ffd93d, #f9ca24, #f39c12)' : 'linear-gradient(135deg, #6bcf7f, #4ecdc4, #45b7d1)') }};
-                                    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-                                "></div>
-                            </div>
-                        </div>
-
-                        <!-- Capacidad máxima -->
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; font-size: 0.8rem;">
-                            <span style="color: #64748b;">Capacidad máxima:</span>
-                            <span style="font-weight: 700; color: {{ $cargaActual >= 6 ? '#ef4444' : '#64748b' }};">
-                                {{ $cargaActual }} / {{ $capacidadMaxima }}
-                            </span>
+                            @endforeach
                         </div>
                     </div>
-                @endforeach
+                @else
+                    <div class="members-list">
+                        <div class="empty-state">
+                            <i class="bi bi-lock-fill"></i>
+                            <p style="color: #64748b; margin-top: 1rem;">Esta sección solo está disponible para administradores</p>
+                        </div>
+                    </div>
+                @endif
             </div>
-        </div>
-    @else
-        <div class="members-list">
-            <div class="empty-state">
-                <i class="bi bi-lock-fill"></i>
-                <p style="color: #64748b; margin-top: 1rem;">Esta sección solo está disponible para administradores</p>
-            </div>
-        </div>
-    @endif
-</div>
 
 
 
