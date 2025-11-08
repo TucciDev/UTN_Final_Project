@@ -397,6 +397,23 @@
             transform: translateX(5px);
         }
 
+        /*  animación de carga */
+        .workload-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid #f1f5f9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            
+        }
+
+        .workload-card:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
         .member-avatar-large {
             width: 50px;
             height: 50px;
@@ -906,6 +923,38 @@
             .podium-points { font-size: 0.8rem; }
             .podium-position { font-size: 2rem !important; }
         }
+
+        /* Estilos para carga de trabajo */
+        @media (max-width: 768px) {
+            #workload .members-list > div[style*="grid"] {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #workload .members-list h3 {
+                font-size: 1.25rem;
+            }
+            
+            #workload div[style*="padding: 1.5rem"] {
+                padding: 1rem !important;
+            }
+        }
+
+        @keyframes pulse-bar {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
+        }
+
+        .workload-card:hover .progress-bar {
+            animation: pulse-bar 2s ease-in-out infinite;
+        }
+        
     </style>
 </head>
 <body>
@@ -1006,15 +1055,21 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#workload" type="button">
+                <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#members" type="button">
                     <i class="bi bi-graph-up"></i>
-                    Carga de Trabajo
+                    Miembros
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#Ranking" type="button">
                     <i class="bi bi-trophy-fill"></i>
                     Ranking
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#workload" type="button">
+                    <i class="bi bi-graph-up"></i>
+                    Carga de Trabajo
                 </button>
             </li>
         </ul>
@@ -1291,12 +1346,12 @@
                 </div>
             </div>
 
-            <!-- Tab: Carga de Trabajo -->
-            <div class="tab-pane fade" id="workload" role="tabpanel">
+            <!-- Tab: Miembros -->
+            <div class="tab-pane fade" id="members" role="tabpanel">
                 <div class="members-list">
                     <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
                         <i class="bi bi-people-fill me-2"></i>
-                        Miembros del Equipo
+                        Miembros del equipo
                     </h3>
 
                     @foreach($miembros as $miembro)
@@ -1339,157 +1394,246 @@
                 </div>
             </div>
 
-            <!-- Tab: Ranking -->
-<div class="tab-pane fade" id="Ranking" role="tabpanel">
-    <div class="members-list">
-        <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
-            <i class="bi bi-people-fill me-2"></i>
-            Ranking de puntos del equipo
-        </h3>
+                        <!-- Tab: Ranking -->
+            <div class="tab-pane fade" id="Ranking" role="tabpanel">
+                <div class="members-list">
+                    <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
+                        <i class="bi bi-people-fill me-2"></i>
+                        Ranking de puntos del equipo
+                    </h3>
 
-        @php
-            // Ordenar miembros por puntos para el ranking
-            $rankingMiembros = $miembros->sortByDesc('puntos')->values();
-        @endphp
+                    @php
+                        // Ordenar miembros por puntos para el ranking
+                        $rankingMiembros = $miembros->sortByDesc('puntos')->values();
+                    @endphp
 
-        @if($rankingMiembros->count() > 0)
-            <!-- Podio -->
-            <div class="row justify-content-center text-center mb-5">
-                <!-- Segundo Lugar -->
-                @if($rankingMiembros->has(1))
-                    <div class="col-4 d-flex align-items-end">
-                        <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
-                            <div class="podium-avatar">{{ $rankingMiembros[1]['iniciales'] }}</div>
-                            <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
-                            <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
-                            <div class="podium-position" style="font-size: 3rem;">2</div>
+                    @if($rankingMiembros->count() > 0)
+                        <!-- Podio -->
+                        <div class="row justify-content-center text-center mb-5">
+                            <!-- Segundo Lugar -->
+                            @if($rankingMiembros->has(1))
+                                <div class="col-4 d-flex align-items-end">
+                                    <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
+                                        <div class="podium-avatar">{{ $rankingMiembros[1]['iniciales'] }}</div>
+                                        <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
+                                        <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
+                                        <div class="podium-position" style="font-size: 3rem;">2</div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Primer Lugar -->
+                            @if($rankingMiembros->has(0))
+                                <div class="col-4 d-flex align-items-end">
+                                    <div class="podium-card" style="height: 100%; background: linear-gradient(135deg, #ffc400ff, #f0c400);">
+                                        <i class="bi bi-trophy-fill podium-trophy"></i>
+                                        <div class="podium-avatar">{{ $rankingMiembros[0]['iniciales'] }}</div>
+                                        <div class="podium-name">{{ $rankingMiembros[0]['nombre'] }}</div>
+                                        <div class="podium-points">{{ $rankingMiembros[0]['puntos'] }} pts</div>
+                                        <div class="podium-position" style="font-size: 4rem;">1</div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Tercer Lugar -->
+                            @if($rankingMiembros->has(2))
+                                <div class="col-4 d-flex align-items-end">
+                                    <div class="podium-card" style="height: 70%; background: linear-gradient(135deg, #d48a40ff, #cc8c4bff);">
+                                        <div class="podium-avatar">{{ $rankingMiembros[2]['iniciales'] }}</div>
+                                        <div class="podium-name">{{ $rankingMiembros[2]['nombre'] }}</div>
+                                        <div class="podium-points">{{ $rankingMiembros[2]['puntos'] }} pts</div>
+                                        <div class="podium-position" style="font-size: 2.5rem;">3</div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                    </div>
-                @endif
 
-                <!-- Primer Lugar -->
-                @if($rankingMiembros->has(0))
-                    <div class="col-4 d-flex align-items-end">
-                        <div class="podium-card" style="height: 100%; background: linear-gradient(135deg, #ffc400ff, #f0c400);">
-                            <i class="bi bi-trophy-fill podium-trophy"></i>
-                            <div class="podium-avatar">{{ $rankingMiembros[0]['iniciales'] }}</div>
-                            <div class="podium-name">{{ $rankingMiembros[0]['nombre'] }}</div>
-                            <div class="podium-points">{{ $rankingMiembros[0]['puntos'] }} pts</div>
-                            <div class="podium-position" style="font-size: 4rem;">1</div>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Tercer Lugar -->
-                @if($rankingMiembros->has(2))
-                    <div class="col-4 d-flex align-items-end">
-                        <div class="podium-card" style="height: 70%; background: linear-gradient(135deg, #d48a40ff, #cc8c4bff);">
-                            <div class="podium-avatar">{{ $rankingMiembros[2]['iniciales'] }}</div>
-                            <div class="podium-name">{{ $rankingMiembros[2]['nombre'] }}</div>
-                            <div class="podium-points">{{ $rankingMiembros[2]['puntos'] }} pts</div>
-                            <div class="podium-position" style="font-size: 2.5rem;">3</div>
-                        </div>
-                    </div>
-                @endif
+                        <!-- Lista del resto de miembros -->
+                        @if($rankingMiembros->count() > 3)
+                            <h4 style="color: #1e293b; font-weight: 600; margin-bottom: 1rem;">Resto del Ranking</h4>
+                            @foreach($rankingMiembros->slice(3) as $index => $miembro)
+                                <div class="ranking-list-item">
+                                    <div class="ranking-position">{{ $index + 4 }}</div>
+                                    <div class="ranking-avatar">{{ $miembro['iniciales'] }}</div>
+                                    <div class="ranking-name">{{ $miembro['nombre'] }}</div>
+                                    <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
+                                </div>
+                            @endforeach
+                        @endif
+                    @else
+                        <div class="empty-state">No hay miembros en el equipo para mostrar un ranking.</div>
+                    @endif
+                </div>
             </div>
+                        
 
-            <!-- Lista del resto de miembros -->
-            @if($rankingMiembros->count() > 3)
-                <h4 style="color: #1e293b; font-weight: 600; margin-bottom: 1rem;">Resto del Ranking</h4>
-                @foreach($rankingMiembros->slice(3) as $index => $miembro)
-                    <div class="ranking-list-item">
-                        <div class="ranking-position">{{ $index + 4 }}</div>
-                        <div class="ranking-avatar">{{ $miembro['iniciales'] }}</div>
-                        <div class="ranking-name">{{ $miembro['nombre'] }}</div>
-                        <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
+          <!-- Tab: Carga de Trabajo -->
+<div class="tab-pane fade" id="workload" role="tabpanel">
+    @if($esAdmin)
+        <div class="members-list">
+            <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
+                <i class="bi bi-graph-up me-2"></i>
+                Carga de trabajo del equipo
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                @foreach($miembros as $miembro)
+                    @php
+                        $cargaActual = $miembro['tareas_asignadas'] - $miembro['tareas_completadas'];
+                        $capacidadMaxima = 6;
+                        $porcentajeCarga = min(($cargaActual / $capacidadMaxima) * 100, 100);
+                    @endphp
+                    
+                    <div class="workload-card">
+                        <!-- Avatar y nombre -->
+                        <div style="display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem;">
+                            <div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0;">
+                                @if($miembro['avatar_url'])
+                                    <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                                @else
+                                    {{ $miembro['iniciales'] }}
+                                @endif
+                            </div>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; color: #1e293b; font-size: 0.95rem; margin-bottom: 0.05rem !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    {{ $miembro['nombre'] }}
+                                </div>
+                                <div style="font-size: 0.8rem; color: #64748b;">
+                                    @if($miembro['es_admin'])
+                                        <i class="bi bi-star-fill" style="color: #fbbf24;"></i> Administrador
+                                    @else
+                                        <i class="bi bi-person"></i> Miembro
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carga actual -->
+                        <div style="margin-bottom: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.88rem; font-weight: 400; color: rgba(28, 37, 53, 1);">Carga actual:</span>
+                                <span style="font-size: 0.88rem; font-weight: 600; color: #1e293b;">
+                                    {{ $cargaActual }} 
+                                    @if($cargaActual == 1)
+                                        tarea
+                                    @else
+                                        tareas
+                                    @endif
+                                </span>
+                            </div>
+                            
+                            <!-- Barra de progreso -->
+                            <div style="width: 100%; height: 8px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 8px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);">
+                                <div class="progress-bar" style="height: 100%; border-radius: 8px; transition: width 0.3s ease, background 0.3s ease; width: {{ $porcentajeCarga }}%; 
+                                    background: {{ $cargaActual >= 6 ? 'linear-gradient(135deg, #ff6b6b, #ee5a6f, #c44569)' : ($cargaActual >= 4 ? 'linear-gradient(135deg, #ffd93d, #f9ca24, #f39c12)' : 'linear-gradient(135deg, #6bcf7f, #4ecdc4, #45b7d1)') }};
+                                    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                                "></div>
+                            </div>
+                        </div>
+
+                        <!-- Capacidad máxima -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; font-size: 0.8rem;">
+                            <span style="color: #64748b;">Capacidad máxima:</span>
+                            <span style="font-weight: 700; color: {{ $cargaActual >= 6 ? '#ef4444' : '#64748b' }};">
+                                {{ $cargaActual }} / {{ $capacidadMaxima }}
+                            </span>
+                        </div>
                     </div>
                 @endforeach
-            @endif
-        @else
-            <div class="empty-state">No hay miembros en el equipo para mostrar un ranking.</div>
-        @endif
-    </div>
-</div>
-    
-
-    <!-- Modal: Crear Tarea -->
-    <div class="modal fade" id="createTaskModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content" style="border-radius: 16px; border: none;">
-                <form action="{{ route('tareas.store', $equipo->id) }}" method="POST">
-                    @csrf
-                    <div class="modal-header" style="border-bottom: 1px solid #f1f5f9;">
-                        <h5 class="modal-title" style="font-weight: 700; color: #1e293b;">
-                            <i class="bi bi-plus-circle me-2"></i>Crear Nueva Tarea
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Título -->
-                        <div class="mb-3">
-                            <label for="titulo" class="form-label fw-bold">Título *</label>
-                            <input type="text" class="form-control" id="titulo" name="titulo" required maxlength="20" placeholder="Ej: Diseñar landing page">
-                        </div>
-
-                        <!-- Descripción -->
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label fw-bold">Descripción</label>
-                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" maxlength="200" placeholder="Describe los detalles de la tarea..."></textarea>
-                        </div>
-
-                        <div class="row">
-                            <!-- Prioridad -->
-                            <div class="col-md-6 mb-3">
-                                <label for="prioridad" class="form-label fw-bold">Prioridad *</label>
-                                <select class="form-select" id="prioridad" name="prioridad" required>
-                                    <option value="baja">🟢 Baja</option>
-                                    <option value="media" selected>🟡 Media</option>
-                                    <option value="alta">🔴 Alta</option>
-                                </select>
-                            </div>
-
-                            <!-- Puntos -->
-                            <div class="col-md-6 mb-3">
-                                <label for="puntos" class="form-label fw-bold">Puntos</label>
-                                <input type="number" class="form-control" id="puntos" name="puntos" min="0" max="1000" value="0" placeholder="0">
-                                <small class="text-muted">Puntos que otorga al completarla</small>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Asignar a -->
-                            <div class="col-md-6 mb-3">
-                                <label for="asignado_a" class="form-label fw-bold">Asignar a *</label>
-                                <select class="form-select" id="asignado_a" name="asignado_a" required>
-                                    <option value="">Selecciona un miembro...</option>
-                                    @foreach($miembros as $miembro)
-                                        <option value="{{ $miembro['id'] }}">
-                                            {{ $miembro['nombre'] }} 
-                                            @if($miembro['es_admin']) ⭐ @endif
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <small class="text-muted">Obligatorio - La tarea debe tener un responsable</small>
-                            </div>
-
-                            <!-- Fecha de vencimiento -->
-                            <div class="col-md-6 mb-3">
-                                <label for="fecha_vencimiento" class="form-label fw-bold">Fecha y hora de vencimiento</label>
-                                <input type="datetime-local" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" min="{{ now()->format('Y-m-d\TH:i') }}">
-                                <small class="text-muted">Opcional</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="border-top: 1px solid #f1f5f9;">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-plus-circle me-2"></i>Crear Tarea
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @else
+        <div class="members-list">
+            <div class="empty-state">
+                <i class="bi bi-lock-fill"></i>
+                <p style="color: #64748b; margin-top: 1rem;">Esta sección solo está disponible para administradores</p>
+            </div>
+        </div>
+    @endif
+</div>
+
+
+
+
+
+            <!-- Modal: Crear Tarea -->
+            <div class="modal fade" id="createTaskModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style="border-radius: 16px; border: none;">
+                        <form action="{{ route('tareas.store', $equipo->id) }}" method="POST">
+                            @csrf
+                            <div class="modal-header" style="border-bottom: 1px solid #f1f5f9;">
+                                <h5 class="modal-title" style="font-weight: 700; color: #1e293b;">
+                                    <i class="bi bi-plus-circle me-2"></i>Crear Nueva Tarea
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Título -->
+                                <div class="mb-3">
+                                    <label for="titulo" class="form-label fw-bold">Título *</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo" required maxlength="20" placeholder="Ej: Diseñar landing page">
+                                </div>
+
+                                <!-- Descripción -->
+                                <div class="mb-3">
+                                    <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" maxlength="200" placeholder="Describe los detalles de la tarea..."></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Prioridad -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="prioridad" class="form-label fw-bold">Prioridad *</label>
+                                        <select class="form-select" id="prioridad" name="prioridad" required>
+                                            <option value="baja">🟢 Baja</option>
+                                            <option value="media" selected>🟡 Media</option>
+                                            <option value="alta">🔴 Alta</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Puntos -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="puntos" class="form-label fw-bold">Puntos</label>
+                                        <input type="number" class="form-control" id="puntos" name="puntos" min="0" max="1000" value="0" placeholder="0">
+                                        <small class="text-muted">Puntos que otorga al completarla</small>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Asignar a -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="asignado_a" class="form-label fw-bold">Asignar a *</label>
+                                        <select class="form-select" id="asignado_a" name="asignado_a" required>
+                                            <option value="">Selecciona un miembro...</option>
+                                            @foreach($miembros as $miembro)
+                                                <option value="{{ $miembro['id'] }}">
+                                                    {{ $miembro['nombre'] }} 
+                                                    @if($miembro['es_admin']) ⭐ @endif
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <small class="text-muted">Obligatorio - La tarea debe tener un responsable</small>
+                                    </div>
+
+                                    <!-- Fecha de vencimiento -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fecha_vencimiento" class="form-label fw-bold">Fecha y hora de vencimiento</label>
+                                        <input type="datetime-local" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" min="{{ now()->format('Y-m-d\TH:i') }}">
+                                        <small class="text-muted">Opcional</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border-top: 1px solid #f1f5f9;">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-plus-circle me-2"></i>Crear Tarea
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
     <!-- Modals para detalles de tareas (se generan dinámicamente) -->
     @foreach([$tareasPorHacer, $tareasEnProgreso, $tareasCompletadas] as $listaTareas)
