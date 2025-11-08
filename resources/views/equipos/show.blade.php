@@ -844,15 +844,19 @@
         }
 
         .podium-trophy {
-            position: absolute;
+            margin-top:25px;
+            margin-bottom:15px;
+            
+            position: relative;
             top: 1rem;
             font-size: 2rem;
             opacity: 0.5;
         }
 
         .podium-avatar {
-            width: 60px;
-            height: 80px;
+            width: 100px;
+            margin-top:15px;
+            height: 100px;
             border-radius: 50%;
             background: rgba(255,255,255,0.2);
             border: 3px solid white;
@@ -1398,7 +1402,7 @@
                 <h4 style="color: #1e293b; font-weight: 600; margin-bottom: 1rem;">Resto del Ranking</h4>
                 @foreach($rankingMiembros->slice(3) as $index => $miembro)
                     <div class="ranking-list-item">
-                        <div class="ranking-position">{{ $index + 4 }}</div>
+                        <div class="ranking-position">{{ $index + 1 }}</div>
                         <div class="ranking-avatar">{{ $miembro['iniciales'] }}</div>
                         <div class="ranking-name">{{ $miembro['nombre'] }}</div>
                         <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
