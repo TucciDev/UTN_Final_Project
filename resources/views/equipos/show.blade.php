@@ -1520,7 +1520,7 @@
 
                         <!-- Menú de acciones (solo para administradores) -->
                         @if($esAdmin)
-                        <div class="dropdown">
+                        <br><br><div class="dropdown">
                             <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
