@@ -53,6 +53,93 @@
             height: 100%;
         }
 
+        /* Asegurar que el botón dropdown esté posicionado correctamente */
+        .member-card .dropdown {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+
+        /* Estilos adicionales para el menú de acciones */
+        .member-card {
+            position: relative;
+            overflow: visible !important;
+        }
+
+        .member-card .dropdown .btn {
+            border: none;
+            background: white;
+            color: #64748b;
+            padding: 0.25rem 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-card .dropdown .btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .dropdown-menu {
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            z-index: 2000 !important;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background: #fee2e2;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-item form {
+            margin: 0;
+        }
+
+        .dropdown-item button {
+            background: none;
+            border: none;
+            padding: 0;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            color: inherit;
+            font-size: inherit;
+        }
+
+        .dropdown-item.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+
+        /* Popover personalizado */
+        .popover {
+            z-index: 1500 !important;
+        }
+
+        .popover-body {
+            padding: 1rem;
+        }
+
+        /* Avatar con hover */
+        .member-avatar-large {
+            transition: transform 0.2s ease;
+        }
+
+        .member-avatar-large:hover {
+            transform: scale(1.05);
+        }
+
         /* Avatar grande en lista de miembros */
         .member-avatar-large {
             padding: 0;
@@ -350,6 +437,47 @@
             font-weight: 600;
         }
 
+        /* Avatares del podio */
+        .podium-avatar {
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .podium-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Avatares de la lista de ranking */
+        .ranking-avatar {
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ranking-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Iniciales cuando no hay imagen */
+        .avatar-initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
         /* Botón crear tarea */
         .btn-create-task {
             width: 100%;
@@ -387,14 +515,18 @@
             padding: 1rem;
             background: white;
             border-radius: 12px;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             border: 2px solid #f1f5f9;
             transition: all 0.3s;
+            position: relative;
+            overflow: visible !important;
+            z-index: auto;
         }
 
         .member-card:hover {
             border-color: #667eea;
             transform: translateX(5px);
+            z-index: 100;
         }
 
         .member-avatar-large {
@@ -910,6 +1042,51 @@
             .podium-points { font-size: 0.8rem; }
             .podium-position { font-size: 2rem !important; }
         }
+
+        /* FIX: Dropdown visible */
+        .members-list {
+            overflow: visible !important;
+        }
+
+        .tab-pane {
+            overflow: visible !important;
+        }
+
+        .tab-content {
+            overflow: visible !important;
+        }
+
+        .modal-backdrop {
+            z-index: 3990 !important;
+        }
+        .modal-backdrop.show {
+            opacity: 0.6 !important;
+        }
+
+        .modal {
+            z-index: 4000 !important; /* Superior a otros elementos */
+        }
+
+        .member-card .dropdown-menu {
+            z-index: 2000 !important;
+        }
+
+        .member-card .dropdown .btn {
+            z-index: 1 !important;
+            position: relative;
+        }
+
+        .member-card .dropdown.show .dropdown-menu {
+            display: block;
+            z-index: 3000 !important;
+            position: absolute;
+        }
+
+        .members-list,
+        .tab-pane,
+        .tab-content {
+            overflow: visible !important;
+        }
     </style>
 </head>
 <body>
@@ -1012,7 +1189,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#workload" type="button">
                     <i class="bi bi-graph-up"></i>
-                    Carga de Trabajo
+                    Miembros
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -1295,7 +1472,7 @@
                 </div>
             </div>
 
-            <!-- Tab: Carga de Trabajo -->
+            <!-- Tab: Miembros -->
             <div class="tab-pane fade" id="workload" role="tabpanel">
                 <div class="members-list">
                     <h3 style="margin-bottom: 1.5rem; color: #1e293b; font-weight: 700;">
@@ -1305,43 +1482,117 @@
 
                     @foreach($miembros as $miembro)
                     <div class="member-card">
-                        <div class="member-avatar-large">
+                        <!-- Avatar que abre el modal -->
+                        <div class="member-avatar-large"
+                            style="cursor: pointer;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#memberModal{{ $miembro['id'] }}">
                             @if($miembro['avatar_url'])
                                 <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}">
                             @else
                                 {{ $miembro['iniciales'] }}
                             @endif
                         </div>
-                            <div class="member-info">
-                                <div class="member-name">{{ $miembro['nombre'] }}</div>
-                                <div class="member-role">
-                                    @if($miembro['es_admin'])
-                                        <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
-                                        Administrador
-                                    @else
-                                        <i class="bi bi-person"></i>
-                                        Miembro
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="member-stats">
-                                <div class="member-stat">
-                                    <div class="member-stat-value">{{ $miembro['tareas_asignadas'] }}</div>
-                                    <div class="member-stat-label">Tareas</div>
-                                </div>
-                                <div class="member-stat">
-                                    <div class="member-stat-value">{{ $miembro['tareas_completadas'] }}</div>
-                                    <div class="member-stat-label">Completadas</div>
-                                </div>
-                                <div class="member-stat">
-                                    <div class="member-stat-value">{{ $miembro['puntos'] }}</div>
-                                    <div class="member-stat-label">Puntos</div>
-                                </div>
+
+                        <div class="member-info">
+                            <div class="member-name">{{ $miembro['nombre'] }}</div>
+                            <div class="member-role">
+                                @if($miembro['es_admin'])
+                                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
+                                    Administrador
+                                @else
+                                    <i class="bi bi-person"></i>
+                                    Miembro
+                                @endif
                             </div>
                         </div>
+
+                        <div class="member-stats">
+                            <div class="member-stat">
+                                <div class="member-stat-value">{{ $miembro['tareas_asignadas'] }}</div>
+                                <div class="member-stat-label">Tareas</div>
+                            </div>
+                            <div class="member-stat">
+                                <div class="member-stat-value">{{ $miembro['tareas_completadas'] }}</div>
+                                <div class="member-stat-label">Completadas</div>
+                            </div>
+                            <div class="member-stat">
+                                <div class="member-stat-value">{{ $miembro['puntos'] }}</div>
+                                <div class="member-stat-label">Puntos</div>
+                            </div>
+                        </div>
+
+                        <!-- Menú de acciones (solo para administradores) -->
+                        @if($esAdmin)
+                        <br><br><div class="dropdown">
+                            <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                @if($miembro['id'] !== Auth::id() && $equipo->creador_id !== $miembro['id'])
+                                    @if($miembro['es_admin'])
+                                        <!-- Cambiar a miembro -->
+                                        <li>
+                                            <form action="{{ route('equipos.change-role', [$equipo->id, $miembro['id']]) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="rol" value="miembro">
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="bi bi-person me-2"></i>
+                                                    Cambiar a Miembro
+                                                </button>
+                                            </form>
+                                        </li>
+                                    @else
+                                        <!-- Cambiar a admin -->
+                                        <li>
+                                            <form action="{{ route('equipos.change-role', [$equipo->id, $miembro['id']]) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="rol" value="admin">
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="bi bi-star me-2"></i>
+                                                    Hacer Administrador
+                                                </button>
+                                            </form>
+                                        </li>
+                                    @endif
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{{ route('equipos.remove-member', [$equipo->id, $miembro['id']]) }}" 
+                                            method="POST" 
+                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar a {{ $miembro['nombre'] }} del equipo?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-trash me-2"></i>
+                                                Eliminar del Equipo
+                                            </button>
+                                        </form>
+                                    </li>
+                                @else
+                                    <li>
+                                        <span class="dropdown-item text-muted disabled">
+                                            @if($equipo->creador_id === $miembro['id'])
+                                                <i class="bi bi-info-circle me-2"></i>
+                                                Creador del equipo
+                                            @else
+                                                <i class="bi bi-info-circle me-2"></i>
+                                                Este eres tú
+                                            @endif
+                                        </span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                        @endif
+                    </div>
+
                     @endforeach
                 </div>
             </div>
+
+            
 
             <!-- Tab: Ranking -->
 <div class="tab-pane fade" id="Ranking" role="tabpanel">
@@ -1363,7 +1614,13 @@
                 @if($rankingMiembros->has(1))
                     <div class="col-4 d-flex align-items-end">
                         <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
-                            <div class="podium-avatar">{{ $rankingMiembros[1]['iniciales'] }}</div>
+                            <div class="podium-avatar">
+                                @if($rankingMiembros[1]['avatar_url'])
+                                    <img src="{{ $rankingMiembros[1]['avatar_url'] }}" alt="{{ $rankingMiembros[1]['nombre'] }}">
+                                @else
+                                    <div class="avatar-initials">{{ $rankingMiembros[1]['iniciales'] }}</div>
+                                @endif
+                            </div>
                             <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
                             <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
                             <div class="podium-position" style="font-size: 3rem;">2</div>
@@ -1682,6 +1939,68 @@
         @endforeach
     @endif
 
+    <!-- Modals de Perfil de Miembro -->
+    @foreach($miembros as $miembro)
+    <div class="modal fade" id="memberModal{{ $miembro['id'] }}" tabindex="-1" aria-labelledby="memberModalLabel{{ $miembro['id'] }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px; border: none; background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <div class="modal-header" style="border-bottom: 1px solid #f1f5f9;">
+                    <h5 class="modal-title" id="memberModalLabel{{ $miembro['id'] }}" style="font-weight: 700; color: #1e293b;">
+                        Perfil de Miembro
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 2rem;">
+                    <div class="text-center mb-4">
+                        <div style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); color: white; font-size: 2.5rem; font-weight: 700; overflow: hidden;">
+                            @if($miembro['avatar_url'])
+                                <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @else
+                                {{ $miembro['iniciales'] }}
+                            @endif
+                        </div>
+                        <h4 class="mt-3 mb-1" style="font-weight: 700; color: #1e293b;">{{ $miembro['nombre'] }}</h4>
+                        <div style="font-size: 0.9rem; color: #64748b;">
+                            @if($miembro['es_admin'])
+                                <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
+                                Administrador
+                            @else
+                                <i class="bi bi-person"></i>
+                                Miembro
+                            @endif
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; border-radius: 12px; padding: 1rem; display: flex; justify-content: space-around; text-align: center;">
+                        <div class="member-stat">
+                            <div class="member-stat-value" style="font-size: 1.5rem;">{{ $miembro['tareas_asignadas'] }}</div>
+                            <div class="member-stat-label" style="font-size: 0.8rem;">Tareas</div>
+                        </div>
+                        <div class="member-stat">
+                            <div class="member-stat-value" style="font-size: 1.5rem;">{{ $miembro['tareas_completadas'] }}</div>
+                            <div class="member-stat-label" style="font-size: 0.8rem;">Completadas</div>
+                        </div>
+                        <div class="member-stat">
+                            <div class="member-stat-value" style="font-size: 1.5rem;">{{ $miembro['puntos'] }}</div>
+                            <div class="member-stat-label" style="font-size: 0.8rem;">Puntos</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1.5rem; border-top: 1px solid #f1f5f9; padding-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <i class="bi bi-person-circle" style="color: #64748b; font-size: 1.1rem;"></i>
+                            <span style="font-size: 0.9rem; color: #475569;">{{ $miembro['username'] }}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="bi bi-envelope-fill" style="color: #64748b; font-size: 1.1rem;"></i>
+                            <span style="font-size: 0.9rem; color: #475569;">{{ $miembro['email'] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Script para Drag & Drop y copiar código -->
@@ -1855,5 +2174,20 @@
             }, 3000);
         }
     </script>
+    <!-- Script para inicializar los popovers -->
+    @push('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar todos los popovers
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl, {
+                container: 'body',
+                sanitize: false
+            });
+        });
+    });
+    </script>
+    @endpush
 </body>
 </html>
