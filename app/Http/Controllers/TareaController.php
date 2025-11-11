@@ -34,7 +34,7 @@ class TareaController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:1000',
             'prioridad' => 'required|in:baja,media,alta',
-            'asignado_a' => 'required|exists:users,id', // ✅ AHORA ES OBLIGATORIO
+            'asignado_a' => 'required|exists:users,id',
             'fecha_vencimiento' => 'nullable|date|after_or_equal:now',
             'puntos' => 'nullable|integer|min:0|max:1000',
         ], [
@@ -58,6 +58,17 @@ class TareaController extends Controller
             if (!$usuarioAsignado) {
                 return back()->with('error', 'El usuario asignado no pertenece a este equipo.');
             }
+
+            // Verificar límite de 6 tareas activas
+        $tareasActivas = $equipo->tareas()
+            ->where('asignado_a', $validated['asignado_a'])
+            ->whereIn('estado', ['por_hacer', 'en_progreso']) // Solo contar tareas no completadas
+            ->count();
+        
+        if ($tareasActivas >= 6) {
+            $nombreUsuario = User::find($validated['asignado_a'])->full_name;
+            return back()->with('error', "❌ {$nombreUsuario} ya tiene 6 tareas activas. No se pueden asignar más hasta que complete alguna.");
+    }
         }
 
         try {
@@ -71,6 +82,7 @@ class TareaController extends Controller
                 'creador_id' => Auth::id(),
                 'asignado_a' => $validated['asignado_a'] ?? null,
                 'puntos' => $validated['puntos'] ?? 0,
+                'vista_por_asignado' => false,
             ]);
 
             return back()->with('success', '¡Tarea creada exitosamente! 📝');
@@ -110,14 +122,34 @@ class TareaController extends Controller
             if (!$usuarioAsignado) {
                 return back()->with('error', 'El usuario asignado no pertenece a este equipo.');
             }
+
+            if ($tarea->asignado_a !== $validated['asignado_a']) {
+                $tareasActivas = $equipo->tareas()
+                    ->where('asignado_a', $validated['asignado_a'])
+                    ->whereIn('estado', ['por_hacer', 'en_progreso'])
+                    ->where('id', '!=', $tarea->id) // Excluir la tarea actual
+                    ->count();
+                
+                if ($tareasActivas >= 6) {
+                    $nombreUsuario = User::find($validated['asignado_a'])->full_name;
+                    return back()->with('error', "❌ {$nombreUsuario} ya tiene 6 tareas activas. No se pueden asignar más hasta que complete alguna.");
+                }
+            }
         }
 
         try {
             DB::beginTransaction();
 
             $estadoAnterior = $tarea->estado;
+            $asignadoAnterior = $tarea->asignado_a;
             
             $tarea->update($validated);
+
+            // Si cambió el asignado, marcar como no vista
+            if ($asignadoAnterior !== $validated['asignado_a']) {
+                $tarea->vista_por_asignado = false;
+                $tarea->save();
+            }
 
             // Si la tarea se completó, otorgar puntos al usuario asignado
             if ($estadoAnterior !== 'completada' && $validated['estado'] === 'completada' && $tarea->asignado_a) {

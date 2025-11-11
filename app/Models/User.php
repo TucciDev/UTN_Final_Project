@@ -85,6 +85,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $username;
     }
+
+    /**
+     * Mensajes enviados
+     */
+    public function mensajesEnviados()
+    {
+        return $this->hasMany(Mensaje::class, 'emisor_id');
+    }
+
+    /**
+     * Mensajes recibidos
+     */
+    public function mensajesRecibidos()
+    {
+        return $this->hasMany(Mensaje::class, 'receptor_id');
+    }
 }
 
 /*

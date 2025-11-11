@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\ContactoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GoogleLoginController;
 
@@ -37,11 +39,27 @@ Route::get('/support', function () {
 })->name('support');
 
 // ========================================
+// POLITICA DE PRIVACIDAD
+// ========================================
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
+// ========================================
 // CONTACTO
 // ========================================
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
+
+// ========================================
+// TERMINOS Y CONDICIONES
+// ========================================
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
 
 // ========================================
 // RUTAS PROTEGIDAS (solo autenticados)
@@ -61,6 +79,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/perfil', [UserController::class, 'destroyPerfil'])->name('perfil.destroy');
     Route::post('/perfil/password', [UserController::class, 'updatePassword'])->name('password.update');
     
+
+
     
     // ========================================
     // RUTAS DE USUARIOS
@@ -122,6 +142,22 @@ Route::middleware('auth')->group(function () {
     
     // Eliminar tarea
     Route::delete('/tareas/{tareaId}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+
+     // ========================================
+    // RUTAS DE MENSAJERÍA
+    // ========================================
+    
+    // Obtener mensajes
+    Route::get('/equipos/{equipoId}/mensajes', [MensajeController::class, 'obtenerMensajes'])->name('mensajes.obtener');
+    
+    // Enviar mensaje
+    Route::post('/equipos/{equipoId}/mensajes', [MensajeController::class, 'enviar'])->name('mensajes.enviar');
+    
+    // Eliminar mensaje
+    Route::delete('/mensajes/{mensajeId}', [MensajeController::class, 'eliminar'])->name('mensajes.eliminar');
+    
+    // Contador de no leídos
+    Route::get('/equipos/{equipoId}/mensajes/no-leidos', [MensajeController::class, 'contadorNoLeidos'])->name('mensajes.no-leidos');
 });
 
 // ========================================

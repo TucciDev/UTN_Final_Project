@@ -5,1138 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $equipo->nombre }} - CollabPro</title>
     
+   <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   
+    <!-- CSS  -->
+    <link rel="stylesheet" href="{{ asset('css/show.css') }}">  
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 50%, #06b6d4 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            padding: 2rem 1rem;
-        }
-
-        .container-custom {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Avatares en tarjetas de grupos */
-        .avatar-group .avatar {
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .avatar-group .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Wrapper para iniciales cuando no hay imagen */
-        .avatar-initials {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Asegurar que el botón dropdown esté posicionado correctamente */
-        .member-card .dropdown {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            z-index: 10;
-        }
-
-        /* Estilos adicionales para el menú de acciones */
-        .member-card {
-            position: relative;
-            overflow: visible !important;
-        }
-
-        .member-card .dropdown .btn {
-            border: none;
-            background: white;
-            color: #64748b;
-            padding: 0.25rem 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .member-card .dropdown .btn:hover {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-
-        .dropdown-menu {
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            min-width: 200px;
-            z-index: 2000 !important;
-        }
-
-        .dropdown-item {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        .dropdown-item:hover {
-            background: #f1f5f9;
-        }
-
-        .dropdown-item.text-danger:hover {
-            background: #fee2e2;
-            color: #dc2626 !important;
-        }
-
-        .dropdown-item form {
-            margin: 0;
-        }
-
-        .dropdown-item button {
-            background: none;
-            border: none;
-            padding: 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            color: inherit;
-            font-size: inherit;
-        }
-
-        .dropdown-item.disabled {
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        
-
-        /* Popover personalizado */
-        .popover {
-            z-index: 1500 !important;
-        }
-
-        .popover-body {
-            padding: 1rem;
-        }
-
-        /* Avatar con hover */
-        .member-avatar-large {
-            transition: transform 0.2s ease;
-        }
-
-        .member-avatar-large:hover {
-            transform: scale(1.05);
-        }
-
-        /* Avatar grande en lista de miembros */
-        .member-avatar-large {
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .member-avatar-large img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Header del equipo */
-        .team-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
-
-        .team-header-content {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .team-icon-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .team-icon-large img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .team-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .team-name {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .team-description {
-            color: #64748b;
-            margin-bottom: 1rem;
-        }
-
-        .team-stats {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: #475569;
-        }
-
-        .stat-badge i {
-            color: #667eea;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .back-link:hover {
-            color: rgba(255, 255, 255, 0.8);
-            transform: translateX(-5px);
-        }
-
-        /* Tabs/Navegación */
-        .nav-tabs-custom {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 0.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: none;
-        }
-
-        .nav-tabs-custom .nav-link {
-            border: none;
-            border-radius: 12px;
-            padding: 0.875rem 1.5rem;
-            color: #64748b;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-tabs-custom .nav-link:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-        }
-
-        .nav-tabs-custom .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            color: white;
-        }
-
-        /* Tablero Kanban */
-        .kanban-board {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .kanban-column {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .kanban-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .kanban-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .kanban-count {
-            background: #f1f5f9;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .kanban-tasks {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            min-height: 200px;
-        }
-
-        /* Tarjeta de tarea */
-        .task-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1rem;
-            border: 2px solid #f1f5f9;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .task-card:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-        }
-
-        /* Indicador de tarea no movible */
-        .task-card[draggable="false"]::before {
-            content: '🔒';
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            font-size: 0.75rem;
-            opacity: 0.5;
-        }
-
-        /* Indicador de tarea movible */
-        .task-card[draggable="true"]::before {
-            content: '⋮⋮';
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            font-size: 1rem;
-            opacity: 0.3;
-            font-weight: bold;
-            letter-spacing: -2px;
-        }
-
-        .task-title {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .task-description {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 0.75rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .task-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .task-priority {
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .task-assignee {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        .assignee-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .task-date {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .task-date.overdue {
-            color: #ef4444;
-            font-weight: 600;
-        }
-
-        .task-date.soon {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        /* Avatares del podio */
-        .podium-avatar {
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .podium-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Avatares de la lista de ranking */
-        .ranking-avatar {
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ranking-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Iniciales cuando no hay imagen */
-        .avatar-initials {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Botón crear tarea */
-        .btn-create-task {
-            width: 100%;
-            padding: 0.875rem;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-create-task:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Lista de miembros */
-        .members-list {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .member-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 2px solid #f1f5f9;
-            transition: all 0.3s;
-            position: relative;
-            overflow: visible !important;
-            z-index: auto;
-        }
-
-        .member-card:hover {
-            border-color: #667eea;
-            transform: translateX(5px);
-            z-index: 100;
-        }
-
-        .member-avatar-large {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .member-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .member-name {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .member-role {
-            font-size: 0.85rem;
-            color: #64748b;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .member-stats {
-            display: flex;
-            gap: 1.5rem;
-            text-align: center;
-        }
-
-        .member-stat {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .member-stat-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .member-stat-label {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #94a3b8;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Código de invitación */
-        .invitation-code-box {
-            background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .invitation-code {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.2rem;
-            font-family: 'Courier New', monospace;
-        }
-
-        .btn-copy-code {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-copy-code:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Drag and drop styles */
-        .task-card.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
-
-        .task-card:not(.dragging) {
-            cursor: grab;
-        }
-
-        .task-card[draggable="false"] {
-            cursor: pointer !important;
-            opacity: 0.85;
-            border-color: #e2e8f0;
-        }
-
-        .task-card[draggable="false"]:hover {
-            border-color: #cbd5e1;
-            transform: none;
-        }
-
-        .kanban-tasks.drag-over {
-            background: rgba(102, 126, 234, 0.05);
-            border: 2px dashed #667eea;
-            border-radius: 12px;
-        }
-
-        /* Alertas */
-        .alert {
-            border-radius: 12px;
-            border: none;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem 0.5rem;
-            }
-
-            .container-custom {
-                padding: 0;
-            }
-
-            .back-link {
-                font-size: 0.9rem;
-                margin-bottom: 1rem;
-            }
-
-            .team-header {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .team-header-content {
-                flex-direction: column;
-                text-align: center;
-                align-items: center;
-            }
-
-            .team-icon-large {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
-            }
-
-            .team-name {
-                font-size: 1.5rem;
-            }
-
-            .team-description {
-                font-size: 0.9rem;
-            }
-
-            .team-stats {
-                flex-direction: column;
-                gap: 0.75rem;
-                width: 100%;
-            }
-
-            .stat-badge {
-                justify-content: center;
-                width: 100%;
-                padding: 0.5rem;
-                background: rgba(102, 126, 234, 0.05);
-                border-radius: 8px;
-            }
-
-            .invitation-code-box {
-                flex-direction: column;
-                text-align: center;
-                padding: 1rem;
-            }
-
-            .invitation-code {
-                font-size: 1.25rem;
-                letter-spacing: 0.15rem;
-            }
-
-            .btn-copy-code {
-                width: 100%;
-            }
-
-            /* Tabs */
-            .nav-tabs-custom {
-                padding: 0.25rem;
-                margin-bottom: 1.5rem;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .nav-tabs-custom .nav-link {
-                padding: 0.75rem 1rem;
-                font-size: 0.85rem;
-                display: inline-flex;
-            }
-
-            /* Kanban */
-            .kanban-board {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .kanban-column {
-                padding: 1rem;
-            }
-
-            .kanban-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .kanban-title {
-                font-size: 1rem;
-            }
-
-            .btn-create-task {
-                padding: 0.75rem;
-                font-size: 0.95rem;
-            }
-
-            /* Task cards */
-            .task-card {
-                padding: 0.875rem;
-            }
-
-            .task-title {
-                font-size: 0.9rem;
-                padding-right: 1.5rem;
-            }
-
-            .task-description {
-                font-size: 0.8rem;
-            }
-
-            .task-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-
-            .task-priority {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.6rem;
-            }
-
-            .task-assignee {
-                font-size: 0.8rem;
-            }
-
-            .task-date {
-                font-size: 0.7rem;
-            }
-
-            /* Miembros */
-            .members-list {
-                padding: 1rem;
-            }
-
-            .members-list h3 {
-                font-size: 1.25rem;
-                margin-bottom: 1rem;
-            }
-
-            .member-card {
-                padding: 0.875rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-
-            .member-avatar-large {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-            }
-
-            .member-info {
-                width: 100%;
-            }
-
-            .member-name {
-                font-size: 0.95rem;
-            }
-
-            .member-role {
-                font-size: 0.8rem;
-            }
-
-            .member-stats {
-                width: 100%;
-                justify-content: space-around;
-                gap: 1rem;
-            }
-
-            .member-stat-value {
-                font-size: 1.1rem;
-            }
-
-            .member-stat-label {
-                font-size: 0.7rem;
-            }
-
-            /* Modales */
-            .modal-dialog {
-                margin: 0.5rem;
-                max-width: calc(100% - 1rem);
-            }
-
-            .modal-content {
-                border-radius: 12px;
-            }
-
-            .modal-header {
-                padding: 1rem;
-            }
-
-            .modal-title {
-                font-size: 1.1rem;
-            }
-
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .modal-footer {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .modal-footer .btn {
-                width: 100%;
-                margin: 0;
-            }
-
-            /* Form controls en modal */
-            .modal .form-label {
-                font-size: 0.9rem;
-            }
-
-            .modal .form-control,
-            .modal .form-select {
-                font-size: 0.9rem;
-                padding: 0.65rem 0.75rem;
-            }
-
-            .modal .row {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            .modal .row > [class*='col'] {
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            /* Calendario */
-            .task-footer {
-                flex-wrap: wrap;
-            }
-
-            /* Empty state */
-            .empty-state {
-                padding: 2rem 1rem;
-            }
-
-            .empty-state i {
-                font-size: 2.5rem;
-            }
-
-            .empty-state p {
-                font-size: 0.9rem;
-            }
-
-            /* Drag indicators */
-            .task-card[draggable="true"]::before,
-            .task-card[draggable="false"]::before {
-                top: 0.25rem;
-                right: 0.25rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .team-name {
-                font-size: 1.25rem;
-            }
-
-            .invitation-code {
-                font-size: 1.1rem;
-                letter-spacing: 0.1rem;
-            }
-
-            .kanban-title {
-                font-size: 0.95rem;
-            }
-
-            .task-title {
-                font-size: 0.85rem;
-            }
-
-            .member-name {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Estilos para el Podio del Ranking */
-        .podium-card {
-            width: 100%;
-            border-radius: 16px 16px 0 0;
-            padding: 1.5rem 1rem;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .podium-trophy {
-            margin-top:25px;
-            margin-bottom:15px;
-            
-            position: relative;
-            top: 1rem;
-            font-size: 2rem;
-            opacity: 0.5;
-        }
-
-        .podium-avatar {
-            width: 100px;
-            margin-top:15px;
-            height: 100px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            border: 3px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .podium-name {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .podium-points {
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .podium-position {
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        /* Estilos para la lista del ranking */
-        .ranking-list-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: white;
-            padding: 0.75rem 1.25rem;
-            border-radius: 12px;
-            margin-bottom: 0.75rem;
-            border: 2px solid #f1f5f9;
-        }
-
-        .ranking-position { font-weight: 700; color: #64748b; font-size: 1.1rem; width: 25px; text-align: center; }
-        .ranking-avatar { width: 40px; height: 40px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-        .ranking-name { flex: 1; font-weight: 600; color: #1e293b; }
-        .ranking-points { font-weight: 700; color: #2563eb; font-size: 1.1rem; }
-
-        @media (max-width: 576px) {
-            .podium-card { padding: 1rem 0.5rem; }
-            .podium-avatar { width: 50px; height: 50px; font-size: 1.2rem; }
-            .podium-name { font-size: 0.85rem; }
-            .podium-points { font-size: 0.8rem; }
-            .podium-position { font-size: 2rem !important; }
-        }
-
-        /* FIX: Dropdown visible */
-        .members-list {
-            overflow: visible !important;
-        }
-
-        .tab-pane {
-            overflow: visible !important;
-        }
-
-        .tab-content {
-            overflow: visible !important;
-        }
-
-        .modal-backdrop {
-            z-index: 3990 !important;
-        }
-        .modal-backdrop.show {
-            opacity: 0.6 !important;
-        }
-
-        .modal {
-            z-index: 4000 !important; /* Superior a otros elementos */
-        }
-
-        .member-card .dropdown-menu {
-            z-index: 2000 !important;
-        }
-
-        .member-card .dropdown .btn {
-            z-index: 1 !important;
-            position: relative;
-        }
-
-        .member-card .dropdown.show .dropdown-menu {
-            display: block;
-            z-index: 3000 !important;
-            position: absolute;
-        }
-
-        .members-list,
-        .tab-pane,
-        .tab-content {
-            overflow: visible !important;
-        }
-
-        /*Workload*/
-        /*  animación de carga */
-        .workload-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 2px solid #f1f5f9;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            
-        }
-
-        .workload-card:hover {
-            border-color: #667eea;
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
-        }
-
-	    /* Estilos para carga de trabajo */
-        @media (max-width: 768px) {
-            #workload .members-list > div[style*="grid"] {
-                grid-template-columns: 1fr !important;
-                gap: 1rem !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #workload .members-list h3 {
-                font-size: 1.25rem;
-            }
-            
-            #workload div[style*="padding: 1.5rem"] {
-                padding: 1rem !important;
-            }
-        }
-
-        @keyframes pulse-bar {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.85;
-            }
-        }
-
-        .workload-card:hover .progress-bar {
-            animation: pulse-bar 2s ease-in-out infinite;
-        }
-    </style>
 </head>
 <body>
 
@@ -1245,6 +122,13 @@
                 <button class="nav-link" id="workload-tab" data-bs-toggle="tab" data-bs-target="#Ranking" type="button">
                     <i class="bi bi-trophy-fill"></i>
                     Ranking
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" onclick="cargarMensajes()">
+                    <i class="bi bi-chat-dots"></i>
+                    Mensajes
+                    <span id="unreadBadge" class="badge bg-danger ms-1" style="display: none;">0</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -1667,20 +551,20 @@
             <div class="row justify-content-center text-center mb-5">
                 <!-- Segundo Lugar -->
                 @if($rankingMiembros->has(1))
-                    <div class="col-4 d-flex align-items-end">
-                        <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
-                            <div class="podium-avatar">
-                                @if($rankingMiembros[1]['avatar_url'])
-                                    <img src="{{ $rankingMiembros[1]['avatar_url'] }}" alt="{{ $rankingMiembros[1]['nombre'] }}">
-                                @else
-                                    <div class="avatar-initials">{{ $rankingMiembros[1]['iniciales'] }}</div>
-                                @endif
-                            </div>
-                            <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
-                            <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
-                            <div class="podium-position" style="font-size: 3rem;">2</div>
+                <div class="col-4 d-flex align-items-end">
+                    <div class="podium-card" style="height: 85%; background: linear-gradient(135deg, #c5c5c5ff, #bdbdbdff);">
+                        <div class="podium-avatar">
+                            @if($rankingMiembros[1]['avatar_url'])
+                                <img src="{{ $rankingMiembros[1]['avatar_url'] }}" alt="{{ $rankingMiembros[1]['nombre'] }}">
+                            @else
+                                <div class="avatar-initials">{{ $rankingMiembros[1]['iniciales'] }}</div>
+                            @endif
                         </div>
+                        <div class="podium-name">{{ $rankingMiembros[1]['nombre'] }}</div>
+                        <div class="podium-points">{{ $rankingMiembros[1]['puntos'] }} pts</div>
+                        <div class="podium-position" style="font-size: 3rem;">2</div>
                     </div>
+                </div>
                 @endif
 
                 <!-- Primer Lugar -->
@@ -1727,24 +611,105 @@
                 @foreach($rankingMiembros->slice(3) as $index => $miembro)
                     <div class="ranking-list-item">
                         <div class="ranking-position">{{ $index + 1 }}</div>
-                        <div class="ranking-avatar">
-                            @if($miembro['avatar_url'])
-                                <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}">
-                            @else
-                                <div class="avatar-initials">{{ $miembro['iniciales'] }}</div>
-                            @endif
+                            <div class="ranking-avatar">
+                                @if($miembro['avatar_url'])
+                                    <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}">
+                                @else
+                                    <div class="avatar-initials">{{ $miembro['iniciales'] }}</div>
+                                @endif
+                            </div>
+                            <div class="ranking-name">{{ $miembro['nombre'] }}</div>
+                            <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
                         </div>
-                        <div class="ranking-name">{{ $miembro['nombre'] }}</div>
-                        <div class="ranking-points">{{ $miembro['puntos'] }} pts</div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
+            @else
+                <div class="empty-state">No hay miembros en el equipo para mostrar un ranking.</div>
             @endif
-        @else
-            <div class="empty-state">No hay miembros en el equipo para mostrar un ranking.</div>
-        @endif
+        </div>
     </div>
-</div>
     
+        <!-- Tab: Mensajes -->
+        <div class="tab-pane fade" id="messages" role="tabpanel">
+            <div class="chat-container">
+                <!-- Sidebar con lista de usuarios -->
+                <div class="chat-sidebar">
+                    <div class="chat-sidebar-header">
+                        <h4><i class="bi bi-people me-2"></i>Miembros</h4>
+                    </div>
+                    <div class="chat-users-list" id="chatUsersList">
+                        @foreach($miembros as $miembro)
+                            @if($miembro['id'] != Auth::id())
+                            <div class="chat-user-item" 
+                                    data-user-id="{{ $miembro['id'] }}"
+                                    data-user-name="{{ $miembro['nombre'] }}"
+                                    data-user-role="{{ $miembro['es_admin'] ? 'Administrador' : 'Miembro' }}"
+                                    data-user-initials="{{ $miembro['iniciales'] }}"
+                                    onclick="seleccionarUsuario(this)">
+                                <div class="chat-user-avatar">{{ $miembro['iniciales'] }}</div>
+                                <div class="chat-user-info">
+                                    <div class="chat-user-name">{{ $miembro['nombre'] }}</div>
+                                    <div class="chat-user-role">
+                                        @if($miembro['es_admin'])
+                                            <i class="bi bi-star-fill" style="color: #fbbf24;"></i> Admin
+                                        @else
+                                            <i class="bi bi-person"></i> Miembro
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Área principal del chat -->
+                <div class="chat-main">
+                    <!-- Header del chat (usuario seleccionado) -->
+                    <div class="chat-header" id="chatHeader" style="display: none;">
+                        <div class="chat-header-avatar" id="chatHeaderAvatar"></div>
+                        <div class="chat-header-info">
+                            <h5 id="chatHeaderName"></h5>
+                            <p id="chatHeaderRole"></p>
+                        </div>
+                    </div>
+
+                    <!-- Área de mensajes -->
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-empty">
+                            <i class="bi bi-chat-dots"></i>
+                            <h4>Selecciona un miembro</h4>
+                            <p>Elige un miembro del equipo para comenzar a chatear</p>
+                        </div>
+                    </div>
+
+                    <!-- Input para escribir mensaje -->
+                    <div class="chat-input-container" id="chatInputContainer" style="display: none;">
+                        <div id="filePreviewContainer"></div>
+                        <form id="chatForm" onsubmit="enviarMensaje(event)">
+                            <div class="chat-input-wrapper">
+                                <div class="chat-input-group">
+                                    <textarea 
+                                        id="messageInput" 
+                                        class="chat-textarea" 
+                                        placeholder="Escribe un mensaje..."
+                                        rows="1"
+                                        onkeypress="handleEnter(event)"></textarea>
+                                    <input type="file" id="fileInput" class="chat-file-input" onchange="previsualizarArchivo(this)">
+                                    <button type="button" class="chat-file-button" onclick="document.getElementById('fileInput').click()">
+                                        <i class="bi bi-paperclip"></i>
+                                    </button>
+                                </div>
+                                <button type="submit" class="chat-send-button" id="sendButton">
+                                    <i class="bi bi-send-fill"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Tab: Carga de Trabajo -->
         <div class="tab-pane fade" id="workload" role="tabpanel">
@@ -1882,13 +847,19 @@
                                 <select class="form-select" id="asignado_a" name="asignado_a" required>
                                     <option value="">Selecciona un miembro...</option>
                                     @foreach($miembros as $miembro)
-                                        <option value="{{ $miembro['id'] }}">
+                                        <option value="{{ $miembro['id'] }}" 
+                                                {{ $miembro['tareas_activas'] >= 6 ? 'disabled' : '' }}>
                                             {{ $miembro['nombre'] }} 
                                             @if($miembro['es_admin']) ⭐ @endif
+                                            @if($miembro['tareas_activas'] >= 6)
+                                                (⚠️ Máx. carga alcanzada)
+                                            @else
+                                                ({{ $miembro['tareas_activas'] }}/6 tareas)
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
-                                <small class="text-muted">Obligatorio - La tarea debe tener un responsable</small>
+                                <small class="text-muted">Límite: 6 tareas activas por persona</small>
                             </div>
 
                             <!-- Fecha de vencimiento -->
@@ -2068,9 +1039,16 @@
                                         <label for="asignado_a_edit_{{ $tarea->id }}" class="form-label fw-bold">Asignar a *</label>
                                         <select class="form-select" id="asignado_a_edit_{{ $tarea->id }}" name="asignado_a" required>
                                             @foreach($miembros as $miembro)
-                                                <option value="{{ $miembro['id'] }}" {{ $tarea->asignado_a == $miembro['id'] ? 'selected' : '' }}>
+                                                <option value="{{ $miembro['id'] }}" 
+                                                        {{ $tarea->asignado_a == $miembro['id'] ? 'selected' : '' }}
+                                                        {{ ($miembro['tareas_activas'] >= 6 && $tarea->asignado_a != $miembro['id']) ? 'disabled' : '' }}>
                                                     {{ $miembro['nombre'] }} 
                                                     @if($miembro['es_admin']) ⭐ @endif
+                                                    @if($miembro['tareas_activas'] >= 6 && $tarea->asignado_a != $miembro['id'])
+                                                        (⚠️ Máx. carga)
+                                                    @elseif($tarea->asignado_a != $miembro['id'])
+                                                        ({{ $miembro['tareas_activas'] }}/6)
+                                                    @endif
                                                 </option>
                                             @endforeach
                                         </select>
@@ -2165,6 +1143,379 @@
     <script>
         // Token CSRF para peticiones AJAX
         const csrfToken = '{{ csrf_token() }}';
+        const equipoId = {{ $equipo->id }};
+        const currentUserId = {{ Auth::id() }};
+
+        // Variables globales para el chat
+        let selectedUserId = null;
+        let chatInterval = null;
+        let selectedFile = null;
+
+        // ========================================
+        // FUNCIONES DE MENSAJERÍA
+        // ========================================
+
+        /**
+         * Selecciona un usuario para chatear
+         */
+        function seleccionarUsuario(element) {
+            // Remover selección anterior
+            document.querySelectorAll('.chat-user-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Agregar selección actual
+            element.classList.add('active');
+
+            // Guardar datos del usuario seleccionado
+            selectedUserId = element.dataset.userId;
+            const userName = element.dataset.userName;
+            const userRole = element.dataset.userRole;
+            const userInitials = element.dataset.userInitials;
+
+            // Actualizar header del chat
+            document.getElementById('chatHeaderAvatar').textContent = userInitials;
+            document.getElementById('chatHeaderName').textContent = userName;
+            document.getElementById('chatHeaderRole').textContent = userRole;
+            document.getElementById('chatHeader').style.display = 'flex';
+            document.getElementById('chatInputContainer').style.display = 'block';
+
+            // Cargar mensajes
+            cargarMensajes();
+
+            // Iniciar polling para nuevos mensajes cada 5 segundos (aumentado de 3)
+            if (chatInterval) {
+                clearInterval(chatInterval);
+            }
+            chatInterval = setInterval(cargarMensajes, 5000);
+        }
+
+        /**
+         * Carga los mensajes entre el usuario actual y el seleccionado
+         */
+        function cargarMensajes() {
+            if (!selectedUserId) return;
+
+            fetch(`/equipos/${equipoId}/mensajes?receptor_id=${selectedUserId}`, {
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatMessages = document.getElementById('chatMessages');
+                const scrollPos = chatMessages.scrollHeight - chatMessages.scrollTop;
+                const wasAtBottom = scrollPos <= chatMessages.clientHeight + 100;
+                
+                chatMessages.innerHTML = '';
+
+                if (data.mensajes && data.mensajes.length > 0) {
+                    data.mensajes.forEach(mensaje => {
+                        chatMessages.appendChild(crearMensajeHTML(mensaje));
+                    });
+                    
+                    // Solo hacer scroll si estaba al final
+                    if (wasAtBottom) {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                } else {
+                    chatMessages.innerHTML = `
+                        <div class="chat-empty">
+                            <i class="bi bi-chat"></i>
+                            <h4>No hay mensajes aún</h4>
+                            <p>Comienza la conversación enviando un mensaje</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar mensajes:', error);
+            });
+        }
+
+        /**
+         * Crea el HTML de un mensaje
+         */
+        function crearMensajeHTML(mensaje) {
+            const div = document.createElement('div');
+            div.className = `chat-message ${mensaje.es_mio ? 'own' : ''}`;
+            div.dataset.mensajeId = mensaje.id;
+
+            let contenido = `
+                <div class="chat-message-avatar">${mensaje.emisor_iniciales}</div>
+                <div class="chat-message-content">
+                    <div class="chat-message-bubble">
+            `;
+
+            if (mensaje.mensaje) {
+                contenido += `<p class="chat-message-text">${escapeHtml(mensaje.mensaje)}</p>`;
+            }
+
+            if (mensaje.archivo) {
+                if (mensaje.es_imagen) {
+                    contenido += `
+                        <img src="${mensaje.archivo}" 
+                             alt="${mensaje.nombre_archivo}" 
+                             class="chat-message-image"
+                             onclick="window.open('${mensaje.archivo}', '_blank')">
+                    `;
+                } else {
+                    contenido += `
+                        <div class="chat-message-file">
+                            <div class="chat-file-icon">
+                                <i class="${mensaje.archivo_icono}"></i>
+                            </div>
+                            <div class="chat-file-info">
+                                <div class="chat-file-name">${escapeHtml(mensaje.nombre_archivo)}</div>
+                                <div class="chat-file-size">${mensaje.archivo_tamaño}</div>
+                            </div>
+                            <a href="${mensaje.archivo}" download class="btn btn-sm" style="color: inherit;">
+                                <i class="bi bi-download"></i>
+                            </a>
+                        </div>
+                    `;
+                }
+            }
+
+            contenido += `
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="chat-message-time">${mensaje.created_at}</div>
+                        ${mensaje.es_mio ? `
+                            <button onclick="eliminarMensaje(${mensaje.id})" 
+                                    style="background: transparent; border: none; color: inherit; opacity: 0.6; cursor: pointer; padding: 0.25rem; font-size: 0.85rem;"
+                                    title="Eliminar mensaje">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+
+            div.innerHTML = contenido;
+            return div;
+        }
+
+        /**
+         * Elimina un mensaje
+         */
+        function eliminarMensaje(mensajeId) {
+            if (!confirm('¿Estás seguro de eliminar este mensaje?')) {
+                return;
+            }
+
+            fetch(`/mensajes/${mensajeId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    cargarMensajes();
+                    mostrarNotificacion('Mensaje eliminado', 'success');
+                } else {
+                    mostrarNotificacion('Error al eliminar mensaje', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarNotificacion('Error al eliminar mensaje', 'error');
+            });
+        }
+
+        /**
+         * Envía un mensaje
+         */
+        function enviarMensaje(event) {
+            event.preventDefault();
+
+            if (!selectedUserId) {
+                mostrarNotificacion('Selecciona un usuario primero', 'error');
+                return;
+            }
+
+            const messageInput = document.getElementById('messageInput');
+            const fileInput = document.getElementById('fileInput');
+            const mensaje = messageInput.value.trim();
+
+            if (!mensaje && !fileInput.files[0]) {
+                mostrarNotificacion('Escribe un mensaje o adjunta un archivo', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('receptor_id', selectedUserId);
+            if (mensaje) formData.append('mensaje', mensaje);
+            if (fileInput.files[0]) formData.append('archivo', fileInput.files[0]);
+
+            // Deshabilitar botón de envío
+            const sendButton = document.getElementById('sendButton');
+            sendButton.disabled = true;
+
+            // Pausar el polling mientras se envía
+            if (chatInterval) {
+                clearInterval(chatInterval);
+            }
+
+            fetch(`/equipos/${equipoId}/mensajes`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Limpiar inputs
+                    messageInput.value = '';
+                    fileInput.value = '';
+                    selectedFile = null;
+                    document.getElementById('filePreviewContainer').innerHTML = '';
+
+                    // Recargar todos los mensajes para evitar duplicados
+                    cargarMensajes();
+
+                    // Reiniciar polling (5 segundos)
+                    chatInterval = setInterval(cargarMensajes, 5000);
+                } else {
+                    mostrarNotificacion(data.error || 'Error al enviar mensaje', 'error');
+                    // Reiniciar polling en caso de error
+                    chatInterval = setInterval(cargarMensajes, 5000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarNotificacion('Error al enviar mensaje', 'error');
+                // Reiniciar polling en caso de error
+                chatInterval = setInterval(cargarMensajes, 5000);
+            })
+            .finally(() => {
+                sendButton.disabled = false;
+            });
+        }
+
+        /**
+         * Previsualiza el archivo seleccionado
+         */
+        function previsualizarArchivo(input) {
+            const container = document.getElementById('filePreviewContainer');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                selectedFile = file;
+
+                const iconClass = getFileIcon(file.name);
+                
+                container.innerHTML = `
+                    <div class="chat-file-preview">
+                        <div class="chat-file-preview-info">
+                            <i class="${iconClass} chat-file-preview-icon"></i>
+                            <span class="chat-file-preview-name">${file.name}</span>
+                        </div>
+                        <button type="button" class="chat-file-preview-remove" onclick="removerArchivo()">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * Remueve el archivo seleccionado
+         */
+        function removerArchivo() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('filePreviewContainer').innerHTML = '';
+            selectedFile = null;
+        }
+
+        /**
+         * Obtiene el icono según el tipo de archivo
+         */
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const icons = {
+                'pdf': 'bi-file-earmark-pdf',
+                'doc': 'bi-file-earmark-word',
+                'docx': 'bi-file-earmark-word',
+                'xls': 'bi-file-earmark-excel',
+                'xlsx': 'bi-file-earmark-excel',
+                'ppt': 'bi-file-earmark-ppt',
+                'pptx': 'bi-file-earmark-ppt',
+                'jpg': 'bi-file-earmark-image',
+                'jpeg': 'bi-file-earmark-image',
+                'png': 'bi-file-earmark-image',
+                'gif': 'bi-file-earmark-image',
+                'zip': 'bi-file-earmark-zip',
+                'rar': 'bi-file-earmark-zip',
+                'txt': 'bi-file-earmark-text',
+                'mp3': 'bi-file-earmark-music',
+                'mp4': 'bi-file-earmark-play',
+            };
+            return icons[ext] || 'bi-file-earmark';
+        }
+
+        /**
+         * Maneja la tecla Enter en el textarea
+         */
+        function handleEnter(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                document.getElementById('chatForm').dispatchEvent(new Event('submit'));
+            }
+        }
+
+        /**
+         * Escapa HTML para prevenir XSS
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        /**
+         * Actualiza el contador de mensajes no leídos
+         */
+        function actualizarContadorNoLeidos() {
+            fetch(`/equipos/${equipoId}/mensajes/no-leidos`, {
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('unreadBadge');
+                if (data.no_leidos > 0) {
+                    badge.textContent = data.no_leidos;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error al actualizar contador:', error));
+        }
+
+        // Actualizar contador cada 10 segundos (aumentado de 5)
+        setInterval(actualizarContadorNoLeidos, 10000);
+        actualizarContadorNoLeidos();
+
+        // Limpiar interval al cambiar de tab
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function (e) {
+                if (e.target.id !== 'messages-tab' && chatInterval) {
+                    clearInterval(chatInterval);
+                    chatInterval = null;
+                }
+            });
+        });
+
+        // ========================================
+        // DRAG AND DROP (código existente)
+        // ========================================
 
         // Drag and Drop
         let draggedElement = null;

@@ -398,21 +398,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="nav-section-title">Más</div>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-bell"></i>
-                        <span>Notificaciones</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        <i class="bi bi-house"></i>
-                        <span>Ir al Inicio</span>
-                    </a>
-                </li>
-            </ul>
         </nav>
 
         <!-- Perfil del usuario -->
@@ -443,7 +428,6 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item active" href="{{ route('perfil') }}"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">

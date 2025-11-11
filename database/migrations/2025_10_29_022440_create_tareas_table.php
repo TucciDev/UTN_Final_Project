@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('equipo_id')->constrained('equipos')->onDelete('cascade');
             $table->foreignId('creador_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('asignado_a')->nullable()->constrained('users')->onDelete('set null');
-            $table->integer('puntos')->default(0); // Puntos que otorga al completarla
+            $table->integer('puntos')->default(0);
+            $table->boolean('vista_por_asignado')->default(false);
             $table->timestamps();
 
             // Índices
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->index('estado');
             $table->index('asignado_a');
             $table->index('creador_id');
+            $table->index('vista_por_asignado');
         });
     }
 

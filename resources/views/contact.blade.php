@@ -82,31 +82,7 @@
     <!-- SECCIÓN DE CONTACTO  -->
     <section class="contact-section-modern py-5" style="background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);">
         <div class="container">
-            
-            <!-- Cards de info -->
-            <div class="row justify-content-center mb-5" data-aos="fade-up">
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="info-card-modern">
-                        <div class="info-card-glow"></div>
-                        <div class="info-icon-modern">
-                            <i class="bi bi-geo-alt-fill"></i>
-                        </div>
-                        <h4>Nuestra ubicación</h4>
-                        <p>UTN - Facultad Regional Haedo<br>París 532, Haedo<br>Buenos Aires, Argentina</p>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="info-card-modern">
-                        <div class="info-card-glow"></div>
-                        <div class="info-icon-modern">
-                            <i class="bi bi-envelope-at-fill"></i>
-                        </div>
-                        <h4>Email de contacto</h4>
-                        <p>contacto@collabpro.com<br>soporte@collabpro.com<br></p>
-                    </div>
-                </div>
-            </div>
-
+        
             <!-- Formulario y mapa -->
             <div class="row g-4">
                 
@@ -241,13 +217,17 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ========================================
+        FOOTER
+        ========================================= -->
     <footer class="footer-modern">
         <div class="container py-5">
+            <!-- Footer Main -->
             <div class="row g-4 pb-4">
+                <!-- Logo y descripción -->
                 <div class="col-lg-4 col-md-6" data-aos="fade-up">
                     <div class="footer-brand mb-3">
-                        <img src="{{ asset('img/collabpro_logo1.png') }}" alt="CollabPro" class="footer-logo mb-3">
+                        <img src="img/collabpro_logo1.png" alt="CollabPro" class="footer-logo mb-3">
                         <p class="text-muted">Transforma tu equipo con la plataforma de gestión más innovadora</p>
                     </div>
                     <div class="social-links mt-4">
@@ -257,43 +237,40 @@
                         <a href="#" class="social-link"><i class="bi bi-github"></i></a>
                     </div>
                 </div>
+                
+                <!-- Links Producto -->
                 <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="100">
                     <h6 class="footer-title mb-3">Producto</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#caracteristicas">Características</a></li>
-                        <li><a href="#como-funciona">Cómo funciona</a></li>
-                        <li><a href="#">Precios</a></li>
-                        <li><a href="#">Actualizaciones</a></li>
+                        <li><a href="{{ route('home') }}">Características</a></li>
+                        <li><a href="{{ route('home') }}">Cómo funciona</a></li>
+                        <li><a href="{{ route('register') }}">Crear Cuenta</a></li>
+                        <li><a href="{{ route('login') }}">Iniciar Sesion</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="200">
-                    <h6 class="footer-title mb-3">Empresa</h6>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="{{ route('contact') }}">Contacto</a></li>
-                    </ul>
-                </div>
+                
+                <!-- Links Recursos -->
                 <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="300">
                     <h6 class="footer-title mb-3">Recursos</h6>
                     <ul class="footer-links list-unstyled">
                         <li><a href="#">Documentación</a></li>
-                        <li><a href="#">API</a></li>
                         <li><a href="#">Tutoriales</a></li>
                         <li><a href="{{ route('support') }}">Soporte</a></li>
+                        <li><a href="{{ route('contact') }}">Contacto</a></li>
                     </ul>
                 </div>
+                
+                <!-- Links Legal -->
                 <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="400">
                     <h6 class="footer-title mb-3">Legal</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#">Privacidad</a></li>
-                        <li><a href="#">Términos</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Licencias</a></li>
+                        <li><a href="{{ route('privacy') }}" target="_blank">Privacidad</a></li>
+                        <li><a href="{{ route('terms') }}" target="_blank">Términos</a></li>
                     </ul>
                 </div>
             </div>
+            
+            <!-- Footer Bottom -->
             <div class="footer-bottom pt-4 mt-4 border-top border-secondary">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
@@ -310,6 +287,7 @@
                 </div>
             </div>
         </div>
+        
     </footer>
     
     <!-- Bootstrap JS -->
@@ -336,19 +314,6 @@
             charCount.textContent = this.value.length;
         });
 
-        // Animación de labels flotantes
-        document.querySelectorAll('.input-modern').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
-            });
-            
-            input.addEventListener('blur', function() {
-                if (!this.value) {
-                    this.parentElement.classList.remove('focused');
-                }
-            });
-        });
-
         // Envío del formulario
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -369,10 +334,45 @@
                 return;
             }
 
-            // Simulación exitosa
-            mostrarNotificacion('✅ Mensaje enviado correctamente', 'success');
-            this.reset();
-            charCount.textContent = '0';
+            // Deshabilitar botón mientras se envía
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.querySelector('.btn-text').innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.btn-text').innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Enviando...';
+
+            // Envío real con AJAX
+            fetch('{{ route("contacto.store") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    email: email,
+                    asunto: asunto,
+                    mensaje: mensaje
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarNotificacion(data.message, 'success');
+                    this.reset();
+                    charCount.textContent = '0';
+                } else {
+                    mostrarNotificacion(data.message || '❌ Error al enviar el mensaje', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarNotificacion('❌ Error al enviar el mensaje', 'error');
+            })
+            .finally(() => {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.btn-text').innerHTML = originalText;
+            });
         });
 
         // Notificación 
