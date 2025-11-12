@@ -603,22 +603,6 @@
                 </li>
             </ul>
 
-            <!-- Sección: Otras opciones -->
-            <div class="nav-section-title">Más</div>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-bell"></i>
-                        <span>Notificaciones</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        <i class="bi bi-house"></i>
-                        <span>Ir al Inicio</span>
-                    </a>
-                </li>
-            </ul>
         </nav>
 
         <!-- Perfil del usuario -->
@@ -647,7 +631,6 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="{{ route('perfil') }}"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">
@@ -728,7 +711,34 @@
                 <!-- Equipos del usuario -->
                 @forelse($equipos as $equipo)
                 <div class="col-12 col-md-6 col-lg-4">
-                    <a href="{{ route('equipos.show', $equipo['id']) }}" class="group-card">
+                    <a href="{{ route('equipos.show', $equipo['id']) }}" class="group-card" style="position: relative;">
+                        
+                        <!-- Indicador de tareas nuevas -->
+                        @if($equipo['tareas_nuevas'] > 0)
+                        <div style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                            <div style="position: relative; display: inline-block;">
+                                <i class="bi bi-bell-fill" style="font-size: 1.5rem; color: #667eea;"></i>
+                                <span style="
+                                    position: absolute;
+                                    top: -5px;
+                                    right: -5px;
+                                    background: #ef4444;
+                                    color: white;
+                                    border-radius: 50%;
+                                    width: 20px;
+                                    height: 20px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 0.7rem;
+                                    font-weight: 700;
+                                    border: 2px solid white;
+                                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                                ">{{ $equipo['tareas_nuevas'] }}</span>
+                            </div>
+                        </div>
+                        @endif
+                        
                         <div class="group-card-header">
                             @if($equipo['imagen_url'])
                                 <!-- Si tiene imagen, mostrar la imagen -->

@@ -17,7 +17,7 @@ class Equipo extends Model
         'codigo_invitacion',
         'icono',
         'color',
-        'imagen', // ✅ AGREGADO
+        'imagen',
         'creador_id',
         'activo',
     ];
@@ -179,5 +179,13 @@ class Equipo extends Model
         static::deleting(function ($equipo) {
             $equipo->eliminarImagenAnterior();
         });
+    }
+
+    /**
+     * Mensajes del equipo
+     */
+    public function mensajes()
+    {
+        return $this->hasMany(Mensaje::class);
     }
 }

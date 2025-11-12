@@ -438,7 +438,7 @@
 <body>
 
     <div class="form-container">
-        <a href="#" class="back-link">
+        <a href="{{ route('dashboard') }}" class="back-link">
             <i class="bi bi-arrow-left"></i>
             Volver al Dashboard
         </a>

@@ -151,9 +151,6 @@
                                 <i class="bi bi-lock me-2"></i>Contraseña
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-key"></i>
-                                </span>
                                 <input type="password" 
                                        class="form-control @error('password') is-invalid @enderror" 
                                        id="password" 
@@ -177,9 +174,6 @@
                                 <i class="bi bi-lock-fill me-2"></i>Confirmar Contraseña
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-shield-check"></i>
-                                </span>
                                 <input type="password" 
                                        class="form-control" 
                                        id="password-confirm" 
@@ -202,9 +196,9 @@
                                        required>
                                 <label class="form-check-label" for="terms">
                                     Acepto los 
-                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Términos y Condiciones</a> 
+                                    <a href="{{ route('terms') }}" target="_blank" class="auth-link">Términos y Condiciones</a> 
                                     y la 
-                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Política de Privacidad</a>
+                                    <a href="{{ route('privacy') }}" target="_blank" class="auth-link">Política de Privacidad</a>
                                 </label>
                             </div>
                         </div>
