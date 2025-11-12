@@ -1305,15 +1305,23 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
-                                        @else
-                                            <div class="task-assignee">
-                                                <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
-                                                <span style="color: #cbd5e1;">Sin asignar</span>
-                                            </div>
-                                        @endif
+                                            @else
+                                                <div class="task-assignee">
+                                                    <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
+                                                    <span style="color: #cbd5e1;">Sin asignar</span>
+                                                </div>
+                                            @endif
                                     </div>
                                 </div>
                             @empty
@@ -1362,15 +1370,23 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
-                                        @else
-                                            <div class="task-assignee">
-                                                <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
-                                                <span style="color: #cbd5e1;">Sin asignar</span>
-                                            </div>
-                                        @endif
+                                            @else
+                                                <div class="task-assignee">
+                                                    <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
+                                                    <span style="color: #cbd5e1;">Sin asignar</span>
+                                                </div>
+                                            @endif
                                     </div>
                                 </div>
                             @empty
@@ -1417,7 +1433,15 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
                                         @endif
@@ -1510,7 +1534,15 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
                                         @endif
