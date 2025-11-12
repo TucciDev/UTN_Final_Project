@@ -40,7 +40,7 @@
                 <div class="col-lg-7 auth-right">
                     <div class="auth-header">
                         <h1>Iniciar Sesión</h1>
-                        <p>Ingresa tus credenciales para continuar</p>
+                        <p>Ingresa tu email o nombre de usuario</p>
                     </div>
 
                     @if ($errors->any())
@@ -60,22 +60,27 @@
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
                         
+                        <!-- Campo unificado: Email o Username -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">
-                                <i class="bi bi-envelope me-2"></i>Correo Electrónico
+                            <label for="login" class="form-label">
+                                <i class="bi bi-person-circle me-2"></i>Correo Electrónico o Usuario
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="bi bi-person"></i>
                                 </span>
-                                <input type="email" 
-                                       class="form-control @error('email') is-invalid @enderror" 
-                                       id="email" 
-                                       name="email"
-                                       placeholder="tu@email.com" 
+                                <input type="text" 
+                                       class="form-control @error('login') is-invalid @enderror" 
+                                       id="login" 
+                                       name="login"
+                                       placeholder="tu@email.com o usuario123" 
                                        required
-                                       value="{{ old('email') }}">
+                                       value="{{ old('login') }}"
+                                       autocomplete="username">
                             </div>
+                            @error('login')
+                                <small class="text-danger mt-1 d-block">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -91,8 +96,12 @@
                                        id="password" 
                                        name="password"
                                        placeholder="••••••••" 
-                                       required>
+                                       required
+                                       autocomplete="current-password">
                             </div>
+                            @error('password')
+                                <small class="text-danger mt-1 d-block">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -147,5 +156,20 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para feedback visual -->
+    <script>
+        document.getElementById('login').addEventListener('input', function(e) {
+            const value = e.target.value;
+            const icon = this.previousElementSibling.querySelector('i');
+            
+            // Cambiar icono según el tipo detectado
+            if (value.includes('@')) {
+                icon.className = 'bi bi-envelope';
+            } else {
+                icon.className = 'bi bi-person';
+            }
+        });
+    </script>
 </body>
 </html>

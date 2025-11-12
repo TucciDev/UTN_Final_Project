@@ -19,10 +19,12 @@ class Tarea extends Model
         'creador_id',
         'asignado_a',
         'puntos',
+        'vista_por_asignado',
     ];
 
     protected $casts = [
-        'fecha_vencimiento' => 'datetime', // Cambiar de 'date' a 'datetime'
+        'fecha_vencimiento' => 'datetime',
+        'vista_por_asignado' => 'boolean',
     ];
 
     // ========================================

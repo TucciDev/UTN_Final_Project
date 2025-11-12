@@ -32,6 +32,12 @@ class EquipoController extends Controller
             ->withCount('usuarios as total_miembros')
             ->get()
             ->map(function ($equipo) use ($user) {
+
+                 $tareasNuevasSinVer = $equipo->tareas()
+                ->where('asignado_a', $user->id)
+                ->where('vista_por_asignado', false)
+                ->count();
+
                 return [
                     'id' => $equipo->id,
                     'nombre' => $equipo->nombre,
@@ -46,6 +52,7 @@ class EquipoController extends Controller
                     'total_miembros' => $equipo->total_miembros,
                     'total_tareas' => $equipo->cantidadTareas(),
                     'tareas_completadas' => $equipo->tareasCompletadas(),
+                    'tareas_nuevas' => $tareasNuevasSinVer,
                     'miembros' => $equipo->usuarios->take(3)->map(function ($usuario) {
                         return [
                             'iniciales' => $usuario->initials,
@@ -172,6 +179,11 @@ class EquipoController extends Controller
                     ->where('estado', 'completada')
                     ->count();
 
+                $tareasActivas = $equipo->tareas()
+                    ->where('asignado_a', $usuario->id)
+                    ->whereIn('estado', ['por_hacer', 'en_progreso'])
+                    ->count();
+
                 return [
                     'id' => $usuario->id,
                     'nombre' => $usuario->full_name,
@@ -184,29 +196,60 @@ class EquipoController extends Controller
                     'es_admin' => $usuario->pivot->rol === 'admin',
                     'tareas_asignadas' => $tareasAsignadas,
                     'tareas_completadas' => $tareasCompletadas,
+                    'tareas_activas' => $tareasActivas,
                 ];
             });
 
-        // Obtener tareas por estado (para el tablero Kanban)
+    // Filtrar tareas según rol del usuario
+    $queryBase = $equipo->tareas()->with('asignado');
+
+    // Si NO es admin, solo mostrar sus tareas asignadas
+    if ($esAdmin) {
+    // Admin ve TODAS las tareas
+    $tareasPorHacer = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'por_hacer')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $tareasEnProgreso = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'en_progreso')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $tareasCompletadas = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'completada')
+        ->orderBy('updated_at', 'desc')
+        ->get();
+    } else {
+        // Miembro solo ve SUS tareas
         $tareasPorHacer = $equipo->tareas()
-            ->where('estado', 'por_hacer')
             ->with('asignado')
+            ->where('asignado_a', Auth::id())
+            ->where('estado', 'por_hacer')
             ->orderBy('prioridad', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
 
         $tareasEnProgreso = $equipo->tareas()
-            ->where('estado', 'en_progreso')
             ->with('asignado')
+            ->where('asignado_a', Auth::id())
+            ->where('estado', 'en_progreso')
             ->orderBy('prioridad', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
 
         $tareasCompletadas = $equipo->tareas()
-            ->where('estado', 'completada')
             ->with('asignado')
+            ->where('asignado_a', Auth::id())
+            ->where('estado', 'completada')
             ->orderBy('updated_at', 'desc')
             ->get();
+    }
 
         return view('equipos.show', compact(
             'equipo',
@@ -371,12 +414,34 @@ class EquipoController extends Controller
             abort(403, 'No perteneces a este equipo.');
         }
 
-        // El creador no puede salir de su propio equipo
-        if ($equipo->creador_id === $user->id) {
-            return back()->with('error', 'Como creador, no puedes salir del equipo. Debes eliminarlo o transferir la propiedad.');
+        // Verificar si es admin o creador
+        $esAdmin = $equipo->esAdmin($user);
+        $esCreador = $equipo->creador_id === $user->id;
+        
+        if ($esAdmin || $esCreador) {
+            $cantidadAdmins = $equipo->usuarios()
+                ->wherePivot('rol', 'admin')
+                ->count();
+            
+            if ($cantidadAdmins <= 1) {
+                return back()->with('error', '⚠️ Eres el único administrador. Debes nombrar a otro administrador antes de salir del equipo.');
+            }
         }
 
         try {
+            // Si es el creador, transferir la propiedad al primer admin disponible
+            if ($esCreador) {
+                $nuevoCreador = $equipo->usuarios()
+                    ->wherePivot('rol', 'admin')
+                    ->where('user_id', '!=', $user->id)
+                    ->first();
+                
+                if ($nuevoCreador) {
+                    $equipo->creador_id = $nuevoCreador->id;
+                    $equipo->save();
+                }
+            }
+            
             $equipo->removerUsuario($user);
 
             return redirect()

@@ -402,7 +402,7 @@
     <!-- ========================================
         CALL TO ACTION - Diseño Moderno
         ========================================= -->
-    <section class="cta-section-modern">
+    <section class="cta-section-modern" id="crear-cuenta">
         <div class="container py-5">
             <div class="cta-card" data-aos="zoom-in">
                 <div class="cta-background">
@@ -427,7 +427,7 @@
     </section>
 
     <!-- ========================================
-        FOOTER - Diseño Moderno
+        FOOTER
         ========================================= -->
     <footer class="footer-modern">
         <div class="container py-5">
@@ -453,19 +453,8 @@
                     <ul class="footer-links list-unstyled">
                         <li><a href="#caracteristicas">Características</a></li>
                         <li><a href="#como-funciona">Cómo funciona</a></li>
-                        <li><a href="#">Precios</a></li>
-                        <li><a href="#">Actualizaciones</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Links Empresa -->
-                <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="200">
-                    <h6 class="footer-title mb-3">Empresa</h6>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="{{ route('contact') }}">Contacto</a></li>
+                        <li><a href="{{ route('register') }}">Crear Cuenta</a></li>
+                        <li><a href="{{ route('login') }}">Iniciar Sesion</a></li>
                     </ul>
                 </div>
                 
@@ -474,9 +463,9 @@
                     <h6 class="footer-title mb-3">Recursos</h6>
                     <ul class="footer-links list-unstyled">
                         <li><a href="#">Documentación</a></li>
-                        <li><a href="#">API</a></li>
                         <li><a href="#">Tutoriales</a></li>
                         <li><a href="{{ route('support') }}">Soporte</a></li>
+                        <li><a href="{{ route('contact') }}">Contacto</a></li>
                     </ul>
                 </div>
                 
@@ -484,10 +473,8 @@
                 <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="400">
                     <h6 class="footer-title mb-3">Legal</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#">Privacidad</a></li>
-                        <li><a href="terminosycondiciones.html">Términos</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Licencias</a></li>
+                        <li><a href="{{ route('privacy') }}" target="_blank">Privacidad</a></li>
+                        <li><a href="{{ route('terms') }}" target="_blank">Términos</a></li>
                     </ul>
                 </div>
             </div>

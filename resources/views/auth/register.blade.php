@@ -151,20 +151,14 @@
                                 <i class="bi bi-lock me-2"></i>Contraseña
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-key"></i>
-                                </span>
                                 <input type="password" 
-                                       class="form-control @error('password') is-invalid @enderror" 
+                                       class="form-control" 
                                        id="password" 
                                        name="password"
                                        placeholder="Mínimo 8 caracteres" 
                                        required
                                        minlength="8"
                                        oninput="checkPasswordStrength()">
-                                <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
-                                </span>
                             </div>
                             <div class="password-strength">
                                 <div class="password-strength-bar" id="strengthBar"></div>
@@ -177,9 +171,6 @@
                                 <i class="bi bi-lock-fill me-2"></i>Confirmar Contraseña
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-shield-check"></i>
-                                </span>
                                 <input type="password" 
                                        class="form-control" 
                                        id="password-confirm" 
@@ -187,9 +178,6 @@
                                        placeholder="Repite tu contraseña" 
                                        required
                                        minlength="8">
-                                <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordConfirm" style="cursor: pointer;"></i>
-                                </span>
                             </div>
                         </div>
 
@@ -202,9 +190,9 @@
                                        required>
                                 <label class="form-check-label" for="terms">
                                     Acepto los 
-                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Términos y Condiciones</a> 
+                                    <a href="{{ route('terms') }}" target="_blank" class="auth-link">Términos y Condiciones</a> 
                                     y la 
-                                    <a href="{{ url('terminosycondiciones.html') }}" target="_blank" class="auth-link">Política de Privacidad</a>
+                                    <a href="{{ route('privacy') }}" target="_blank" class="auth-link">Política de Privacidad</a>
                                 </label>
                             </div>
                         </div>
