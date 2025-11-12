@@ -95,6 +95,12 @@
                     </div>
                     @endif
                 </div>
+
+                <div style="margin-top: 1rem;">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#leaveTeamModal">
+                        <i class="bi bi-box-arrow-right"></i> Salir del Equipo
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1136,6 +1142,104 @@
         </div>
     </div>
     @endforeach
+
+    <div class="modal fade" id="leaveTeamModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px; border: none;">
+                <div class="modal-header" style="border-bottom: 1px solid #f1f5f9;">
+                    <h5 class="modal-title" style="font-weight: 700; color: #dc2626;">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Salir del Equipo
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @php
+                        $esCreador = $equipo->creador_id === Auth::id();
+                        $cantidadAdmins = $equipo->usuarios()
+                            ->wherePivot('rol', 'admin')
+                            ->count();
+                    @endphp
+
+                    @if(($esAdmin || $esCreador) && $cantidadAdmins <= 1)
+                        <div class="alert alert-warning" style="border-radius: 12px;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>Eres el único administrador</strong>
+                            <p class="mb-0 mt-2">Debes nombrar a otro miembro como administrador antes de poder salir del equipo.</p>
+                            @if($esCreador)
+                                <p class="mb-0 mt-1"><small>Como creador, la propiedad del equipo será transferida al nuevo administrador.</small></p>
+                            @endif
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <h6 style="font-weight: 600; margin-bottom: 1rem;">Miembros disponibles:</h6>
+                            @foreach($miembros->where('es_admin', false)->where('id', '!=', Auth::id()) as $miembro)
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="width: 35px; height: 35px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #2563eb 100%); display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; font-size: 0.9rem;">
+                                            {{ $miembro['iniciales'] }}
+                                        </div>
+                                        <span style="font-weight: 500;">{{ $miembro['nombre'] }}</span>
+                                    </div>
+                                    <form action="{{ route('equipos.change-role', [$equipo->id, $miembro['id']]) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="rol" value="admin">
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-star"></i> Hacer Admin
+                                        </button>
+                                    </form>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        @if($esCreador)
+                            <div class="alert alert-info" style="border-radius: 12px;">
+                                <i class="bi bi-info-circle-fill me-2"></i>
+                                <strong>Transferencia de propiedad</strong>
+                                <p class="mb-0 mt-2">Como creador del equipo, al salir la propiedad será transferida automáticamente a otro administrador.</p>
+                            </div>
+                        @else
+                            <div class="alert alert-info" style="border-radius: 12px;">
+                                <i class="bi bi-info-circle-fill me-2"></i>
+                                Puedes salir del equipo sin problemas.
+                            </div>
+                        @endif
+                        
+                        <p style="color: #64748b; margin-top: 1rem;">
+                            ¿Estás seguro de que deseas salir de <strong>{{ $equipo->nombre }}</strong>?
+                        </p>
+                        
+                        <div class="alert alert-warning" style="border-radius: 12px; margin-top: 1rem;">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>Advertencia:</strong> Perderás acceso a todas las tareas y mensajes del equipo.
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #f1f5f9;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    
+                    @if(!$esAdmin || ($esAdmin && $cantidadAdmins > 1))
+                        <form action="{{ route('equipos.leave', $equipo->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-box-arrow-right"></i> Salir del Equipo
+                            </button>
+                        </form>
+                    @endif
+                    
+                    @if($esAdmin && $equipo->total_miembros == 1 && $equipo->creador_id === Auth::id())
+                    <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('⚠️ ADVERTENCIA: Esta acción eliminará el equipo permanentemente, incluyendo todas las tareas y mensajes. ¿Estás completamente seguro?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar Equipo Permanentemente
+                        </button>
+                    </form>
+                @endif
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
