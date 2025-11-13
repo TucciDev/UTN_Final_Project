@@ -1018,13 +1018,13 @@
                                     <i class="bi bi-trash"></i> Eliminar
                                 </button>
                             </form>
-                            @if($tarea->estado === 'completada')
-                                <form action="{{ route('tareas.destroyCompletada', $tarea->id) }}" 
+                            @if($tarea->estado === 'completada' && !$tarea->archivada)
+                                <form action="{{ route('tareas.archivar', $tarea->id) }}" 
                                     method="POST" 
                                     style="display:inline;" 
-                                    onsubmit="return confirm('¿Deseas quitar esta tarea del tablero de completadas? Los puntos permanecerán asignados.');">
+                                    onsubmit="return confirm('¿Deseas archivar esta tarea? Ya no aparecerá en el tablero, pero seguirá guardada.');">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('PATCH')
                                     <button type="submit" class="btn btn-success">
                                         <i class="bi bi-check2-circle"></i> Revisada
                                     </button>
