@@ -212,29 +212,31 @@ class EquipoController extends Controller
                 ];
             });
 
+    // Filtrar tareas según rol del usuario
+    $queryBase = $equipo->tareas()->with('asignado');
 
-        // Filtrar tareas según rol del usuario
-        if ($esAdmin) {
-        // Admin ve TODAS las tareas
-        $tareasPorHacer = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'por_hacer')
-            ->orderBy('prioridad', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+    // Si NO es admin, solo mostrar sus tareas asignadas
+    if ($esAdmin) {
+    // Admin ve TODAS las tareas
+    $tareasPorHacer = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'por_hacer')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $tareasEnProgreso = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'en_progreso')
-            ->orderBy('prioridad', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+    $tareasEnProgreso = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'en_progreso')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $tareasCompletadas = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'completada')
-            ->orderBy('updated_at', 'desc')
-            ->get();
+    $tareasCompletadas = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'completada')
+        ->orderBy('updated_at', 'desc')
+        ->get();
     } else {
         // Miembro solo ve SUS tareas
         $tareasPorHacer = $equipo->tareas()

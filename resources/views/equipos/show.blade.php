@@ -1018,6 +1018,18 @@
                                     <i class="bi bi-trash"></i> Eliminar
                                 </button>
                             </form>
+                            @if($tarea->estado === 'completada')
+                                <form action="{{ route('tareas.destroyCompletada', $tarea->id) }}" 
+                                    method="POST" 
+                                    style="display:inline;" 
+                                    onsubmit="return confirm('¿Deseas quitar esta tarea del tablero de completadas? Los puntos permanecerán asignados.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check2-circle"></i> Revisada
+                                    </button>
+                                </form>
+                            @endif
                         @endif
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>

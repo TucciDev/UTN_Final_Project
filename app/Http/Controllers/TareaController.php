@@ -271,4 +271,25 @@ class TareaController extends Controller
             return back()->with('error', 'Hubo un error al eliminar la tarea.');
         }
     }
+    // Elimina una tarea completada sin restar puntos
+    public function destroyCompletada($tareaId)
+    {
+        $tarea = Tarea::findOrFail($tareaId);
+        $equipo = $tarea->equipo;
+
+        // Solo los admins pueden eliminar tareas
+        if (!$equipo->esAdmin(Auth::user())) {
+            return back()->with('error', 'Solo los administradores pueden eliminar tareas completadas.');
+        }
+
+        try {
+            // No restamos puntos porque ya se otorgaron al completarse
+            $tarea->delete();
+
+            return back()->with('success', 'Tarea completada eliminada del tablero correctamente.');
+        } catch (\Exception $e) {
+            \Log::error('Error al eliminar tarea completada: ' . $e->getMessage());
+            return back()->with('error', 'Hubo un error al eliminar la tarea completada.');
+        }
+    }
 }
