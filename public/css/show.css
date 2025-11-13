@@ -368,7 +368,7 @@ body {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    -webkit-line-clamp: 3;
+    line-clamp: 3;
 }
 
 .task-footer {
@@ -1177,6 +1177,12 @@ MENSAJERÍA
     border: 2px solid transparent;
 }
 
+.chat-message-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+}
+
 .chat-user-item:hover {
     background: rgba(102, 126, 234, 0.05);
     border-color: rgba(102, 126, 234, 0.2);
@@ -1303,10 +1309,6 @@ MENSAJERÍA
     flex-shrink: 0;
 }
 
-.chat-message-content {
-    flex: 1;
-}
-
 .chat-message-bubble {
     background: white;
     padding: 0.875rem 1.125rem;
@@ -1362,6 +1364,22 @@ MENSAJERÍA
     min-width: 0;
 }
 
+.unread-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ef4444; /* rojo */
+    border-radius: 50%;
+    margin-left: 8px;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 .chat-file-name {
     font-weight: 600;
     font-size: 0.9rem;
@@ -1391,7 +1409,7 @@ MENSAJERÍA
 
 .chat-message.own .chat-message-time {
     text-align: right;
-    color: rgba(255,255,255,0.85);
+    color: #94a3b8;
 }
 
 .chat-input-container {

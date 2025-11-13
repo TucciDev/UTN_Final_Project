@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipo;
 use App\Models\User;
+use App\Models\Mensaje;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -170,6 +171,16 @@ class EquipoController extends Controller
             ->orderByDesc('equipo_usuario.puntos')
             ->get()
             ->map(function ($usuario) use ($equipo) {
+
+                $user = Auth::user();
+
+                // Contar mensajes no leídos de este miembro hacia el usuario actual
+                $mensajesNoLeidos = \App\Models\Mensaje::where('equipo_id', $equipo->id)
+                    ->where('emisor_id', $usuario->id)
+                    ->where('receptor_id', $user->id)
+                    ->where('leido', false)
+                    ->count();
+
                 $tareasAsignadas = $equipo->tareas()
                     ->where('asignado_a', $usuario->id)
                     ->count();
@@ -197,8 +208,10 @@ class EquipoController extends Controller
                     'tareas_asignadas' => $tareasAsignadas,
                     'tareas_completadas' => $tareasCompletadas,
                     'tareas_activas' => $tareasActivas,
+                    'mensajes_no_leidos' => $mensajesNoLeidos,
                 ];
             });
+
 
         // Filtrar tareas según rol del usuario
         if ($esAdmin) {
