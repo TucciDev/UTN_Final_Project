@@ -212,29 +212,31 @@ class EquipoController extends Controller
                 ];
             });
 
+    // Filtrar tareas según rol del usuario
+    $queryBase = $equipo->tareas()->with('asignado');
 
-        // Filtrar tareas según rol del usuario
-        if ($esAdmin) {
-        // Admin ve TODAS las tareas
-        $tareasPorHacer = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'por_hacer')
-            ->orderBy('prioridad', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+    // Si NO es admin, solo mostrar sus tareas asignadas
+    if ($esAdmin) {
+    // Admin ve TODAS las tareas
+    $tareasPorHacer = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'por_hacer')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $tareasEnProgreso = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'en_progreso')
-            ->orderBy('prioridad', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+    $tareasEnProgreso = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'en_progreso')
+        ->orderBy('prioridad', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $tareasCompletadas = $equipo->tareas()
-            ->with('asignado')
-            ->where('estado', 'completada')
-            ->orderBy('updated_at', 'desc')
-            ->get();
+    $tareasCompletadas = $equipo->tareas()
+        ->with('asignado')
+        ->where('estado', 'completada')
+        ->orderBy('updated_at', 'desc')
+        ->get();
     } else {
         // Miembro solo ve SUS tareas
         $tareasPorHacer = $equipo->tareas()
@@ -424,13 +426,11 @@ class EquipoController extends Controller
             abort(403, 'No perteneces a este equipo.');
         }
 
-        // El creador no puede salir de su propio equipo
-        if ($equipo->creador_id === $user->id) {
-            return back()->with('error', 'Como creador, no puedes salir del equipo. Debes eliminarlo o transferir la propiedad.');
-        }
-
-        // Si es admin, verificar que haya otro admin
-        if ($equipo->esAdmin($user)) {
+        // Verificar si es admin o creador
+        $esAdmin = $equipo->esAdmin($user);
+        $esCreador = $equipo->creador_id === $user->id;
+        
+        if ($esAdmin || $esCreador) {
             $cantidadAdmins = $equipo->usuarios()
                 ->wherePivot('rol', 'admin')
                 ->count();
@@ -441,6 +441,19 @@ class EquipoController extends Controller
         }
 
         try {
+            // Si es el creador, transferir la propiedad al primer admin disponible
+            if ($esCreador) {
+                $nuevoCreador = $equipo->usuarios()
+                    ->wherePivot('rol', 'admin')
+                    ->where('user_id', '!=', $user->id)
+                    ->first();
+                
+                if ($nuevoCreador) {
+                    $equipo->creador_id = $nuevoCreador->id;
+                    $equipo->save();
+                }
+            }
+            
             $equipo->removerUsuario($user);
 
             return redirect()

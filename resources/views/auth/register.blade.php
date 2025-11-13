@@ -152,16 +152,13 @@
                             </label>
                             <div class="input-group">
                                 <input type="password" 
-                                       class="form-control @error('password') is-invalid @enderror" 
+                                       class="form-control" 
                                        id="password" 
                                        name="password"
                                        placeholder="Mínimo 8 caracteres" 
                                        required
                                        minlength="8"
                                        oninput="checkPasswordStrength()">
-                                <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
-                                </span>
                             </div>
                             <div class="password-strength">
                                 <div class="password-strength-bar" id="strengthBar"></div>
@@ -181,9 +178,6 @@
                                        placeholder="Repite tu contraseña" 
                                        required
                                        minlength="8">
-                                <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordConfirm" style="cursor: pointer;"></i>
-                                </span>
                             </div>
                         </div>
 
