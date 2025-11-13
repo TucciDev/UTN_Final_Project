@@ -195,15 +195,23 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
-                                        @else
-                                            <div class="task-assignee">
-                                                <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
-                                                <span style="color: #cbd5e1;">Sin asignar</span>
-                                            </div>
-                                        @endif
+                                            @else
+                                                <div class="task-assignee">
+                                                    <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
+                                                    <span style="color: #cbd5e1;">Sin asignar</span>
+                                                </div>
+                                            @endif
                                     </div>
                                 </div>
                             @empty
@@ -252,15 +260,23 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
-                                        @else
-                                            <div class="task-assignee">
-                                                <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
-                                                <span style="color: #cbd5e1;">Sin asignar</span>
-                                            </div>
-                                        @endif
+                                            @else
+                                                <div class="task-assignee">
+                                                    <i class="bi bi-person-dash" style="color: #cbd5e1;"></i>
+                                                    <span style="color: #cbd5e1;">Sin asignar</span>
+                                                </div>
+                                            @endif
                                     </div>
                                 </div>
                             @empty
@@ -307,7 +323,15 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
                                         @endif
@@ -400,7 +424,15 @@
                                         </div>
                                         @if($tarea->asignado)
                                             <div class="task-assignee">
-                                                <div class="assignee-avatar">{{ $tarea->asignado->initials }}</div>
+                                                <div class="assignee-avatar">
+                                                    @if($tarea->asignado->ruta_img)
+                                                        <img src="{{ asset($tarea->asignado->ruta_img) }}" 
+                                                            alt="{{ $tarea->asignado->nombre }}"
+                                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                                    @else
+                                                        {{ $tarea->asignado->initials }}
+                                                    @endif
+                                                </div>
                                                 <span>{{ $tarea->asignado->nombre }}</span>
                                             </div>
                                         @endif
@@ -646,15 +678,28 @@
                     <div class="chat-users-list" id="chatUsersList">
                         @foreach($miembros as $miembro)
                             @if($miembro['id'] != Auth::id())
-                            <div class="chat-user-item" 
+                            <div class="chat-user-item"
+                                    id="user-{{ $miembro['id'] }}"
                                     data-user-id="{{ $miembro['id'] }}"
                                     data-user-name="{{ $miembro['nombre'] }}"
                                     data-user-role="{{ $miembro['es_admin'] ? 'Administrador' : 'Miembro' }}"
                                     data-user-initials="{{ $miembro['iniciales'] }}"
                                     onclick="seleccionarUsuario(this)">
-                                <div class="chat-user-avatar">{{ $miembro['iniciales'] }}</div>
-                                <div class="chat-user-info">
-                                    <div class="chat-user-name">{{ $miembro['nombre'] }}</div>
+                                <div class="chat-user-avatar" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem;">
+                                @if($miembro['avatar_url'])
+                                    <img src="{{ $miembro['avatar_url'] }}" alt="{{ $miembro['nombre'] }}"
+                                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                @else
+                                    <div class="avatar-initials">{{ $miembro['iniciales'] }}</div>
+                                @endif
+                                </div>
+                                <div class="chat-user-info position-relative">
+                                    <div class="chat-user-name d-flex align-items-center">
+                                        {{ $miembro['nombre'] }}
+                                        @if($miembro['mensajes_no_leidos'] > 0)
+                                            <span class="unread-dot"></span>
+                                        @endif
+                                    </div>
                                     <div class="chat-user-role">
                                         @if($miembro['es_admin'])
                                             <i class="bi bi-star-fill" style="color: #fbbf24;"></i> Admin
@@ -1276,9 +1321,24 @@
             const userName = element.dataset.userName;
             const userRole = element.dataset.userRole;
             const userInitials = element.dataset.userInitials;
+            const avatarUrl = element.dataset.userAvatarUrl;
 
             // Actualizar header del chat
-            document.getElementById('chatHeaderAvatar').textContent = userInitials;
+            const chatHeaderAvatar = document.getElementById('chatHeaderAvatar');
+            chatHeaderAvatar.innerHTML = '';
+            if (avatarUrl) {
+                const img = document.createElement('img');
+                img.src = avatarUrl;
+                img.alt = userName;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '50%';
+                chatHeaderAvatar.appendChild(img);
+            } else {
+                chatHeaderAvatar.textContent = userInitials;
+            }
+            
             document.getElementById('chatHeaderName').textContent = userName;
             document.getElementById('chatHeaderRole').textContent = userRole;
             document.getElementById('chatHeader').style.display = 'flex';
@@ -1331,6 +1391,12 @@
                         </div>
                     `;
                 }
+
+                const userItem = document.getElementById(`user-${selectedUserId}`);
+                if (userItem) {
+                    const dot = userItem.querySelector('.unread-dot');
+                    if (dot) dot.remove();
+                }
             })
             .catch(error => {
                 console.error('Error al cargar mensajes:', error);
@@ -1345,8 +1411,15 @@
             div.className = `chat-message ${mensaje.es_mio ? 'own' : ''}`;
             div.dataset.mensajeId = mensaje.id;
 
+            let avatarContent = '';
+            if (mensaje.emisor_avatar_url) {
+                avatarContent = `<img src="${mensaje.emisor_avatar_url}" alt="${mensaje.emisor_nombre}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                avatarContent = mensaje.emisor_iniciales;
+            }
+
             let contenido = `
-                <div class="chat-message-avatar">${mensaje.emisor_iniciales}</div>
+                <div class="chat-message-avatar">${avatarContent}</div>
                 <div class="chat-message-content">
                     <div class="chat-message-bubble">
             `;
@@ -1383,7 +1456,7 @@
 
             contenido += `
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; color: grey;">
                         <div class="chat-message-time">${mensaje.created_at}</div>
                         ${mensaje.es_mio ? `
                             <button onclick="eliminarMensaje(${mensaje.id})" 
