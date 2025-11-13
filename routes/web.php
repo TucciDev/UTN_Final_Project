@@ -143,6 +143,10 @@ Route::middleware('auth')->group(function () {
     // Eliminar tarea
     Route::delete('/tareas/{tareaId}', [TareaController::class, 'destroy'])->name('tareas.destroy');
 
+    // Eliminar una tarea completada sin restar puntos
+    Route::delete('/tareas/{tarea}/completada', [TareaController::class, 'destroyCompletada'])
+        ->name('tareas.destroyCompletada');
+
      // ========================================
     // RUTAS DE MENSAJERÍA
     // ========================================
