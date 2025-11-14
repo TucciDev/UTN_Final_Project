@@ -412,6 +412,11 @@ small.text-danger {
     font-size: 0.875rem;
 }
 
+input::-ms-reveal, 
+input::-ms-clear {
+    display: none !important;
+}
+
 /* Responsive */
 @media (max-width: 991px) {
     .auth-left {

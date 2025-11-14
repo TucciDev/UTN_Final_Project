@@ -182,7 +182,7 @@
                                        required
                                        minlength="8">
                                 <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordConfirm" style="cursor: pointer;"></i>
                                 </span>
                             </div>
                         </div>
