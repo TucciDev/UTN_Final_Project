@@ -20,11 +20,13 @@ class Tarea extends Model
         'asignado_a',
         'puntos',
         'vista_por_asignado',
+        'archivada',
     ];
 
     protected $casts = [
         'fecha_vencimiento' => 'datetime',
         'vista_por_asignado' => 'boolean',
+        'archivada' => 'boolean',
     ];
 
     // ========================================

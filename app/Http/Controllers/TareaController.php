@@ -292,4 +292,24 @@ class TareaController extends Controller
             return back()->with('error', 'Hubo un error al eliminar la tarea completada.');
         }
     }
+    public function archivar($tareaId)
+    {
+        $tarea = Tarea::findOrFail($tareaId);
+        $equipo = $tarea->equipo;
+
+        // Solo admin puede archivar
+        if (!$equipo->esAdmin(Auth::user())) {
+            return back()->with('error', 'Solo los administradores pueden archivar tareas.');
+        }
+
+        try {
+            $tarea->archivada = true;
+            $tarea->save();
+
+            return back()->with('success', 'Tarea archivada correctamente. Ya no aparecerá en el tablero.');
+        } catch (\Exception $e) {
+            \Log::error('Error al archivar tarea: ' . $e->getMessage());
+            return back()->with('error', 'Hubo un error al archivar la tarea.');
+        }
+    }
 }

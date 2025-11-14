@@ -235,6 +235,7 @@ class EquipoController extends Controller
     $tareasCompletadas = $equipo->tareas()
         ->with('asignado')
         ->where('estado', 'completada')
+        ->where('archivada', false)
         ->orderBy('updated_at', 'desc')
         ->get();
     } else {
