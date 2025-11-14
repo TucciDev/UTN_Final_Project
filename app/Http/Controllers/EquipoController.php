@@ -45,7 +45,7 @@ class EquipoController extends Controller
                     'descripcion' => $equipo->descripcion,
                     'icono' => $equipo->icono,
                     'color' => $equipo->color,
-                    'imagen_url' => $equipo->imagen_url, // ✅ AGREGADO
+                    'imagen_url' => $equipo->imagen_url,
                     'rol' => $equipo->pivot->rol,
                     'es_admin' => $equipo->pivot->rol === 'admin',
                     'favorito' => $equipo->pivot->favorito,
@@ -88,11 +88,11 @@ class EquipoController extends Controller
             'descripcion' => 'nullable|string|max:1000',
             'icono' => 'nullable|string|max:50',
             'color' => 'nullable|string|max:7',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ✅ AGREGADO
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'nombre.required' => 'El nombre del equipo es obligatorio',
-            'nombre.max' => 'El nombre no puede tener más de 255 caracteres',
-            'descripcion.max' => 'La descripción no puede tener más de 1000 caracteres',
+            'nombre.max' => 'El nombre no puede tener más de 20 caracteres',
+            'descripcion.max' => 'La descripción no puede tener más de 200 caracteres',
             'imagen.image' => 'El archivo debe ser una imagen',
             'imagen.mimes' => 'La imagen debe ser formato: jpeg, png, jpg o gif',
             'imagen.max' => 'La imagen no puede pesar más de 2MB',
@@ -113,7 +113,7 @@ class EquipoController extends Controller
                 'descripcion' => $validated['descripcion'] ?? null,
                 'icono' => $validated['icono'] ?? 'bi-people',
                 'color' => $validated['color'] ?? '#667eea',
-                'imagen' => $imagenPath, // ✅ AGREGADO
+                'imagen' => $imagenPath,
                 'codigo_invitacion' => Equipo::generarCodigoInvitacion(),
                 'creador_id' => Auth::id(),
                 'activo' => true,
@@ -354,11 +354,11 @@ class EquipoController extends Controller
             'descripcion' => 'nullable|string|max:1000',
             'icono' => 'nullable|string|max:50',
             'color' => 'nullable|string|max:7',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ✅ AGREGADO
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'nombre.required' => 'El nombre del equipo es obligatorio',
-            'nombre.max' => 'El nombre no puede tener más de 255 caracteres',
-            'descripcion.max' => 'La descripción no puede tener más de 1000 caracteres',
+            'nombre.max' => 'El nombre no puede tener más de 20 caracteres',
+            'descripcion.max' => 'La descripción no puede tener más de 200 caracteres',
             'imagen.image' => 'El archivo debe ser una imagen',
             'imagen.mimes' => 'La imagen debe ser formato: jpeg, png, jpg o gif',
             'imagen.max' => 'La imagen no puede pesar más de 2MB',

@@ -32,24 +32,24 @@
                     <div>
                         <img src="{{ asset('img/collabpro_logo1.png') }}" alt="CollabPro" class="auth-logo">
                         <h2>Comienza tu viaje</h2>
-                        <p>Únete a miles de equipos que ya transformaron su productividad</p>
+                        <p>Únete al grupo de equipos que ya transformaron su productividad</p>
                         
                         <ul class="auth-benefits list-unstyled">
                             <li>
                                 <i class="bi bi-check-circle-fill"></i>
-                                <span>Gratis para equipos hasta 10 personas</span>
+                                <span>Colaboracion en Equipos</span>
+                            </li>
+                           <li>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Gestión de tareas en tiempo real</span>
                             </li>
                             <li>
                                 <i class="bi bi-check-circle-fill"></i>
-                                <span>Sin tarjeta de crédito requerida</span>
+                                <span>Sistema de puntos y rankings</span>
                             </li>
                             <li>
                                 <i class="bi bi-check-circle-fill"></i>
-                                <span>Configuración en menos de 2 minutos</span>
-                            </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill"></i>
-                                <span>Soporte 24/7 incluido</span>
+                                <span>Analytics y reportes detallados</span>
                             </li>
                         </ul>
                     </div>
@@ -159,6 +159,9 @@
                                        required
                                        minlength="8"
                                        oninput="checkPasswordStrength()">
+                                <span class="input-group-text">
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
                             </div>
                             <div class="password-strength">
                                 <div class="password-strength-bar" id="strengthBar"></div>
@@ -178,6 +181,9 @@
                                        placeholder="Repite tu contraseña" 
                                        required
                                        minlength="8">
+                                <span class="input-group-text">
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
                             </div>
                         </div>
 

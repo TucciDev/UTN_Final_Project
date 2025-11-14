@@ -98,6 +98,9 @@
                                        placeholder="••••••••" 
                                        required
                                        autocomplete="current-password">
+                                <span class="input-group-text">
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
                             </div>
                             @error('password')
                                 <small class="text-danger mt-1 d-block">{{ $message }}</small>

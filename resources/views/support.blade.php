@@ -106,18 +106,18 @@
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center categories-row" id="categoriesRow">
-                
+               
                 <!-- Categoría 1: Cuenta y Perfil -->
                 <div class="col-lg-4 col-md-6 mb-4" data-category="cuenta" data-aos="fade-up" data-aos-delay="0">
                     <div class="category-card" data-category="cuenta">
                         <div class="category-icon">
                             <i class="bi bi-person-circle"></i>
                         </div>
-                        <h3 class="category-title">Cuenta y Perfil</h3>
+                        <h3 class="category-title">Cuenta y perfil</h3>
                         <p class="category-description">
                             Problemas con tu cuenta, contraseña, datos personales y configuración de perfil.
                         </p>
-                        <span class="category-badge">5 artículos</span>
+                        <!-- <span class="category-badge">5 artículos</span> -->
                     </div>
                 </div>
                 <!-- Categoría 2: Gestión de Tareas -->
@@ -126,28 +126,28 @@
                         <div class="category-icon">
                             <i class="bi bi-list-check"></i>
                         </div>
-                        <h3 class="category-title">Gestión de Tareas</h3>
+                        <h3 class="category-title">Gestión de tareas</h3>
                         <p class="category-description">
                             Crear, editar, organizar y compartir tareas. Problemas con proyectos y equipos.
                         </p>
-                        <span class="category-badge">5 artículos</span>
+                        <!-- <span class="category-badge">5 artículos</span> -->
                     </div>
                 </div>
-                <!-- Categoría 3: Sincronización y Notificaciones -->
+                <!-- Categoría 3: Grupos y Colaboración -->
                 <div class="col-lg-4 col-md-6 mb-4" data-category="sync" data-aos="fade-up" data-aos-delay="200">
                     <div class="category-card" data-category="sync">
                         <div class="category-icon">
-                            <i class="bi bi-arrow-repeat"></i>
+                            <i class="bi bi-people-fill"></i>
                         </div>
-                        <h3 class="category-title">Sincronización y Notificaciones</h3>
+                        <h3 class="category-title">Grupos y colaboración</h3>
                         <p class="category-description">
-                            Problemas de sincronización entre dispositivos y configuración de notificaciones.
+                            Creación y gestión de grupos. Invitaciones, roles, chat y administración de miembros.
                         </p>
-                        <span class="category-badge">5 artículos</span>
+                        <!-- <span class="category-badge">5 artículos</span> -->
                     </div>
                 </div>
             </div>
-            <!-- Botón Volver (oculto inicialmente) 
+            <!-- Botón Volver (oculto inicialmente)
             <div class="text-center mb-4" id="backButtonContainer" style="display: none;">
                 <button class="back-button" id="backButton">
                     <i class="bi bi-arrow-left"></i>
@@ -158,431 +158,331 @@
             <div class="questions-container" id="questionsContainer">
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
-                        
+                       
                         <!-- PREGUNTAS CATEGORÍA: CUENTA Y PERFIL -->
                         <div class="accordion accordion-flush faq-accordion" id="cuentaQuestions" style="display: none;">
-                            
+                           
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cuenta1">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">No puedo iniciar sesión en mi cuenta</span>
+                                        <span class="faq-question-text">¿Cómo puedo crear una cuenta en CollabPro?</span>
                                     </button>
                                 </h2>
                                 <div id="cuenta1" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p class="mb-3">Si tenés problemas para iniciar sesión, seguí estos pasos:</p>
+                                        <p class="mb-3">Para registrarte en CollabPro:</p>
                                         <ol class="faq-list">
-                                            <li>Verificá que estés usando el <strong>email correcto</strong> registrado</li>
-                                            <li>Asegurate de que tu contraseña no tenga espacios adicionales</li>
-                                            <li>Si olvidaste tu contraseña, hacé clic en <strong>"¿Olvidaste tu contraseña?"</strong></li>
-                                            <li>Revisá tu carpeta de spam por si el email de recuperación llegó ahí</li>
-                                            <li>Intentá limpiar caché y cookies de tu navegador</li>
+                                            <li>Ingresá a la página principal de la plataforma.</li>
+                                            <li>Hacé clic en <strong>“Registrarse”.</strong></li>
+                                            <li>Completá el formulario con tu nombre, apellido, correo electrónico, nombre de usuario y contraseña.</li>
+                                            <li>Confirmá la contraseña y seleccioná <strong>“Crear cuenta”.</strong></li>
                                         </ol>
                                         <div class="faq-warning">
                                             <i class="bi bi-info-circle-fill"></i>
-                                            <span><strong>Nota:</strong> Después de 5 intentos fallidos, tu cuenta será bloqueada temporalmente por seguridad.</span>
+                                            <span><strong>Nota:</strong> También podés registrarte más rápido usando tu cuenta de Google, eligiendo “Registrarse con Google” y autorizando el acceso.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cuenta2">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">¿Cómo cambio mi contraseña?</span>
+                                        <span class="faq-question-text">¿Qué hago si olvidé mi contraseña?</span>
                                     </button>
                                 </h2>
                                 <div id="cuenta2" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p class="mb-3">Para cambiar tu contraseña:</p>
+                                        <p class="mb-3">Si no recordás tu contraseña:</p>
                                         <ol class="faq-list">
-                                            <li>Ingresá a <strong>Configuración → Seguridad</strong></li>
-                                            <li>Hacé clic en <strong>"Cambiar contraseña"</strong></li>
-                                            <li>Ingresá tu contraseña actual</li>
-                                            <li>Escribí tu nueva contraseña dos veces</li>
-                                            <li>Hacé clic en <strong>"Guardar cambios"</strong></li>
+                                            <li>En la pantalla de inicio de sesión, hacé clic en <strong>“¿Olvidaste tu contraseña?”.</strong></li>
+                                            <li>Ingresá el correo con el que te registraste.</li>
+                                            <li>Revisá tu bandeja de entrada y seguí el enlace de recuperación.</li>
+                                            <li>Creá una nueva contraseña para volver a acceder a tu cuenta.</li>
                                         </ol>
                                         <div class="faq-tip">
                                             <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Tip:</strong> Usá una contraseña de al menos 8 caracteres con letras, números y símbolos.</span>
+                                            <span><strong>Tip:</strong> Usá una contraseña de al menos 8 caracteres con letras y números.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cuenta3">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">¿Cómo actualizo mi información de perfil?</span>
+                                        <span class="faq-question-text">¿Puedo iniciar sesión con mi cuenta de Google?</span>
                                     </button>
                                 </h2>
                                 <div id="cuenta3" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Podés actualizar tu perfil en cualquier momento:</p>
-                                        <ol class="faq-list">
-                                            <li>Hacé clic en tu foto de perfil en la esquina superior derecha</li>
-                                            <li>Seleccioná <strong>"Mi perfil"</strong></li>
-                                            <li>Editá la información que quieras cambiar</li>
-                                            <li>Hacé clic en <strong>"Guardar"</strong></li>
-                                        </ol>
-                                        <p class="mt-3">Podés cambiar: nombre, email, foto de perfil, biografía y preferencias de notificación.</p>
+                                        <p>Sí. Si te registraste o vinculaste tu cuenta de Google, podés iniciar sesión fácilmente haciendo clic en <strong>“Iniciar sesión con Google”</strong>, seleccionando tu cuenta y accediendo directamente a tu Dashboard.</p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                                                             <!-- Pregunta 4 -->
                                 <div class="accordion-item faq-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cuenta4">
                                             <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                            <span class="faq-question-text">¿Cómo recupero mi cuenta si olvidé el correo asociado?</span>
+                                            <span class="faq-question-text">¿Cómo puedo editar mi perfil o cambiar mi información personal?</span>
                                         </button>
                                     </h2>
                                     <div id="cuenta4" class="accordion-collapse collapse">
                                         <div class="accordion-body">
-                                            <p>Si no recordás el correo con el que creaste tu cuenta, seguí estos pasos:</p>
+                                            <p>Para modificar tus datos personales:</p>
                                             <ol class="faq-list">
-                                                <li>Intentá buscar en tu bandeja de entrada correos con el remitente <strong>no-reply@collabpro.com.</strong></li>
-                                                <li>Si tenés varias direcciones, probá iniciar sesión con cada una.</li>
-                                                <li>En caso de no encontrar el correo, contactá al <strong>soporte de CollabPro</strong> indicando tu nombre completo y nombre del equipo al que pertenecés.</li>
-                                            </ol>
-                                            <div class="faq-warning">
-                                                <i class="bi bi-info-circle-fill"></i>
-                                                <span><strong>Nota:</strong> Por seguridad, el equipo de soporte solo puede confirmar la cuenta si verificás tu identidad.</span>
-                                            </div>
+                                                <li>Desde el <strong>Dashboard</strong>, hacé clic en los tres puntos que aparecen junto a tu nombre de usuario (abajo a la izquierda).</li>
+                                                <li>Seleccioná <strong>“Mi perfil”.</strong></li>
+                                                <li>Desde ahí podés cambiar tu foto de perfil, actualizar tu información personal o modificar tu contraseña.</li>
+                                            </ol>  
                                         </div>
                                     </div>
                                 </div>
-
+ 
                                 <!-- Pregunta 5 -->
                                 <div class="accordion-item faq-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cuenta5">
                                             <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                            <span class="faq-question-text">¿Qué hago si mi cuenta fue bloqueada?</span>
+                                            <span class="faq-question-text">¿Qué puedo hacer si tengo problemas para acceder a mi cuenta o actualizar mis datos?</span>
                                         </button>
                                     </h2>
                                     <div id="cuenta5" class="accordion-collapse collapse">
                                         <div class="accordion-body">
-                                            <p>Si tu cuenta fue bloqueada por motivos de seguridad, podés resolverlo así:</p>
+                                            <p>Si tenés inconvenientes para ingresar o modificar tu información:</p>
                                             <ol class="faq-list">
-                                                <li>Esperá 15 minutos y volvé a intentar iniciar sesión</li>
-                                                <li>Si sigue bloqueada, usá la opción <strong>"Recuperar acceso"</strong> en la pantalla de inicio de sesión</li>
-                                                <li>Comprobá tu correo electrónico para completar la verificación</li>
-                                                <li>Si el problema persiste, contactá a <strong>soporte@collabpro.com</strong></li>
+                                                <li>Verificá que el correo y la contraseña sean correctos.</li>
+                                                <li>Si el problema persiste, usá la opción <strong>“¿Olvidaste tu contraseña?”</strong> para restablecerla.</li>
+                                                <li>Si no podés actualizar tus datos, cerrá sesión e intentá nuevamente.</li>
+                                                <li>En caso de que el inconveniente continúe, comunicate con el <strong>equipo de soporte</strong> de CollabPro para recibir ayuda personalizada.</li>
                                             </ol>
-                                            <div class="faq-tip">
-                                                <i class="bi bi-lightbulb"></i>
-                                                <span><strong>Tip:</strong> Evitá múltiples intentos fallidos seguidos para prevenir bloqueos automáticos.</span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
-
-
+ 
+ 
                         <!-- PREGUNTAS CATEGORÍA: GESTIÓN DE TAREAS -->
                         <div class="accordion accordion-flush faq-accordion" id="tareasQuestions" style="display: none;">
-                            
+                           
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tareas1">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">¿Cómo creo una nueva tarea?</span>
+                                        <span class="faq-question-text">¿Cómo puedo crear una nueva tarea en CollabPro?</span>
                                     </button>
                                 </h2>
                                 <div id="tareas1" class="accordion-collapse collapse">
                                     <div class="accordion-body">
                                         <p class="mb-3">Crear una tarea es muy simple:</p>
                                         <ol class="faq-list">
-                                            <li>Hacé clic en el botón <strong>"+ Nueva Tarea"</strong> en la parte superior</li>
-                                            <li>Escribí el nombre de la tarea</li>
-                                            <li>Agregá una descripción (opcional)</li>
-                                            <li>Asigná una fecha de vencimiento</li>
-                                            <li>Seleccioná la prioridad (Alta, Media o Baja)</li>
-                                            <li>Hacé clic en <strong>"Guardar"</strong></li>
+                                            <li>Ingresá al tablero del equipo donde querés agregarla.</li>
+                                            <li>Hacé clic en el botón <strong>“Nueva tarea”</strong> o en el símbolo <strong>“+”</strong> dentro de la columna correspondiente.</li>
+                                            <li>Completá los campos requeridos: nombre de la tarea, descripción, responsable, fecha límite y nivel de prioridad.</li>
+                                            <li>Seleccioná <strong>“Guardar”</strong> para crearla.</li>
                                         </ol>
-                                        <div class="faq-tip">
-                                            <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Tip:</strong> Podés usar el atajo de teclado Ctrl+N para crear tareas rápidamente.</span>
-                                        </div>
+                                        <p class="mb-3">La tarea aparecerá automáticamente en el tablero Kanban del equipo.</p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tareas2">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">¿Cómo elimino una tarea?</span>
+                                        <span class="faq-question-text">¿Cómo puedo asignar una tarea a un miembro del equipo?</span>
                                     </button>
                                 </h2>
                                 <div id="tareas2" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Para eliminar una tarea:</p>
+                                        <p>Cuando creás o editás una tarea, vas a encontrar el campo <strong>“Asignado a”.</strong></p>
                                         <ol class="faq-list">
-                                            <li>Abrí la tarea que querés eliminar</li>
-                                            <li>Hacé clic en el menú de opciones (tres puntos)</li>
-                                            <li>Seleccioná <strong>"Eliminar"</strong></li>
-                                            <li>Confirmá la eliminación</li>
+                                            <li>Hacé clic en ese campo y seleccioná el nombre del miembro del equipo que se encargará de la tarea.</li>
+                                            <li>Guardá los cambios y el usuario asignado recibirá una notificación.</li>
                                         </ol>
-                                        <div class="faq-warning">
-                                            <i class="bi bi-info-circle-fill"></i>
-                                            <span><strong>Nota:</strong> Las tareas eliminadas van a la papelera y pueden recuperarse durante 30 días.</span>
-                                        </div>
+                                        <p>También podés cambiar la asignación en cualquier momento desde el tablero.</p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tareas3">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">No puedo compartir una tarea con mi equipo</span>
+                                        <span class="faq-question-text">¿De qué manera puedo seguir el progreso de una tarea?</span>
                                     </button>
                                 </h2>
                                 <div id="tareas3" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Si no podés compartir tareas, verificá:</p>
-                                        <ul class="faq-list">
-                                            <li>Que tengas <strong>permisos de administrador o editor</strong> en el proyecto</li>
-                                            <li>Que los usuarios con los que querés compartir estén en tu equipo</li>
-                                            <li>Que tu plan incluya la función de <strong>colaboración</strong></li>
-                                            <li>Que el email del usuario esté correctamente escrito</li>
-                                        </ul>
-                                        <p class="mt-3">Si el problema persiste, podés invitar al usuario primero al proyecto y luego compartir la tarea.</p>
+                                        <p>El tablero Kanban de CollabPro te permite visualizar el estado de cada tarea según su progreso.
+                                        Podés moverlas manualmente entre columnas como <strong>“Pendiente”</strong>, <strong>“En progreso”</strong>, o <strong>“Completada”.</strong>
+                                        Además, cada tarea muestra detalles como porcentaje de avance, responsable y fecha límite, para un seguimiento más claro y organizado.</p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tareas4">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">No puedo agregar o eliminar miembros de mi equipo</span>
+                                        <span class="faq-question-text">¿Puedo editar o eliminar una tarea después de crearla?</span>
                                     </button>
                                 </h2>
                                 <div id="tareas4" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Solo los administradores o creadores del equipo pueden gestionar miembros. 
-                                            Si tenés ese rol y el error persiste, actualizá la página o verificá tu conexión. 
-                                            También podés revisar si el usuario ya fue invitado previamente.
-                                        </p>   
+                                        <p>Sí. Para editar una tarea, hacé clic sobre ella en el tablero y seleccioná la opción <strong>“Editar”.</strong>
+                                        Desde ahí podés modificar su nombre, descripción, fecha, prioridad o asignación.
+                                        Si necesitás eliminarla, hacé clic en <strong>“Eliminar tarea”</strong> dentro del mismo menú.
+                                        Tené en cuenta que solo los administradores o creadores del grupo pueden borrar tareas.
+                                        </p>  
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tareas5">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">¿Cómo asigno una tarea a un miembro del equipo?</span>
+                                        <span class="faq-question-text">¿Cómo funciona el sistema de puntos y ranking por completar tareas?</span>
                                     </button>
                                 </h2>
                                 <div id="tareas5" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Para asignar una tarea:</p>
-                                        <ol class="faq-list">
-                                            <li>Abrí la tarea que querés asignar</li>
-                                            <li>Hacé clic en el campo <strong>"Asignar a"</strong></li>
-                                            <li>Seleccioná el miembro del equipo de la lista</li>
-                                            <li>La persona recibirá una notificación automáticamente</li>
-                                        </ol>
-                                        <div class="faq-tip">
-                                            <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Tip:</strong> Podés asignar múltiples personas a una misma tarea.</span>
-                                        </div>
+                                        <p>CollabPro incluye un sistema de gamificación que premia la productividad.
+                                        Cada vez que un usuario completa una tarea, gana puntos.
+                                        Estos puntos se acumulan y determinan la posición del usuario en el ranking del equipo, fomentando la motivación y la colaboración.
+                                        El ranking puede verse desde el <strong>Dashboard</strong> general del grupo.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                         </div>
-
-                        <!-- PREGUNTAS CATEGORÍA: SINCRONIZACIÓN Y NOTIFICACIONES -->
+ 
+                        <!-- PREGUNTAS CATEGORÍA: GRUPOS Y COLABORACIÓN -->
                         <div class="accordion accordion-flush faq-accordion" id="syncQuestions" style="display: none;">
-                            
+                           
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sync1">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">Los cambios no se sincronizan entre dispositivos</span>
+                                        <span class="faq-question-text">¿Cómo puedo crear un grupo de trabajo en CollabPro?</span>
                                     </button>
                                 </h2>
                                 <div id="sync1" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p class="mb-3">Si los cambios no se reflejan en todos tus dispositivos:</p>
+                                        <p class="mb-3">Para crear un grupo:</p>
                                         <ol class="faq-list">
-                                            <li>Verificá que estés <strong>usando la misma cuenta</strong> en todos los dispositivos</li>
-                                            <li>Comprobá tu <strong>conexión a Internet</strong> en ambos dispositivos</li>
-                                            <li>Forzá la sincronización deslizando hacia abajo en la pantalla principal</li>
-                                            <li>Cerrá sesión y volvé a iniciarla</li>
-                                            <li>Actualizá la aplicación a la <strong>última versión</strong></li>
+                                            <li>Ingresá a tu <strong>Dashboard.</strong></li>
+                                            <li>Hacé clic en el botón <strong>“Crear grupo”.</strong></li>
+                                            <li>Completá la información requerida: nombre del equipo, descripción (opcional), icono e imagen representativa, y color del grupo.</li>
+                                            <li>Confirmá seleccionando <strong>“Crear equipo”.</strong></li>
                                         </ol>
                                         <div class="faq-tip">
                                             <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Consejo:</strong> La sincronización puede tardar hasta 1 minuto en completarse.</span>
+                                            <span><strong>Importante:</strong> Una vez creado, vas a recibir un código de invitación único para que otros usuarios puedan unirse.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sync2">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">No recibo notificaciones de nuevas tareas</span>
+                                        <span class="faq-question-text">¿Cómo puedo unirme a un grupo existente?</span>
                                     </button>
                                 </h2>
                                 <div id="sync2" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Si no estás recibiendo notificaciones:</p>
+                                        <p>Si otro usuario te invitó a un grupo, seguí estos pasos:</p>
                                         <ul class="faq-list">
-                                            <li><strong>En la app:</strong> Verificá que los permisos de notificaciones estén activados en la configuración de tu dispositivo</li>
-                                            <li><strong>En la web:</strong> Asegurate de haber aceptado las notificaciones del navegador</li>
-                                            <li>Andá a <strong>Configuración → Notificaciones</strong> y verificá que estén activadas</li>
-                                            <li>Revisá que no esté activado el modo "No molestar"</li>
-                                            <li>Comprobá tu bandeja de spam para notificaciones por email</li>
+                                            <li>Desde el <strong>Dashboard</strong>, hacé clic en <strong>“Unirse a un grupo”.</strong></li>
+                                            <li>Ingresá el código de invitación que te compartieron.</li>
+                                            <li>Hacé clic en <strong>“Unirse al equipo”.</strong></li>
                                         </ul>
-                                        <p class="mt-3">Recordá que podés personalizar qué notificaciones querés recibir en la configuración.</p>
+                                        <p>Listo, vas a formar parte del grupo y podrás acceder a sus tareas y tableros.</p>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sync3">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">Recibo demasiadas notificaciones</span>
+                                        <span class="faq-question-text">¿Qué diferencia hay entre un administrador y un miembro del grupo?</span>
                                     </button>
                                 </h2>
                                 <div id="sync3" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Podés personalizar las notificaciones según tus necesidades:</p>
+                                        <p>En CollabPro existen dos roles:</p>
                                         <ol class="faq-list">
-                                            <li>Andá a <strong>Configuración → Notificaciones</strong></li>
-                                            <li>Desactivá las notificaciones que no necesitás</li>
-                                            <li>Configurá un <strong>horario de silencio</strong> (ej: de 22:00 a 08:00)</li>
-                                            <li>Ajustá la frecuencia de resúmenes diarios</li>
-                                            <li>Desactivá notificaciones para proyectos específicos</li>
+                                            <li><strong>Administrador:</strong> puede crear, editar y eliminar tareas, gestionar miembros, ver estadísticas generales y acceder al panel de administración del grupo.</li>
+                                            <li><strong>Miembro:</strong> puede visualizar tareas, marcarlas como completadas, participar en el chat y colaborar en las actividades del equipo.</li>
                                         </ol>
                                         <div class="faq-tip">
                                             <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Recomendado:</strong> Activá solo notificaciones de alta prioridad y menciones directas.</span>
+                                            <span>El rol se asigna automáticamente al crear el grupo, pero puede modificarse desde la configuración del equipo.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sync4">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">La sincronización con mi calendario no funciona</span>
+                                        <span class="faq-question-text">¿Cómo puedo comunicarme con mi equipo dentro de la plataforma?</span>
                                     </button>
                                 </h2>
                                 <div id="sync4" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Para solucionar problemas de sincronización con calendarios:</p>
+                                        <p>CollabPro incluye un chat integrado en tiempo real para cada grupo. Para usarlo:</p>
                                         <ul class="faq-list">
-                                            <li>Desconectá y volvé a conectar tu calendario en <strong>Configuración → Integraciones</strong></li>
-                                            <li>Verificá que hayas otorgado todos los <strong>permisos necesarios</strong></li>
-                                            <li>Comprobá que tu calendario esté configurado como <strong>predeterminado</strong></li>
-                                            <li>Asegurate de que la sincronización bidireccional esté activada</li>
-                                            <li>Verificá que tu cuenta de calendario esté activa</li>
+                                            <li>Ingresá al grupo desde el <strong>Dashboard.</strong></li>
+                                            <li>Abrí la pestaña <strong>“Mensajes”.</strong></li>
+                                            <li>Seleccioná el miembro con quien querés comunicarte.</li>
+                                            <li>Escribí tu mensaje y presioná Enter o hacé clic en el botón de enviar.</li>
                                         </ul>
                                         <div class="faq-warning">
                                             <i class="bi bi-info-circle-fill"></i>
-                                            <span><strong>Importante:</strong> Los cambios pueden tardar hasta 15 minutos en reflejarse.</span>
+                                            <span><strong>Importante:</strong> Podés ver el historial de mensajes y los nombres y avatares de quienes participan, lo que facilita la comunicación sin salir de la plataforma.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                  
-
+ 
+                 
+ 
                             <!-- Pregunta 5 -->
                             <div class="accordion-item faq-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sync5">
                                         <i class="bi bi-plus-circle-fill me-3 faq-icon"></i>
-                                        <span class="faq-question-text">Las notificaciones llegan con retraso o en horarios incorrectos</span>
+                                        <span class="faq-question-text">¿Cómo puedo gestionar los miembros de mi grupo?</span>
                                     </button>
                                 </h2>
                                 <div id="sync5" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <p>Si las notificaciones no llegan a tiempo o aparecen en horarios equivocados, seguí estos pasos:</p>
+                                        <p>Para administrar los integrantes del grupo:</p>
                                         <ol class="faq-list">
-                                            <li>Verificá que la <strong>hora y zona horaria</strong> de tu dispositivo estén configuradas correctamente</li>
-                                            <li>Comprobá tu conexión a Internet y el estado del servicio de notificaciones</li>
-                                            <li>En la app móvil, reiniciá la sesión o cerrá y abrí nuevamente la aplicación</li>
-                                            <li>En la web, actualizá la página o borrá la caché del navegador</li>
-                                            <li>Si el problema persiste, desactivá y volvé a activar las notificaciones desde <strong>Configuración → Notificaciones</strong></li>
+                                            <li>Ingresá al grupo desde el <strong>Dashboard.</strong></li>
+                                            <li>Abrí la pestaña <strong>“Miembros”.</strong></li>
                                         </ol>
                                         <div class="faq-tip">
                                             <i class="bi bi-lightbulb"></i>
-                                            <span><strong>Consejo:</strong> Mantener la app actualizada garantiza que las notificaciones se entreguen correctamente.</span>
+                                            <span>Desde ahí podés ver todos los integrantes, asignar o quitar roles y, si sos administrador, eliminar usuarios o volver a compartir el código de invitación para sumar nuevos miembros.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-    </section>
-    
-    <!-- Botón volver (oculto inicialmente) -->
-    <div class="text-center mb-4" id="backButtonContainer" style="display: none;">
-        <button class="back-button" id="backButton">
-        <i class="bi bi-chevron-up"></i>
-        Ocultar preguntas
-        </button>
-    </div> 
-
-    <!-- CTA Section -->
-    <section class="py-5 my-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="cta-support-card position-relative overflow-hidden">
-                        <!-- Patrón de fondo geométrico -->
-                        <div class="cta-geometric-pattern"></div>
-                        
-                        <!-- Círculos decorativos -->
-                        <div class="cta-circle cta-circle-1"></div>
-                        <div class="cta-circle cta-circle-2"></div>
-                        <div class="cta-circle cta-circle-3"></div>
-                        
-                        <div class="row align-items-center position-relative" style="z-index: 2;">
-                            <!-- Columna izquierda: Icono -->
-                            <div class="col-lg-5 text-center mb-4 mb-lg-0">
-                                <div class="cta-icon-wrapper">
-                                    <div class="cta-icon-circle">
-                                        <i class="bi bi-headset"></i>
-                                    </div>
-                                    <div class="cta-icon-pulse"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Columna derecha: Contenido -->
-                            <div class="col-lg-7 text-center text-lg-start">
-                                <span class="cta-badge mb-3 d-inline-block">Soporte 24/7</span>
-                                <h2 class="cta-heading mb-3">¿Necesitás ayuda adicional?</h2>
-                                <p class="cta-description mb-4">
-                                    Nuestro equipo de soporte está disponible para asistirte con cualquier consulta. Estamos para ayudarte.
-                                </p>
-                                <a href="{{ route('contact') }}" class="btn-cta-support">
-                                    <span>Contactanos</span>
-                                    <i class="bi bi-envelope ms-2"></i>
-                                    <div class="btn-cta-shine"></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- Footer -->
