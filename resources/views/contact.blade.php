@@ -231,10 +231,9 @@
                         <p class="text-muted">Transforma tu equipo con la plataforma de gestión más innovadora</p>
                     </div>
                     <div class="social-links mt-4">
-                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                        <a href="https://instagram.com" class="social-link"><i class="bi bi-instagram"></i></a>
+                        <a href="https://facebook.com" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="https://github.com/TucciDev/UTN_Final_Project.git" class="social-link"><i class="bi bi-github"></i></a>
                     </div>
                 </div>
                 
@@ -253,8 +252,8 @@
                 <div class="col-lg-2 col-md-6 col-6" data-aos="fade-up" data-aos-delay="300">
                     <h6 class="footer-title mb-3">Recursos</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#">Documentación</a></li>
-                        <li><a href="#">Tutoriales</a></li>
+                        <li><a href="{{ asset('docs/Grupo 4- GDS-M4- 2C-2025.pdf') }}" target="_blank"">Documentación</a></li>
+                        <li><a href="{{ asset('videos/VideoMarketing_Grupo4.mp4') }}" target="_blank">Demo</a></li>
                         <li><a href="{{ route('support') }}">Soporte</a></li>
                         <li><a href="{{ route('contact') }}">Contacto</a></li>
                     </ul>

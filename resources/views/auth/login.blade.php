@@ -99,7 +99,7 @@
                                        required
                                        autocomplete="current-password">
                                 <span class="input-group-text">
-                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePassword" style="cursor: pointer;"></i>
+                                    <i class="bi bi-eye-slash password-toggle-icon" id="togglePasswordLogin" style="cursor: pointer;"></i>
                                 </span>
                             </div>
                             @error('password')
@@ -173,6 +173,24 @@
                 icon.className = 'bi bi-person';
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+        // ----- LOGIN -----
+        const togglePasswordLogin = document.getElementById('togglePasswordLogin');
+        const passwordLogin = document.getElementById('password');
+
+        if (togglePasswordLogin && passwordLogin) {
+            togglePasswordLogin.addEventListener('click', () => {
+                const type = passwordLogin.type === 'password' ? 'text' : 'password';
+                passwordLogin.type = type;
+
+                togglePasswordLogin.classList.toggle('bi-eye');
+                togglePasswordLogin.classList.toggle('bi-eye-slash');
+            });
+        }
+
+    });
     </script>
 </body>
 </html>
