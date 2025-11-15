@@ -391,6 +391,7 @@
 
     @php
         use Illuminate\Support\Facades\Auth;
+        use Illuminate\Support\Facades\Mail;
     @endphp
 </body>
 </html>
