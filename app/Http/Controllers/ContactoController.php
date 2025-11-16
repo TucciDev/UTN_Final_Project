@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contacto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ContactoController extends Controller
 {
@@ -26,6 +27,11 @@ class ContactoController extends Controller
 
         try {
             Contacto::create($validated);
+
+            Mail::send('emails.contacto', $validated, function ($message) {
+                $message->to('test@example.com') // este mail lo ignora Mailtrap, usa el SMTP
+                        ->subject('Nuevo mensaje desde el formulario');
+            });
 
             return response()->json([
                 'success' => true,
