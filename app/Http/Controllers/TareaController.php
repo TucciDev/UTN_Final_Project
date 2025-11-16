@@ -43,7 +43,7 @@ class TareaController extends Controller
             'descripcion.max' => 'La descripción no puede tener más de 1000 caracteres',
             'prioridad.required' => 'La prioridad es obligatoria',
             'prioridad.in' => 'La prioridad debe ser: baja, media o alta',
-            'asignado_a.required' => 'Debes asignar la tarea a un miembro del equipo', // ✅ NUEVO
+            'asignado_a.required' => 'Debes asignar la tarea a un miembro del equipo', 
             'asignado_a.exists' => 'El usuario asignado no existe',
             'fecha_vencimiento.date' => 'La fecha de vencimiento no es válida',
             'fecha_vencimiento.after_or_equal' => 'La fecha de vencimiento debe ser en el futuro',
